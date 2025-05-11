@@ -22,6 +22,7 @@ const LoginPage = () => {
     }));
   };
   const handleSubmit = () => {
+    e.preventDefault(); //폼 제출 시 리로딩 방지
     console.log(formData);
     alert("로그인 버튼이 클릭되었습니다.");
   };
@@ -36,7 +37,7 @@ const LoginPage = () => {
           영남대학교 수강신청
         </div>
         {/* 폼 */}
-        <div className="space-y-2 2xl:space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-2 2xl:space-y-3">
           <input
             type="text"
             name="stdId"
@@ -53,13 +54,13 @@ const LoginPage = () => {
             className={inputStyle}
             placeholder="비밀번호"
           />
-        </div>
-        <div
-          className="cursor-pointer p-2 2xl:p-4 my-5 2xl:my-8 bg-indigo-500 text-white text-center rounded-lg shadow-lg shadow-indigo-500/50 hover:shadow-indigo-600/70 hover:shadow-[inset_10px_10px_10px]"
-          onClick={handleSubmit}
+        </form>
+        <button
+          type="submit"
+          className="cursor-pointer w-full p-2 2xl:p-4 my-5 2xl:my-8 bg-indigo-500 text-white text-center rounded-lg shadow-lg shadow-indigo-500/50 hover:shadow-indigo-600/70 hover:shadow-[inset_10px_10px_10px]"
         >
           로그인
-        </div>
+        </button>
         <div className="flex items-center mx-5 text-gray-400 lg:text-sm 2xl:text-md">
           <hr className={lineStyle} />
           <span className="mx-5 2xl:my-3">또는</span>
