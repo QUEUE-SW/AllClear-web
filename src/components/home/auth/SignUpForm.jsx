@@ -14,7 +14,7 @@ const SignUpForm = () => {
 	const [passwordError, setPasswordError] = useState(false);
 
 	// 패스워드 입력 감지 및 일치 검사
-	const handlePasswordChange = (value) => {
+	const handlePWChange = (value) => {
 		setPassword(value);
 		if (passwordConfirm && value !== passwordConfirm) {
 			setPasswordError(true);
@@ -22,7 +22,7 @@ const SignUpForm = () => {
 			setPasswordError(false);
 		}
 	};
-	const handlePasswordConfirmChange = (value) => {
+	const handlePWConfirmChange = (value) => {
 		setPasswordConfirm(value);
 		if (password && password !== value) {
 			setPasswordError(true);
@@ -92,7 +92,7 @@ const SignUpForm = () => {
 				<input
 					type="password"
 					value={password}
-					onChange={(e) => handlePasswordChange(e.target.value)}
+					onChange={(e) => handlePWChange(e.target.value)}
 					placeholder="비밀번호"
 					className={inputStyle}
 				/>
@@ -100,7 +100,7 @@ const SignUpForm = () => {
 				<input
 					type="password"
 					value={passwordConfirm}
-					onChange={(e) => handlePasswordConfirmChange(e.target.value)}
+					onChange={(e) => handlePWConfirmChange(e.target.value)}
 					placeholder="비밀번호 확인"
 					className={inputStyle}
 				/>
