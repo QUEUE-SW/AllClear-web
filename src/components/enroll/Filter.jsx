@@ -2,41 +2,39 @@ import React from "react";
 import { useState } from "react";
 
 const Filter = ({ filter }) => {
-  const [view, setView] = useState(false);
+  let filterName = [];
+  let options = [];
+  switch (filter) {
+    case "category":
+      options = ["전체", "교양", "전공"];
+      filterName = "이수구분";
+      break;
+    case "grade":
+      options = ["전체", "1학년", "2학년", "3학년", "4학년"];
+      filterName = "학년";
+      break;
+    case "department":
+      options = ["전체", "컴퓨터학부", "국어국문학과", "오징어심리학과", "사과껍질깎기학과"];
+      filterName = "학과";
+      break;
+    case "code":
+      // 직접 입력 및 입력한 내용 기준 필터링...
+      options = ["전체", "교양", "전공"];
+      filterName = "강의코드";
+      break;
+    default:
+      break;
+  }
 
-  const items = [
-    {
-      id: 1,
-      item: "전체",
-    },
-    {
-      id: 2,
-      item: "교양",
-    },
-    {
-      id: 3,
-      item: "전공",
-    },
-  ];
   return (
-    <li
-      onClick={() => {
-        setView(!view);
-      }}
-      className="w-[225px] border border-black"
-    >
-      <div>{filter}</div>
-      {view ? "⌃" : "⌄"}
-      {/* selectList */}
-      <ul>
-        {view &&
-          items.map((e) => (
-            <li key={e.id} className="border-t">
-              {e.item}
-            </li>
-          ))}
-      </ul>
-    </li>
+    <div className="flex flex-col w-[225px]">
+      <label>{filterName}</label>
+      <select className="p-2 rounded-lg border-2 border-gray-300">
+        {options.map((item) => (
+          <option key={item}>{item}</option>
+        ))}
+      </select>
+    </div>
   );
 };
 
