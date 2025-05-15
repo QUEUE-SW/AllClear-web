@@ -5,8 +5,10 @@ import React from "react";
 const EnrollPage = () => {
   return (
     <div className="w-full h-screen bg-gray-50">
-      <Header/>
-      <EnrollForm />
+      <Header />
+      <div className="w-full h-[calc(100vh-77px)] flex justify-center items-center">
+        <EnrollForm />
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="p-5 flex justify-between border-b border-gray-500 shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)]">
+    <div className="p-3 bg-gray-50 flex justify-between border-b border-gray-500 shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)]">
       <h2 className="text-3xl">영남대학교 수강신청</h2>
       <div className="flex gap-10 items-center">
         <div className="flex text-gray-500 gap-3">
