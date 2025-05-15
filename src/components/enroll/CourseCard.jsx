@@ -1,6 +1,13 @@
 import React from "react";
 
 const CourseCard = ({ title, course, isRegister }) => {
+  const statusColorMap = {
+    red: 'bg-red-500 hover:bg-red-600',
+    orange: 'bg-orange-400 hover:bg-orange-500',
+    green: 'bg-green-400 hover:bg-green-500',
+    gray: 'bg-gray-400 hover:bg-gray-500',
+  };
+
   const mockCredits = {
     "totalCredit": 6,
     "maxCredit": 18,
@@ -19,7 +26,7 @@ const CourseCard = ({ title, course, isRegister }) => {
         <div className="w-[85px]">시간</div>
         <div className="w-[70px]">여석현황</div>
         <div className="w-[65px]">강의실</div>
-        <div className="w-[30px]">학점</div>
+        <div className="w-[40px]">학점</div>
         {/* <div className="w-[60px]">버튼임당</div> */}
       </div>
       <div className="flex flex-col w-full h-[550px] justify-between">
@@ -39,11 +46,11 @@ const CourseCard = ({ title, course, isRegister }) => {
               </div>
               <div className="w-[70px]">{e.capacity}</div>
               <div className="w-[65px]">{e.location}</div>
-              <div className="w-[30px]">{e.credit}</div>
+              <div className="w-[40px]">{e.credit}</div>
               {!isRegister ? (
-                <button className="w-[60px]">신청</button>
+                <button className={`w-[50px] ${statusColorMap[e.status]} text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]`}>신청</button>
               ) : (
-                <button className="w-[60px]">취소</button>
+                <button className="w-[50px] bg-black hover:bg-gray-400 text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">취소</button>
               )}
             </div>
           ))}

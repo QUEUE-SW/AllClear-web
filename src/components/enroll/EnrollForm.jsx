@@ -14,6 +14,7 @@ const EnrollForm = () => {
       credit: 3,
       time1: "월 10:00~11:30",
       time2: "수 12:00~13:30",
+      status: "red",
     },
     {
       courseId: 2,
@@ -25,6 +26,7 @@ const EnrollForm = () => {
       credit: 3,
       time1: "월 10:00~11:30",
       time2: "수 12:00~13:30",
+      status: "green",
     },
     {
       courseId: 3,
@@ -36,6 +38,19 @@ const EnrollForm = () => {
       credit: 3,
       time1: "월 10:00~11:30",
       time2: "수 12:00~13:30",
+      status: "orange",
+    },
+    {
+      courseId: 4,
+      courseCode: "cs103",
+      name: "컴퓨터프로그래밍",
+      professor: "박대영",
+      location: "IT관 117",
+      capacity: "20",
+      credit: 3,
+      time1: "월 10:00~11:30",
+      time2: "수 12:00~13:30",
+      status: "gray",
     },
   ];
   const mockRegister = [
