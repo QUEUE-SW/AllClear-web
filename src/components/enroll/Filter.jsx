@@ -14,7 +14,13 @@ const Filter = ({ filter }) => {
       filterName = "학년";
       break;
     case "department":
-      options = ["전체", "컴퓨터학부", "국어국문학과", "오징어심리학과", "사과껍질깎기학과"];
+      options = [
+        "전체",
+        "컴퓨터학부",
+        "국어국문학과",
+        "오징어심리학과",
+        "사과껍질깎기학과",
+      ];
       filterName = "학과";
       break;
     case "code":
@@ -26,10 +32,17 @@ const Filter = ({ filter }) => {
       break;
   }
 
+  const handleChange = (option) => {
+    console.log("선택한 옵션: ", option);
+  };
+
   return (
     <div className="flex flex-col w-[225px]">
       <label>{filterName}</label>
-      <select className="p-2 rounded-lg border-2 border-gray-300">
+      <select
+        onChange={(e) => handleChange(e.target.value)}
+        className="p-2 rounded-lg border-2 border-gray-300"
+      >
         {options.map((item) => (
           <option key={item}>{item}</option>
         ))}
