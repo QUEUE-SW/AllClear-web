@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/stores/authStore";
 
 /**
  * 현재 accessToken 값을 반환합니다.
