@@ -1,6 +1,6 @@
 import LoginForm from "@/components/home/auth/LoginForm";
+import { login } from "@/services/auth";
 import { useAuthStore } from "@/store/authStore";
-import { apiInterface } from "@/utils/apiInterface";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,16 +9,9 @@ const LoginPage = () => {
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
 	const handleLogin = async ({ identifier, password }) => {
-		console.log(identifier, password);
 		try {
-			const res = await apiInterface(
-				"post",
-				"/auth/sign-in",
-				{ identifier, password },
-				{},
-				false
-			);
-			setAccessToken(res.data.accessToken);
+			const { accessToken } = await login(identifier, password);
+			setAccessToken(accessToken);
 			navigate("/sugang");
 		} catch (error) {
 			alert("로그인중 오류 발생");
