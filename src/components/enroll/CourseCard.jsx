@@ -2,10 +2,10 @@ import React from "react";
 
 const CourseCard = ({ title, course, isRegister }) => {
   const statusColorMap = {
-    red: 'bg-red-500 hover:bg-red-600',
-    orange: 'bg-orange-400 hover:bg-orange-500',
-    green: 'bg-green-400 hover:bg-green-500',
-    gray: 'bg-gray-400 hover:bg-gray-500',
+    red: 'bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]',
+    orange: 'bg-orange-400 hover:bg-orange-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]',
+    green: 'bg-green-400 hover:bg-green-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]',
+    gray: 'bg-gray-400 hover:bg-gray-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]',
   };
 
   const mockCredits = {
@@ -29,8 +29,8 @@ const CourseCard = ({ title, course, isRegister }) => {
         <div className="w-[40px]">학점</div>
         {/* <div className="w-[60px]">버튼임당</div> */}
       </div>
-      <div className="flex flex-col w-full h-[550px] justify-between">
-        <div>
+      <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
+        <div className="overflow-scroll rounded-b-xl">
           {course.map((e) => (
             <div
               key={e.courseId}
@@ -50,7 +50,7 @@ const CourseCard = ({ title, course, isRegister }) => {
               {!isRegister ? (
                 <button className={`w-[50px] ${statusColorMap[e.status]} text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]`}>신청</button>
               ) : (
-                <button className="w-[50px] bg-black hover:bg-gray-400 text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">취소</button>
+                <button className="w-[50px] bg-black hover:bg-gray-400 text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]">취소</button>
               )}
             </div>
           ))}
