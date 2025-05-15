@@ -2,20 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
+function LoginForm({ onLoginSubmit }) {
 	const inputStyle =
 		"w-full px-4 py-2 lg:py-3 bg-gray-200 2xl:text-lg lg:text-sm text-gray-500 border border-gray-300 rounded-3xl";
 	const lineStyle = "grow border-t border-gray-300";
 
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
-		stdId: "",
+		identifier: "",
 		password: "",
 	});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		if (!["stdId", "password"].includes(name)) return;
+		if (!["identifier", "password"].includes(name)) return;
 		setFormData((prev) => ({
 			...prev,
 			[name]: value,
@@ -23,8 +23,7 @@ function LoginForm() {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault(); //폼 제출 시 리로딩 방지
-		console.log(formData);
-		alert("로그인 버튼이 클릭되었습니다.");
+		onLoginSubmit(formData);
 	};
 	const toSignup = () => navigate("/signup");
 
@@ -40,8 +39,8 @@ function LoginForm() {
 				<form onSubmit={handleSubmit} className="space-y-2 2xl:space-y-3">
 					<input
 						type="text"
-						name="stdId"
-						value={formData.stdId}
+						name="identifier"
+						value={formData.identifier}
 						onChange={handleChange}
 						className={inputStyle}
 						placeholder="학번"
