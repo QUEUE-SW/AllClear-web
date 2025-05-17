@@ -17,25 +17,25 @@ import { useNavigate } from "react-router-dom";
  * - <LoginForm />: 사용자 입력을 처리하는 프레젠테이셔널 컴포넌트
  */
 const LoginPage = () => {
-	const navigate = useNavigate();
-	const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const navigate = useNavigate();
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
-	const handleLogin = async ({ identifier, password }) => {
-		try {
-			const { accessToken } = await login(identifier, password);
-			setAccessToken(accessToken);
-			navigate("/sugang");
-		} catch (error) {
-			alert("로그인중 오류 발생");
-			console.error(error);
-		}
-	};
+  const handleLogin = async ({ identifier, password }) => {
+    try {
+      const { accessToken } = await login(identifier, password);
+      setAccessToken(accessToken);
+      navigate("/sugang");
+    } catch (error) {
+      alert("로그인중 오류 발생");
+      console.error(error);
+    }
+  };
 
-	return (
-		<div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
-			<LoginForm onLoginSubmit={handleLogin} />
-		</div>
-	);
+  return (
+    <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
+      <LoginForm onLoginSubmit={handleLogin} />
+    </div>
+  );
 };
 
 export default LoginPage;
