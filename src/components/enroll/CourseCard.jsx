@@ -1,6 +1,6 @@
 import React from "react";
 
-const CourseCard = ({ title, course, isRegister }) => {
+const CourseCard = ({ title, courses, isRegister }) => {
   const statusColorMap = {
     red: "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
     orange:
@@ -17,17 +17,17 @@ const CourseCard = ({ title, course, isRegister }) => {
   };
 
   const handleEnroll = (id) => {
-    console.log(course.find((c) => c.courseId === id));
+    console.log(courses.find((c) => c.courseId === id));
   };
   const handleCancel = (id) => {
-    console.log(course.find((c) => c.courseId === id));
+    console.log(courses.find((c) => c.courseId === id));
   };
 
   return (
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
       <div className="flex justify-between border-b-2 border-gray-200 px-4 py-2">
         <div className="text-xl">{title}</div>
-        <div>{course.length}개 강의</div>
+        <div>{courses.length}개 강의</div>
       </div>
       <div className="flex border-slate-400 text-sm p-2 text-center text-gray-400">
         <div className="w-[55px]">강의 번호</div>
@@ -41,7 +41,7 @@ const CourseCard = ({ title, course, isRegister }) => {
       </div>
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
         <div className="overflow-scroll rounded-b-xl">
-          {course.map((e) => (
+          {courses.map((e) => (
             <div
               key={e.courseId}
               className="flex p-2 h-20 text-sm items-center text-center bg-white border-gray-200 border-b"

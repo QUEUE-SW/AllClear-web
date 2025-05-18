@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 const Filter = ({ filter }) => {
-  let filterName = [];
+  let filterName = "";
   let options = [];
   switch (filter) {
     case "category":

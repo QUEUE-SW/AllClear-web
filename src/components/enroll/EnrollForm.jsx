@@ -88,9 +88,9 @@ const EnrollForm = () => {
       </div>
       <div className="flex gap-6">
         {/* cources */}
-        <CourseCard title="강의 목록" course={mockCourse} isRegister={false}/>
+        <CourseCard title="강의 목록" courses={mockCourse} isRegister={false}/>
         {/* register */}
-        <CourseCard title="수강 현황" course={mockRegister} isRegister={true}/>
+        <CourseCard title="수강 현황" courses={mockRegister} isRegister={true}/>
       </div>
     </div>
   );
