@@ -1,0 +1,56 @@
+import React from "react";
+
+const CourseItem = ({ course, isRegister }) => {
+  const statusColorMap = {
+    red: "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
+    orange:
+      "bg-orange-400 hover:bg-orange-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
+    green:
+      "bg-green-400 hover:bg-green-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
+    gray: "bg-gray-400 hover:bg-gray-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
+  };
+
+  const handleEnroll = (id) => {
+    console.log(id);
+  };
+  const handleCancel = (id) => {
+    console.log(id);
+  };
+
+  return (
+    <div
+      className="flex p-2 h-20 text-sm items-center text-center bg-white border-gray-200 border-b"
+    >
+      <div className="w-[55px]">{course.courseCode}</div>
+      <div className="w-[60px]">{course.name}</div>
+      <div className="w-[70px]">{course.professor}</div>
+      <div className="w-[85px] text-xs">
+        {course.time1}
+        <br />
+        {course?.time2}
+      </div>
+      <div className="w-[70px]">{course.capacity}</div>
+      <div className="w-[65px]">{course.location}</div>
+      <div className="w-[40px]">{course.credit}</div>
+      {!isRegister ? (
+        <button
+          onClick={() => handleEnroll(course.courseId)}
+          className={`w-[50px] ${
+            statusColorMap[course.status]
+          } text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]`}
+        >
+          신청
+        </button>
+      ) : (
+        <button
+          onClick={() => handleCancel(course.courseId)}
+          className="w-[50px] bg-black hover:bg-gray-400 text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
+        >
+          취소
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default CourseItem;
