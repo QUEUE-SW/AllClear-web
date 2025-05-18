@@ -24,7 +24,7 @@ const LoginPage = () => {
     try {
       const { accessToken } = await login(identifier, password);
       setAccessToken(accessToken);
-      navigate("/sugang");
+      navigate("/enroll");
     } catch (error) {
       alert("로그인중 오류 발생");
       console.error(error);
