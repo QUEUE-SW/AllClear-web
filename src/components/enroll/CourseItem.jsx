@@ -1,14 +1,15 @@
 import React from "react";
 
 const CourseItem = ({ course, isRegister }) => {
-  const statusColorMap = {
-    red: "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
-    orange:
-      "bg-orange-400 hover:bg-orange-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
-    green:
-      "bg-green-400 hover:bg-green-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
-    gray: "bg-gray-400 hover:bg-gray-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]",
-  };
+  const statusColor =
+    course.status === "red"
+      ? "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
+      : course.status === "orange"
+      ? "bg-orange-400 hover:bg-orange-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
+      : course.status === "gray"
+      ? "bg-gray-400 hover:bg-gray-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
+      : // gray가 아니라면 green ( 기본 status 색은 green )
+        "bg-green-400 hover:bg-green-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]";
 
   const handleEnroll = (id) => {
     console.log(id);
@@ -18,9 +19,7 @@ const CourseItem = ({ course, isRegister }) => {
   };
 
   return (
-    <div
-      className="flex p-2 h-20 text-sm items-center text-center bg-white border-gray-200 border-b"
-    >
+    <div className="flex p-2 h-20 text-sm items-center text-center bg-white border-gray-200 border-b">
       <div className="w-[55px]">{course.courseCode}</div>
       <div className="w-[60px]">{course.name}</div>
       <div className="w-[70px]">{course.professor}</div>
@@ -35,9 +34,7 @@ const CourseItem = ({ course, isRegister }) => {
       {!isRegister ? (
         <button
           onClick={() => handleEnroll(course.courseId)}
-          className={`w-[50px] ${
-            statusColorMap[course.status]
-          } text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]`}
+          className={`w-[50px] ${statusColor} text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]`}
         >
           신청
         </button>
