@@ -15,7 +15,7 @@ const Header = () => {
         </div>
         <div className="text-red-500">25:01</div>
         <button
-          onClick={() => handleLogout()}
+          onClick={handleLogout}
           className="bg-red-500 text-white rounded-md px-4 py-1 shadow-[0px_5px_10px_rgba(0,0,0,0.3)] hover:shadow-[0px_8px_10px_rgba(0,0,0,0.3),inset_10px_10px_30px_rgba(190,0,0,5)]"
         >
           로그아웃
