@@ -25,7 +25,7 @@ const CourseCard = ({ title, courses, isRegister }) => {
         {/* <div className="w-[60px]">버튼임당</div> */}
       </div>
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
-        <div className="overflow-scroll rounded-b-xl">
+        <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
           {courses.map((course) => (
             <CourseItem key={course.courseId} course={course} isRegister={isRegister}/>
           ))}

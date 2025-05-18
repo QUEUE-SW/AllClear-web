@@ -86,7 +86,7 @@ const EnrollForm = () => {
         <Filter filter="department"/>
         <Filter filter="code"/>
       </div>
-      <div className="flex gap-6">
+      <div className="flex gap-6 min-w-0">
         {/* cources */}
         <CourseCard title="강의 목록" courses={mockCourse} isRegister={false}/>
         {/* register */}
