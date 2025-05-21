@@ -1,6 +1,12 @@
 import { useState } from "react";
+import {
+  gradeOptions,
+  collegeOptions,
+  departmentOptions,
+  majorOptions,
+} from "@/data/userOptions";
 
-const SignUpForm = () => {
+const SignUpForm = ({ onSubmit }) => {
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -34,8 +40,13 @@ const SignUpForm = () => {
   // 서브밋 핸들러
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      studentId,
+    if (password !== passwordConfirm) {
+      setPasswordError(true);
+      return;
+    }
+
+    onSubmit?.({
+      identifier: studentId,
       password,
       passwordConfirm,
       name,
@@ -45,32 +56,6 @@ const SignUpForm = () => {
       major,
     });
   };
-
-  // 샘플 데이터. api 연동 후 삭제 예정
-  const gradeOptions = ["1학년", "2학년", "3학년", "4학년"];
-  const collegeOptions = [
-    "단과대학",
-    "인문대학",
-    "사회과학대학",
-    "자연과학대학",
-    "공과대학",
-    "예술대학",
-  ];
-  const departmentOptions = [
-    "학부 | 학과",
-    "컴퓨터공학과",
-    "경영학과",
-    "심리학과",
-    "화학과",
-    "전자공학과",
-  ];
-  const majorOptions = [
-    "전공",
-    "정보통신공학과",
-    "컴퓨터공학과",
-    "컴퓨터조립학과",
-    "윈도우설치학과",
-  ];
 
   // 공통 인풋 스타일. 추후 파일 분리 예정
   const inputStyle =

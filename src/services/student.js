@@ -1,7 +1,16 @@
 import { apiInterface } from "@/utils/apiInterface";
 
 /**
- * 학점 조회
+ * 이름 및 학번 조회 api
+ * @returns {object} basicData
+ */
+export const myBasicData = async () => {
+  const res = await apiInterface("get", "/students/me");
+  return res.data;
+};
+
+/**
+ * 학점 조회 api
  * @return {object} credits
  */
 export const getCredits = async () => {
