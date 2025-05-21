@@ -15,3 +15,18 @@ export const login = async (identifier, password) => {
   );
   return response.data;
 };
+
+/**
+ * 회원가입 요청
+ * @param {Object} payload - 회원가입 정보
+ */
+export const signUp = async (payload) => {
+  const response = await apiInterface(
+    "post",
+    "/auth/sign-up",
+    payload,
+    {},
+    false
+  );
+  return response.data;
+};
