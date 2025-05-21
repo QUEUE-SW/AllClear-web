@@ -1,43 +1,11 @@
 import React from "react";
 import CourseItem from "./CourseItem";
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import { getCapacities } from "@/services/courses";
-
-const CourseCard = ({ title, courses, isRegister }) => {
-  const [currentCapa, setCurrentCapa] = useState([]);
-  const mockCredits = {
-    totalCredit: 6,
-    maxCredit: 18,
-    remainingCredit: 12,
-  };
-
-  const getCurrentCapa = async () => {
-    try {
-      const res = await getCapacities();
-      setCurrentCapa(res);
-    } catch (error) {
-      console.log("수강신청 인원 조회 실패", error);
-    }
-  };
-
-  useEffect(() => {
-    // setInterval로 2초마다 인원 조회 실행.
-    // 서버 연결 후 주석 취소 처리할 예정.
-    // const interval = setInterval(() => {
-      getCurrentCapa();
-    // }, 2000);
-    
-    // setInterval은 초기화가 필요함.
-    // return () => {
-    //   clearInterval(interval);
-    // };
-=======
 import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
 const CourseCard = ({ title, courses, isRegister }) => {
+  const [currentCapa, setCurrentCapa] = useState([]);
   const [credits, setCredits] = useState({
     totalCredit: null,
     maxCredit: null,
@@ -51,9 +19,28 @@ const CourseCard = ({ title, courses, isRegister }) => {
     } catch (error) {}
   };
 
+  const getCurrentCapa = async () => {
+    try {
+      const res = await getCapacities();
+      setCurrentCapa(res);
+    } catch (error) {
+      console.log("수강신청 인원 조회 실패", error);
+    }
+  };
+
   useEffect(() => {
     getCreditData();
->>>>>>> 33b138a271d21e0f063435ba65b58324714d0ce4
+
+    // setInterval로 2초마다 인원 조회 실행.
+    // 서버 연결 후 주석 취소 처리할 예정.
+    // const interval = setInterval(() => {
+      getCurrentCapa();
+    // }, 2000);
+    
+    // setInterval은 초기화가 필요함.
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
