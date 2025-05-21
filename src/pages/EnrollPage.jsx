@@ -7,14 +7,14 @@ import { useState } from "react";
 
 const EnrollPage = () => {
   const [myBasic, setMyBasic] = useState({
-    name: "박지원",
-    studentId: "22012077",
-    semester: "1학기",
+    name: "",
+    studentId: "",
+    semester: "",
   });
 
   const getMyBasic = async () => {
     try {
-      const res = myBasicData();
+      const res = await myBasicData();
       console.log(res);
       setMyBasic(res);
     } catch (error) {
