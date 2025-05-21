@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({ myBasic }) => {
   const handleLogout = () => {
     console.log("로그아웃");
   };
@@ -9,9 +9,9 @@ const Header = () => {
       <h2 className="text-3xl">영남대학교 수강신청</h2>
       <div className="flex gap-10 items-center">
         <div className="flex text-gray-500 gap-3">
-          <p>2025-1학기</p>
-          <p>22012077</p>
-          <p>박지원</p>
+          <p>2025-{myBasic.semester}</p>
+          <p>{myBasic.studentId}</p>
+          <p>{myBasic.name}</p>
         </div>
         <div className="text-red-500">25:01</div>
         <button
