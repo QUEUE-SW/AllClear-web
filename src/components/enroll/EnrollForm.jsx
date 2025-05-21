@@ -4,11 +4,10 @@ import Filter from "./Filter";
 import { getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
-import { mockCourse, mockRegister } from "@/data/mockCourses";
 
 const EnrollForm = () => {
-  const [generalCourses, setGeneralCourses] = useState(mockCourse);
-  const [registerCourses, setRegisterCourses] = useState(mockRegister);
+  const [generalCourses, setGeneralCourses] = useState([]);
+  const [registerCourses, setRegisterCourses] = useState([]);
 
   const getRegisterCourses = async () => {
     try {
