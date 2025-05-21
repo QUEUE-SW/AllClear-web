@@ -40,7 +40,7 @@ const CourseItem = ({ course, isRegister }) => {
         </button>
       ) : (
         <button
-          onClick={() => handleCancel(course.courseId)}
+          onClick={() => handleCancel(course.enrollmentId)}
           className="w-[50px] bg-black hover:bg-gray-400 text-white rounded-xl px-1 py-2 shadow-[0px_4px_4px_rgba(0,0,0,0.25)] hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
         >
           취소
