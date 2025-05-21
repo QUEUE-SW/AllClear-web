@@ -4,7 +4,7 @@ import {
   collegeOptions,
   departmentOptions,
   majorOptions,
-} from "@/data/signUpOptions";
+} from "@/data/userOptions";
 
 const SignUpForm = ({ onSubmit }) => {
   const [studentId, setStudentId] = useState("");
