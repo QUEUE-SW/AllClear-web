@@ -1,5 +1,6 @@
 import React from "react";
 import CourseItem from "./CourseItem";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { getCapacities } from "@/services/courses";
 
@@ -31,6 +32,28 @@ const CourseCard = ({ title, courses, isRegister }) => {
     // return () => {
     //   clearInterval(interval);
     // };
+=======
+import { useState } from "react";
+import { useEffect } from "react";
+import { getCredits } from "@/services/student";
+
+const CourseCard = ({ title, courses, isRegister }) => {
+  const [credits, setCredits] = useState({
+    totalCredit: null,
+    maxCredit: null,
+    remainingCredit: null,
+  });
+
+  const getCreditData = async () => {
+    try {
+      const res = await getCredits();
+      setCredits(res);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getCreditData();
+>>>>>>> 33b138a271d21e0f063435ba65b58324714d0ce4
   }, []);
 
   return (
@@ -62,10 +85,10 @@ const CourseCard = ({ title, courses, isRegister }) => {
         </div>
         {isRegister && (
           <div className="flex border-t justify-between text-sm p-3">
-            <div>총 학점: {mockCredits.totalCredit}</div>
+            <div>총 학점: {credits.totalCredit}</div>
             <div className="flex gap-4">
-              <div>최대 신청 가능 학점: {mockCredits.maxCredit}</div>
-              <div>남은 신청 가능 학점: {mockCredits.remainingCredit}</div>
+              <div>최대 신청 가능 학점: {credits.maxCredit}</div>
+              <div>남은 신청 가능 학점: {credits.remainingCredit}</div>
             </div>
           </div>
         )}
