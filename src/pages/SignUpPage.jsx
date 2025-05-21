@@ -5,6 +5,8 @@ import {
   majorMap,
 } from "@/constants/signupOptioins";
 import SignUpForm from "@/components/home/auth/SignUpForm";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "@/services/auth";
 
 /**
  * SignUpPage.jsx
@@ -21,6 +23,7 @@ import SignUpForm from "@/components/home/auth/SignUpForm";
  */
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const handleSignUpSubmit = async (formData) => {
     const payload = {
       identifier: formData.identifier,
@@ -35,20 +38,13 @@ const SignUpPage = () => {
     };
 
     try {
-      // axios 인터페이스로 변경 예정
-      const res = await fetch("/api/v1/auth/sign-up", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
+      const data = await signUp(payload);
 
       if (data.code === "2000") {
-        console.log(payload);
         alert("회원가입 성공!");
         navigate("/login");
       } else {
-        alert("회원가입 실패" + data.message);
+        alert("회원가입 실패: " + data.message);
       }
     } catch (err) {
       console.error(err);
