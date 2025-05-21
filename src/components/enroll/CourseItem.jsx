@@ -1,6 +1,7 @@
+import { enrollCourse } from "@/services/enrollments";
 import React from "react";
 
-const CourseItem = ({ course, isRegister }) => {
+const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
   const statusColor =
     course.status === "red"
       ? "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
@@ -11,8 +12,14 @@ const CourseItem = ({ course, isRegister }) => {
       : // gray가 아니라면 green ( 기본 status 색은 green )
         "bg-green-400 hover:bg-green-500 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]";
 
-  const handleEnroll = (id) => {
-    console.log(id);
+  const handleEnroll = async (id) => {
+    try {
+      const res = await enrollCourse(id);
+      alert(`${res.data.courseName} 신청 성공`);
+      onEnrollSuccess?.(); // 갱신 호출
+    } catch (error) {
+      alert("신청 실패 또는 서버 오류");
+    }
   };
   const handleCancel = (id) => {
     console.log(id);
