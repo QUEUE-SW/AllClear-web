@@ -1,6 +1,6 @@
 import React from "react";
 
-const CourseItem = ({ course, isRegister }) => {
+const CourseItem = ({ course, capacity, isRegister }) => {
   const statusColor =
     course.status === "red"
       ? "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
@@ -28,7 +28,7 @@ const CourseItem = ({ course, isRegister }) => {
         <br />
         {course?.time2}
       </div>
-      <div className="w-[70px]">{course.capacity}</div>
+      <div className="w-[70px]">{capacity.current || course.capacity}/{course.capacity}</div>
       <div className="w-[65px]">{course.location}</div>
       <div className="w-[40px]">{course.credit}</div>
       {!isRegister ? (

@@ -1,12 +1,37 @@
 import React from "react";
 import CourseItem from "./CourseItem";
+import { useState, useEffect } from "react";
+import { getCapacities } from "@/services/courses";
 
 const CourseCard = ({ title, courses, isRegister }) => {
+  const [currentCapa, setCurrentCapa] = useState([]);
   const mockCredits = {
     totalCredit: 6,
     maxCredit: 18,
     remainingCredit: 12,
   };
+
+  const getCurrentCapa = async () => {
+    try {
+      const res = await getCapacities();
+      setCurrentCapa(res);
+    } catch (error) {
+      console.log("수강신청 인원 조회 실패", error);
+    }
+  };
+
+  useEffect(() => {
+    // setInterval로 2초마다 인원 조회 실행.
+    // 서버 연결 후 주석 취소 처리할 예정.
+    // const interval = setInterval(() => {
+      getCurrentCapa();
+    // }, 2000);
+    
+    // setInterval은 초기화가 필요함.
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
 
   return (
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
@@ -27,7 +52,12 @@ const CourseCard = ({ title, courses, isRegister }) => {
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
         <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
           {courses.map((course) => (
-            <CourseItem key={course.courseId} course={course} isRegister={isRegister}/>
+            <CourseItem
+              key={course.courseId}
+              course={course}
+              capacity={currentCapa.find((capa) => capa.courseId === course.courseId) || 0}
+              isRegister={isRegister}
+            />
           ))}
         </div>
         {isRegister && (
