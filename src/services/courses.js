@@ -15,7 +15,7 @@ export const getEnrollStatus = async () => {
  * @returns {Array} capacities
  */
 
-export const getCapacities = async () => {
-  const res = await apiInterface("get", "/enrollments/capacities?ids=1");
+export const getCapacities = async (ids) => {
+  const res = await apiInterface("get", `/enrollments/capacities?ids=${ids}`);
   return res.data;
 };
