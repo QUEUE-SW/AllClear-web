@@ -1,12 +1,26 @@
 import React from "react";
 import CourseItem from "./CourseItem";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getCredits } from "@/services/student";
 
 const CourseCard = ({ title, courses, isRegister }) => {
-  const mockCredits = {
-    totalCredit: 6,
-    maxCredit: 18,
-    remainingCredit: 12,
+  const [credits, setCredits] = useState({
+    totalCredit: null,
+    maxCredit: null,
+    remainingCredit: null,
+  });
+
+  const getCreditData = async () => {
+    try {
+      const res = await getCredits();
+      setCredits(res);
+    } catch (error) {}
   };
+
+  useEffect(() => {
+    getCreditData();
+  }, []);
 
   return (
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
@@ -32,10 +46,10 @@ const CourseCard = ({ title, courses, isRegister }) => {
         </div>
         {isRegister && (
           <div className="flex border-t justify-between text-sm p-3">
-            <div>총 학점: {mockCredits.totalCredit}</div>
+            <div>총 학점: {credits.totalCredit}</div>
             <div className="flex gap-4">
-              <div>최대 신청 가능 학점: {mockCredits.maxCredit}</div>
-              <div>남은 신청 가능 학점: {mockCredits.remainingCredit}</div>
+              <div>최대 신청 가능 학점: {credits.maxCredit}</div>
+              <div>남은 신청 가능 학점: {credits.remainingCredit}</div>
             </div>
           </div>
         )}
