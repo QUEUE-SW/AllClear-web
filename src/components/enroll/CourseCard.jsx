@@ -6,9 +6,9 @@ import { getCredits } from "@/services/student";
 
 const CourseCard = ({ title, courses, isRegister }) => {
   const [credits, setCredits] = useState({
-    totalCredit: 6,
-    maxCredit: 18,
-    remainingCredit: 12,
+    totalCredit: null,
+    maxCredit: null,
+    remainingCredit: null,
   });
 
   const getCreditData = async () => {
