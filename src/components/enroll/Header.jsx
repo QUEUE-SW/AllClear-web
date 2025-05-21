@@ -1,8 +1,13 @@
+import { useAuthStore } from "@/stores/authStore";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ myBasic }) => {
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
   const handleLogout = () => {
-    console.log("로그아웃");
+    logout();
+    navigate("/login");
   };
   return (
     <div className="p-3 bg-gray-50 flex justify-between border-b border-gray-500 shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)]">
