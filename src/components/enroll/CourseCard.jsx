@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
-const CourseCard = ({ title, courses, isRegister }) => {
+const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
   // setCourseIdList는 수강신청 목록 조회 api 구현하면서 설정할 예정입니다.
   const [coursesIdList, setCourseIdList] = useState([]);
   const [currentCapa, setCurrentCapa] = useState([]);
@@ -75,6 +75,7 @@ const CourseCard = ({ title, courses, isRegister }) => {
                 0
               }
               isRegister={isRegister}
+              onEnrollSuccess={onEnrollSuccess}
             />
           ))}
         </div>

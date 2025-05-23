@@ -36,12 +36,14 @@ const EnrollForm = () => {
           title="강의 목록"
           courses={generalCourses}
           isRegister={false}
+          onEnrollSuccess={getRegisterCourses}
         />
         {/* register */}
         <CourseCard
           title="수강 현황"
           courses={registerCourses}
           isRegister={true}
+          onEnrollSuccess={getRegisterCourses}
         />
       </div>
     </div>
