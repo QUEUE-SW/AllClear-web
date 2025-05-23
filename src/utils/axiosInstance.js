@@ -17,7 +17,7 @@ const baseConfig = {
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  // withCredentials: true, 쿠키 미사용으로 인한 삭제
 };
 
 const tokenInstance = axios.create(baseConfig);
