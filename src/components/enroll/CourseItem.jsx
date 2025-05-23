@@ -16,7 +16,7 @@ const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
     try {
       const res = await enrollCourse(id);
       alert(`${res.data.courseName} 신청 성공`);
-      onEnrollSuccess?.(); // 갱신 호출
+      onEnrollSuccess();
     } catch (error) {
       alert("신청 실패 또는 서버 오류");
     }
