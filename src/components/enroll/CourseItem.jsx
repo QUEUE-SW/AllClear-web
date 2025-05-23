@@ -18,11 +18,17 @@ const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
       alert(`${res.data.courseName} 신청 성공`);
       onEnrollSuccess();
     } catch (error) {
-      alert("신청 실패 또는 서버 오류");
+      alert("신청 실패");
     }
   };
-  const handleCancel = (id) => {
-    console.log(id);
+  const handleCancel = async (enrollmentId) => {
+    try {
+      await cancelEnrollment(enrollmentId);
+      alert("신청 취소");
+      onEnrollSuccess();
+    } catch (errror) {
+      alert("취소 실패");
+    }
   };
 
   return (
