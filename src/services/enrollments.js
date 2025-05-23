@@ -11,3 +11,9 @@ export const enrollCourse = async (courseId) => {
 
   return response.data;
 }
+
+export const cancelEnrollment = async (enrollmentId) => {
+  const response = await apiInterface("delete", `/enrollments/${enrollmentId}`);
+
+  return response.data;
+}
