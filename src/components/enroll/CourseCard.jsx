@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
-const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
+const CourseCard = ({ title, courses, isRegister, onEnrollmentChange }) => {
   const [credits, setCredits] = useState({
     totalCredit: null,
     maxCredit: null,
@@ -45,7 +45,7 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
               key={course.courseId}
               course={course}
               isRegister={isRegister}
-              onEnrollSuccess={onEnrollSuccess}
+              onEnrollmentChange={onEnrollmentChange}
             />
           ))}
         </div>

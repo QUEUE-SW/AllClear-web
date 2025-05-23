@@ -1,7 +1,7 @@
 import { enrollCourse } from "@/services/enrollments";
 import React from "react";
 
-const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
+const CourseItem = ({ course, isRegister, onEnrollmentChange }) => {
   const statusColor =
     course.status === "red"
       ? "bg-red-500 hover:bg-red-600 hover:shadow-[inset_0px_4px_4px_rgba(0,0,0,0.25)]"
@@ -16,7 +16,7 @@ const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
     try {
       const res = await enrollCourse(id);
       alert(`${res.data.courseName} 신청 성공`);
-      onEnrollSuccess();
+      onEnrollmentChange();
     } catch (error) {
       alert("신청 실패");
     }
@@ -25,7 +25,7 @@ const CourseItem = ({ course, isRegister, onEnrollSuccess }) => {
     try {
       await cancelEnrollment(enrollmentId);
       alert("신청 취소");
-      onEnrollSuccess();
+      onEnrollmentChange();
     } catch (errror) {
       alert("취소 실패");
     }
