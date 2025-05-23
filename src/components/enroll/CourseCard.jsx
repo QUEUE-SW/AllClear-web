@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
-const CourseCard = ({ title, courses, isRegister }) => {
+const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
   const [credits, setCredits] = useState({
     totalCredit: null,
     maxCredit: null,
@@ -41,7 +41,12 @@ const CourseCard = ({ title, courses, isRegister }) => {
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
         <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
           {courses.map((course) => (
-            <CourseItem key={course.courseId} course={course} isRegister={isRegister}/>
+            <CourseItem
+              key={course.courseId}
+              course={course}
+              isRegister={isRegister}
+              onEnrollSuccess={onEnrollSuccess}
+            />
           ))}
         </div>
         {isRegister && (
