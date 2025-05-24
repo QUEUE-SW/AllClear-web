@@ -35,7 +35,9 @@ const CourseItem = ({ course, capacity, isRegister, onEnrollSuccess }) => {
         <br />
         {course?.time2}
       </div>
-      <div className="w-[70px]">{capacity.current || course.capacity}/{course.capacity}</div>
+      <div className="w-[70px]">
+        {capacity.current || course.capacity}/{course.capacity}
+      </div>
       <div className="w-[65px]">{course.location}</div>
       <div className="w-[40px]">{course.credit}</div>
       {!isRegister ? (
