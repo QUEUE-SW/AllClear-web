@@ -12,12 +12,12 @@ import { getAccessToken } from "./auth";
 */
 
 const baseConfig = {
-  baseURL: "/api/v1",
+  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
   timeout: 3000,
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  // withCredentials: true, 쿠키 미사용으로 인한 삭제
 };
 
 const tokenInstance = axios.create(baseConfig);

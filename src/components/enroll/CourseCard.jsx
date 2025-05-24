@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
-const CourseCard = ({ title, courses, isRegister }) => {
+const CourseCard = ({ title, courses, isRegister,onEnrollSuccess }) => {
   // setCourseIdList는 수강신청 목록 조회 api 구현하면서 설정할 예정입니다.
   const [coursesIdList, setCourseIdList] = useState([]);
   const [currentCapa, setCurrentCapa] = useState([]);
@@ -36,15 +36,15 @@ const CourseCard = ({ title, courses, isRegister }) => {
     getCreditData();
   }, []);
 
+  // 서버 연결 후 주석 취소 처리할 예정. -> 주석 코드 적용할 
   useEffect(() => {
     // setInterval로 2초마다 인원 조회 실행.
-    // 서버 연결 후 주석 취소 처리할 예정.
     const idsQuery = coursesIdList.join(",");
     // const interval = setInterval(() => {
     getCurrentCapa(idsQuery);
     // }, 2000);
 
-    // setInterval은 초기화가 필요함.
+    // setInterval함수는 초기화가 필요한 함수라서 초기화해줌.
     // return () => {
     //   clearInterval(interval);
     // };
@@ -76,6 +76,7 @@ const CourseCard = ({ title, courses, isRegister }) => {
                 (capa) => capa.courseId === course.courseId
               )}
               isRegister={isRegister}
+              onEnrollSuccess={onEnrollSuccess}
             />
           ))}
         </div>
