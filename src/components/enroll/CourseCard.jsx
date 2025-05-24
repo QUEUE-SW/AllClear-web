@@ -18,7 +18,9 @@ const CourseCard = ({ title, courses, isRegister }) => {
     try {
       const res = await getCredits();
       setCredits(res);
-    } catch (error) {}
+    } catch (error) {
+      console.error("학점 조회 실패", error);
+    }
   };
 
   const getCurrentCapa = async (ids) => {
@@ -26,7 +28,7 @@ const CourseCard = ({ title, courses, isRegister }) => {
       const res = await getCapacities(ids);
       setCurrentCapa(res);
     } catch (error) {
-      console.log("수강신청 인원 조회 실패", error);
+      console.error("수강신청 인원 조회 실패", error);
     }
   };
 
@@ -70,10 +72,9 @@ const CourseCard = ({ title, courses, isRegister }) => {
             <CourseItem
               key={course.courseId}
               course={course}
-              capacity={
-                currentCapa.find((capa) => capa.courseId === course.courseId) ||
-                0
-              }
+              capacity={currentCapa.find(
+                (capa) => capa.courseId === course.courseId
+              )}
               isRegister={isRegister}
             />
           ))}
