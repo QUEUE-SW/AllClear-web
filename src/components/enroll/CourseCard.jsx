@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { getCredits } from "@/services/student";
 
 const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
+  // setCourseIdList는 수강신청 목록 조회 api 구현하면서 설정할 예정입니다.
+  const [coursesIdList, setCourseIdList] = useState([]);
+  const [currentCapa, setCurrentCapa] = useState([]);
   const [credits, setCredits] = useState({
     totalCredit: null,
     maxCredit: null,
@@ -15,12 +18,37 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
     try {
       const res = await getCredits();
       setCredits(res);
-    } catch (error) {}
+    } catch (error) {
+      console.error("학점 조회 실패", error);
+    }
+  };
+
+  const getCurrentCapa = async (ids) => {
+    try {
+      const res = await getCapacities(ids);
+      setCurrentCapa(res);
+    } catch (error) {
+      console.error("수강신청 인원 조회 실패", error);
+    }
   };
 
   useEffect(() => {
     getCreditData();
   }, []);
+
+  // 서버 연결 후 주석 취소 처리할 예정. -> 주석 코드 적용할
+  useEffect(() => {
+    // setInterval로 2초마다 인원 조회 실행.
+    const idsQuery = coursesIdList.join(",");
+    // const interval = setInterval(() => {
+    getCurrentCapa(idsQuery);
+    // }, 2000);
+
+    // setInterval함수는 초기화가 필요한 함수라서 초기화해줌.
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, [coursesIdList]);
 
   return (
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
@@ -44,6 +72,9 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
             <CourseItem
               key={course.courseId}
               course={course}
+              capacity={currentCapa.find(
+                (capa) => capa.courseId === course.courseId
+              )}
               isRegister={isRegister}
               onEnrollSuccess={onEnrollSuccess}
             />
