@@ -62,7 +62,7 @@ const SignUpForm = ({ onSubmit }) => {
     "w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-600 placeholder-gray-400 text-sm";
 
   return (
-    <div className="w-[450px] h-[590px] bg-white rounded-3xl shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)] p-4">
+    <div className="w-[450px] min-w-[400px] h-[590px] bg-white rounded-3xl shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)] p-4">
       <h1 className="text-lg font-semibold mb-4">수강신청 회원가입</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
