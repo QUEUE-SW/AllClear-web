@@ -26,7 +26,7 @@ const CourseItem = ({ course, isRegister, onEnrollmentChange }) => {
       await cancelEnrollment(enrollmentId);
       alert("신청 취소");
       onEnrollmentChange();
-    } catch (errror) {
+    } catch (error) {
       alert("취소 실패");
     }
   };
