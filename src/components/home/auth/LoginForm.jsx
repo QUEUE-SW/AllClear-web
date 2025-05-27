@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginForm({ onLoginSubmit }) {
+function LoginForm({ onLoginSubmit, errorMessage }) {
   const inputStyle =
     "w-full px-4 py-2 lg:py-3 bg-gray-200 2xl:text-lg lg:text-sm text-gray-500 border border-gray-300 rounded-3xl";
   const lineStyle = "grow border-t border-gray-300";
@@ -52,6 +52,12 @@ function LoginForm({ onLoginSubmit }) {
             className={inputStyle}
             placeholder="비밀번호"
           />
+
+          {errorMessage && (
+            <div className="w-full text-center text-sm text-red-500 mt-1">
+              {errorMessage}
+            </div>
+          )}
 
           <button
             type="submit"

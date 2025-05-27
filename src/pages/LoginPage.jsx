@@ -1,6 +1,7 @@
 import LoginForm from "@/components/home/auth/LoginForm";
 import { login } from "@/services/auth";
 import { useAuthStore } from "@/stores/authStore";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -19,21 +20,40 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const navigate = useNavigate();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async ({ identifier, password }) => {
     try {
-      const { accessToken } = await login(identifier, password);
-      setAccessToken(accessToken);
-      navigate("/enroll");
+      const res = await login(identifier, password);
+
+      if (res.code === "2000") {
+        setAccessToken(res.data.accessToken);
+        navigate("/enroll");
+      } else {
+        setErrorMessage(res.message || "로그인에 실패했습니다.");
+      }
     } catch (error) {
-      alert("로그인중 오류 발생");
-      console.error(error);
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+
+      if (status === 400 && code === "4000") {
+        // 학번, 비밀번호 형식 오류
+        setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
+      } else if (status === 401 && code === "4010") {
+        // 비밀번호 미일치
+        setErrorMessage("비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
+      } else if (status === 404 && code === "4040") {
+        // 해당 학번 미존재
+        setErrorMessage("입력하신 학번으로 가입된 계정을 찾을 수 없습니다.");
+      } else {
+        setErrorMessage("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
   return (
     <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
-      <LoginForm onLoginSubmit={handleLogin} />
+      <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
     </div>
   );
 };
