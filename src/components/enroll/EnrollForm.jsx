@@ -4,7 +4,6 @@ import Filter from "./Filter";
 import { getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
-
 const EnrollForm = () => {
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
