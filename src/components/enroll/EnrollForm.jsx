@@ -1,13 +1,22 @@
 import React from "react";
 import CourseCard from "./CourseCard";
 import Filter from "./Filter";
-import { getEnrollStatus } from "@/services/courses";
+import { getCourses, getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
 
 const EnrollForm = () => {
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
+
+  const getGeneralCourses = async () => {
+    try {
+      const res = await getCourses();
+      setGeneralCourses(res);
+    } catch (error) {
+      console.error("수강 목록 조회 실패", error);
+    }
+  };
 
   const getRegisterCourses = async () => {
     try {
@@ -19,6 +28,7 @@ const EnrollForm = () => {
   };
 
   useEffect(() => {
+    getGeneralCourses();
     getRegisterCourses();
   }, []);
 
