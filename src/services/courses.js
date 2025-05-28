@@ -1,11 +1,11 @@
 import { apiInterface } from "@/utils/apiInterface";
 
 /**
- * 강의 목록 조회 api
+ * 필터링 적용된 강의 목록 조회 api
  * @returns {Array} courses
  */
-export const getCourses = async () => {
-  const res = await apiInterface("get", "/courses");
+export const getCourses = async (filters) => {
+  const res = await apiInterface("get", "/courses/filters", {}, filters);
   return res.data;
 };
 

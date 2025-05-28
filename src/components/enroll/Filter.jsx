@@ -1,31 +1,40 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
-const Filter = ({ filter }) => {
+const Filter = ({ kind, setFilter }) => {
+  const [code, setCode] = useState("");
   let filterName = "";
   let options = [];
-  switch (filter) {
+  switch (kind) {
     case "category":
-      options = ["전체", "교양", "전공"];
+      options = [
+        { label: "전체", value: "" },
+        { label: "교양", value: "GENERAL" },
+        { label: "전공", value: "MAJOR" },
+      ];
       filterName = "이수구분";
       break;
     case "grade":
-      options = ["전체", "1학년", "2학년", "3학년", "4학년"];
+      options = [
+        { label: "전체", value: "" },
+        { label: "1학년", value: 1 },
+        { label: "2학년", value: 2 },
+        { label: "3학년", value: 3 },
+        { label: "4학년", value: 4 },
+      ];
       filterName = "학년";
       break;
     case "department":
       options = [
-        "전체",
-        "컴퓨터학부",
-        "국어국문학과",
-        "오징어심리학과",
-        "사과껍질깎기학과",
+        { label: "전체", value: "" },
+        { label: "컴퓨터공학부", value: "COMPUTER_SCIENCE_AND_ENGINEERING" },
+        { label: "전자전기공학부", value: "ELECTRONIC_ENGINEERING" },
+        { label: "로봇공학과", value: "ROBOTICS_ENGINEERING" },
       ];
       filterName = "학과";
       break;
     case "code":
-      // 직접 입력 및 입력한 내용 기준 필터링...
-      options = ["전체", "교양", "전공"];
       filterName = "강의코드";
       break;
     default:
@@ -33,20 +42,37 @@ const Filter = ({ filter }) => {
   }
 
   const handleChange = (option) => {
-    console.log("선택한 옵션: ", option);
+    setFilter((prev) => ({
+      ...prev,
+      [kind]: option,
+    }));
   };
 
+  useEffect(() => {
+    handleChange(code);
+  }, [code]);
   return (
     <div className="flex flex-col w-[225px]">
       <label>{filterName}</label>
-      <select
-        onChange={(e) => handleChange(e.target.value)}
-        className="p-2 rounded-lg border-2 border-gray-300"
-      >
-        {options.map((item) => (
-          <option key={item}>{item}</option>
-        ))}
-      </select>
+      {kind !== "code" ? (
+        <select
+          onChange={(e) => handleChange(e.target.value)}
+          className="p-2 rounded-lg border-2 border-gray-300"
+        >
+          {options.map((item, idx) => (
+            <option key={idx} value={item.value}>
+              {item.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type="number"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          className="p-2 rounded-lg border-2 border-gray-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        />
+      )}
     </div>
   );
 };

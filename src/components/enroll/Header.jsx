@@ -15,7 +15,7 @@ const Header = ({ myBasic }) => {
       <div className="flex gap-10 items-center">
         <div className="flex text-gray-500 gap-3">
           <p>2025-{myBasic.semester}</p>
-          <p>{myBasic.studentId}</p>
+          <p>{myBasic.identifier}</p>
           <p>{myBasic.name}</p>
         </div>
         <div className="text-red-500">25:01</div>

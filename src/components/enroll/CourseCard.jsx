@@ -3,6 +3,7 @@ import CourseItem from "./CourseItem";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getCredits } from "@/services/student";
+import { getCapacities } from "@/services/courses";
 
 const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
   // setCourseIdList는 수강신청 목록 조회 api 구현하면서 설정할 예정입니다.
@@ -54,7 +55,7 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
       <div className="flex justify-between border-b-2 border-gray-200 px-4 py-2">
         <div className="text-xl">{title}</div>
-        <div>{courses.length}개 강의</div>
+        <div>{courses?.length}개 강의</div>
       </div>
       <div className="flex border-slate-400 text-sm p-2 text-center text-gray-400">
         <div className="w-[55px]">강의 번호</div>
@@ -68,7 +69,7 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
       </div>
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
         <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
-          {courses.map((course) => (
+          {courses?.map((course) => (
             <CourseItem
               key={course.courseId}
               course={course}

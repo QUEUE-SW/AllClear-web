@@ -5,13 +5,20 @@ import { getCourses, getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
 const EnrollForm = () => {
+  const [filters, setFilters] = useState({
+    category: "",
+    grade: "",
+    department: "",
+    code: ""
+  });
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
 
   const getGeneralCourses = async () => {
     try {
-      const res = await getCourses();
+      const res = await getCourses(filters);
       setGeneralCourses(res);
+      console.log(res);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
@@ -26,8 +33,12 @@ const EnrollForm = () => {
     }
   };
 
-  useEffect(() => {
+  // 필터를 변경할 때마다 강의목록 조희 api를 연동합니다.
+  useEffect(()=>{
     getGeneralCourses();
+  },[filters]);
+
+  useEffect(() => {
     getRegisterCourses();
   }, []);
 
@@ -35,10 +46,10 @@ const EnrollForm = () => {
     <div className="w-[1050px]">
       {/* filters */}
       <div className="flex gap-12 mb-5">
-        <Filter filter="category" />
-        <Filter filter="grade" />
-        <Filter filter="department" />
-        <Filter filter="code" />
+        <Filter kind="category" setFilter={setFilters}/>
+        <Filter kind="grade" setFilter={setFilters}/>
+        <Filter kind="department" setFilter={setFilters}/>
+        <Filter kind="code" setFilter={setFilters}/>
       </div>
       <div className="flex gap-6 min-w-0">
         {/* cources */}
