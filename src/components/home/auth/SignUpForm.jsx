@@ -16,15 +16,14 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
   const [department, setDepartment] = useState("");
   const [major, setMajor] = useState("");
 
+  const [studentIdError, setStudentIdError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [formError, setFormError] = useState({
     studentId: "",
     password: "",
     passwordConfirm: "",
     common: "",
   });
-
-  const [studentIdError, setStudentIdError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
 
   const gradeOptions = Object.keys(gradeMap);
   const collegeOptions = Object.keys(collegeMap);
@@ -162,7 +161,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
           className={inputStyle}
         />
         <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
-          {studentIdError}
+          {studentIdError || errorMessage}
         </span>
 
         <input
