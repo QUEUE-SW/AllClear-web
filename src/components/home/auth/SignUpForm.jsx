@@ -5,6 +5,7 @@ import {
   departmentMap,
   majorMap,
 } from "@/constants/signupOptioins";
+import { isValidKoreanName, isValidStudentId } from "@/utils/validation";
 
 const SignUpForm = ({ onSubmit, errorMessage }) => {
   const [studentId, setStudentId] = useState("");
@@ -94,7 +95,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     if (!studentId) {
       newErrors.studentId = "학번을 입력하세요.";
       setStudentIdError(newErrors.studentId);
-    } else if (!/^[0-9]{8}$/.test(studentId)) {
+    } else if (!isValidStudentId(studentId)) {
       newErrors.studentId = "학번은 8자리 숫자여야 합니다.";
       setStudentIdError(newErrors.studentId);
     } else {
@@ -115,7 +116,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     const majors = getFilteredMajors();
     if (!name) {
       newErrors.common = "이름을 입력하세요.";
-    } else if (!/^[가-힣]{2,18}$/.test(name)) {
+    } else if (!isValidKoreanName(name)) {
       newErrors.common = "이름은 한글 2~18자여야 합니다.";
     } else if (!grade) {
       newErrors.common = "학년을 선택하세요.";
