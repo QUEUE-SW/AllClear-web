@@ -28,5 +28,5 @@ export const signUp = async (payload) => {
     {},
     false
   );
-  return response.data;
+  return response;
 };

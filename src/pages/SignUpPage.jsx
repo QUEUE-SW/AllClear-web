@@ -46,9 +46,12 @@ const SignUpPage = () => {
       } else {
         alert("회원가입 실패: " + data.message);
       }
-    } catch (err) {
-      console.error(err);
-      alert("서버 오류가 발생했습니다.");
+    } catch (error) {
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+
+      if (status === 400 && code === "4000") {
+      }
     }
   };
   return (

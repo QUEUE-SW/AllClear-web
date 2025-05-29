@@ -16,6 +16,11 @@ const SignUpForm = ({ onSubmit }) => {
   const [department, setDepartment] = useState("");
   const [major, setMajor] = useState("");
 
+  const [formError, setFormError] = useState({
+    studentId: "",
+    common: "",
+  });
+
   // 패스워드 에러
   const [passwordError, setPasswordError] = useState(false);
 
@@ -75,13 +80,44 @@ const SignUpForm = ({ onSubmit }) => {
     }
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    // 학번 단독 에러 처리
+    if (!studentId) {
+      newErrors.studentId = "학번을 입력하세요.";
+    } else if (!/^[0-9]{8}$/.test(studentId)) {
+      newErrors.studentId = "학번은 8자리 숫자여야 합니다.";
+    }
+
+    // 나머지 필드 공통 처리
+    const majors = getFilteredMajors();
+    const isCommonInvalid =
+      !name ||
+      !grade ||
+      !college ||
+      !department ||
+      (majors.length > 0 && !major);
+
+    if (isCommonInvalid) {
+      newErrors.common = "모든 항목을 정확히 입력 또는 선택해주세요.";
+    }
+
+    setFormError(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   // 서브밋 핸들러
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (password !== passwordConfirm) {
       setPasswordError(true);
       return;
     }
+
+    const isValid = validateForm();
+    if (!isValid) return;
 
     onSubmit?.({
       identifier: studentId,
@@ -111,6 +147,9 @@ const SignUpForm = ({ onSubmit }) => {
           placeholder="학번"
           className={inputStyle}
         />
+        <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
+          {formError.studentId}
+        </span>
 
         <input
           type="password"
@@ -128,7 +167,7 @@ const SignUpForm = ({ onSubmit }) => {
           className={inputStyle}
         />
 
-        <span className="min-h-[18px] -mt-1 ml-2 text-xs text-red-500">
+        <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
           {passwordError && "비밀번호가 일치하지 않습니다."}
         </span>
 
@@ -205,10 +244,12 @@ const SignUpForm = ({ onSubmit }) => {
             </option>
           ))}
         </select>
-
+        <span className="min-h-[18px] -mt-3 ml-2 text-xs text-red-500">
+          {formError.common}
+        </span>
         <button
           type="submit"
-          className="w-full mt-4 py-2.5 bg-indigo-500 text-white rounded-xl shadow-gray-300/50 hover:shadow-indigo-300/50 shadow-[inset_3px_3px_3px_rgba(0,0,0,5)] hover:shadow-[10px_10px_10px,inset_1px_1px_5px]"
+          className="w-full py-2.5 bg-indigo-500 text-white rounded-xl shadow-gray-300/50 hover:shadow-indigo-300/50 shadow-[inset_3px_3px_3px_rgba(0,0,0,5)] hover:shadow-[10px_10px_10px,inset_1px_1px_5px]"
         >
           회원가입
         </button>
