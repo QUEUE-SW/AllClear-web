@@ -1,9 +1,3 @@
-import {
-  gradeMap,
-  collegeMap,
-  departmentMap,
-  majorMap,
-} from "@/constants/signupOptioins";
 import SignUpForm from "@/components/home/auth/SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "@/services/auth";
