@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
-  gradeOptions,
-  collegeOptions,
-  departmentOptions,
-  majorOptions,
-} from "@/data/userOptions";
+  gradeMap,
+  collegeMap,
+  departmentMap,
+  majorMap,
+} from "@/constants/signupOptioins";
 
 const SignUpForm = ({ onSubmit }) => {
   const [studentId, setStudentId] = useState("");
@@ -18,6 +18,44 @@ const SignUpForm = ({ onSubmit }) => {
 
   // 패스워드 에러
   const [passwordError, setPasswordError] = useState(false);
+
+  const gradeOptions = Object.keys(gradeMap);
+  const collegeOptions = Object.keys(collegeMap);
+
+  const departmentOptionsByCollege = {
+    공과대학: [],
+    디지털융합대학: ["컴퓨터공학부", "전자공학과", "로봇공학과"],
+  };
+
+  const majorOptionsByDepartment = {
+    컴퓨터공학부: ["컴퓨터공학과", "정보통신공학과", "소프트웨어융합전공"],
+    전자공학과: [],
+    로봇공학과: [],
+  };
+
+  const getFilteredMajors = () => {
+    if (!grade || !department) return [];
+
+    const majors = majorOptionsByDepartment[department] || [];
+
+    const isDigitalCS =
+      college === "디지털융합대학" && department === "컴퓨터공학부";
+    const gradeNum = gradeMap[grade];
+
+    if (!isDigitalCS) return majors; // 전공 필터링 안 하는 경우 (그냥 학부 기준으로 보여줌)
+
+    if (gradeNum === 1) return ["통합"];
+    if (gradeNum === 2 || gradeNum === 3)
+      return majors.filter((m) =>
+        ["컴퓨터공학과", "정보통신공학과", "소프트웨어융합전공"].includes(m)
+      );
+    if (gradeNum === 4)
+      return majors.filter((m) =>
+        ["컴퓨터공학과", "정보통신공학과"].includes(m)
+      );
+
+    return majors;
+  };
 
   // 패스워드 입력 감지 및 일치 검사
   const handlePWChange = (value) => {
@@ -50,10 +88,10 @@ const SignUpForm = ({ onSubmit }) => {
       password,
       passwordConfirm,
       name,
-      grade,
-      college,
-      department,
-      major,
+      grade: gradeMap[grade],
+      college: collegeMap[college],
+      department: departmentMap[department],
+      major: majorMap[major],
     });
   };
 
@@ -105,13 +143,16 @@ const SignUpForm = ({ onSubmit }) => {
 
           <select
             value={grade}
-            onChange={(e) => setGrade(e.target.value)}
+            onChange={(e) => {
+              setGrade(e.target.value);
+              setMajor("");
+            }}
             className={inputStyle}
           >
             <option value="">학년</option>
-            {gradeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+            {gradeOptions.map((g) => (
+              <option key={g} value={g}>
+                {g}
               </option>
             ))}
           </select>
@@ -119,24 +160,34 @@ const SignUpForm = ({ onSubmit }) => {
 
         <select
           value={college}
-          onChange={(e) => setCollege(e.target.value)}
+          onChange={(e) => {
+            setCollege(e.target.value);
+            setDepartment("");
+            setMajor("");
+          }}
           className={inputStyle}
         >
-          {collegeOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          <option value="">대학</option>
+          {collegeOptions.map((c) => (
+            <option key={c} value={c}>
+              {c}
             </option>
           ))}
         </select>
 
         <select
           value={department}
-          onChange={(e) => setDepartment(e.target.value)}
+          onChange={(e) => {
+            setDepartment(e.target.value);
+            setMajor("");
+          }}
           className={inputStyle}
+          disabled={!departmentOptionsByCollege[college]?.length}
         >
-          {departmentOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          <option value="">학부/학과</option>
+          {departmentOptionsByCollege[college]?.map((d) => (
+            <option key={d} value={d}>
+              {d}
             </option>
           ))}
         </select>
@@ -145,10 +196,12 @@ const SignUpForm = ({ onSubmit }) => {
           value={major}
           onChange={(e) => setMajor(e.target.value)}
           className={inputStyle}
+          disabled={getFilteredMajors().length === 0}
         >
-          {majorOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          <option value="">전공</option>
+          {getFilteredMajors().map((m) => (
+            <option key={m} value={m}>
+              {m}
             </option>
           ))}
         </select>
