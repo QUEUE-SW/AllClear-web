@@ -16,6 +16,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
   const [department, setDepartment] = useState("");
   const [major, setMajor] = useState("");
 
+  // 각 필드별 에러 메시지 상태
   const [studentIdError, setStudentIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [formError, setFormError] = useState({
@@ -25,20 +26,24 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     common: "",
   });
 
+  // 셀렉트 옵션 데이터 정의
   const gradeOptions = Object.keys(gradeMap);
   const collegeOptions = Object.keys(collegeMap);
 
+  // 대학 -> 학부/학과 옵션 커스텀 매핑
   const departmentOptionsByCollege = {
     공과대학: [],
     디지털융합대학: ["컴퓨터공학부", "전자공학과", "로봇공학과"],
   };
 
+  // 학부/학과 -> 전공 옵션 커스텀 매핑
   const majorOptionsByDepartment = {
     컴퓨터공학부: ["컴퓨터공학과", "정보통신공학과", "소프트웨어융합전공"],
     전자공학과: [],
     로봇공학과: [],
   };
 
+  // 전공 필터링 로직 (학년/학과에 따라 전공 선택지 제한하기 위함)
   const getFilteredMajors = () => {
     if (!grade || !department) return [];
 
@@ -81,10 +86,11 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     }
   };
 
+  // 전체 유효성 검사 true일 시만 onSubmit 호출
   const validateForm = () => {
     const newErrors = {};
 
-    // 학번 (개별 처리)
+    // 학번 검사
     if (!studentId) {
       newErrors.studentId = "학번을 입력하세요.";
       setStudentIdError(newErrors.studentId);
@@ -95,6 +101,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
       setStudentIdError("");
     }
 
+    // 비밀번호 검사
     if (!password) {
       newErrors.password = "비밀번호를 입력하세요.";
       setPasswordError(newErrors.password);
@@ -104,9 +111,8 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
       setPasswordError(newErrors.passwordConfirm);
     }
 
-    // 공통 항목 중 첫 번째 오류만 반영
+    // 이름~전공 공통 필드 검사 (우선순위 순서대로)
     const majors = getFilteredMajors();
-
     if (!name) {
       newErrors.common = "이름을 입력하세요.";
     } else if (!/^[가-힣]{2,18}$/.test(name)) {
@@ -125,7 +131,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // 서브밋 핸들러
+  // 폼 제출
   const handleSubmit = (e) => {
     e.preventDefault();
 
