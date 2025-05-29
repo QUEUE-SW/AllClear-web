@@ -218,3 +218,21 @@ const SignUpForm = ({ onSubmit }) => {
 };
 
 export default SignUpForm;
+
+/**
+ * 대학
+  공과대학: "ENGINEERING", -> 하위 학부 없음
+  디지털융합대학: "DIGITAL_CONVERGENCE", -> 컴공, 전자, 로봇
+
+  학부/학과
+    컴퓨터공학부: "COMPUTER_SCIENCE_AND_ENGINEERING", -> 컴공, 정통, 소융
+    전자공학과: "ELECTRONIC_ENGINEERING", -> 하위 전공 없음
+    로봇공학과: "ROBOTICS_ENGINEERING", -> 하위 전공 없음
+
+  디지털융합대학, 컴퓨터공학과 선택시에만 적용! 그 외 모든경우는 disabled처리
+  1학년 선택시 -> 통합 전공만 표시
+
+  2,3 학년 선택시 -> 컴공, 정통, 소융 전공만 표시
+
+  4 학년 선택시 -> 컴공, 정통 전공만 표시
+ */
