@@ -6,7 +6,7 @@ import {
   majorMap,
 } from "@/constants/signupOptioins";
 
-const SignUpForm = ({ onSubmit }) => {
+const SignUpForm = ({ onSubmit, errorMessage }) => {
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -23,7 +23,7 @@ const SignUpForm = ({ onSubmit }) => {
     common: "",
   });
 
-  // 패스워드 에러
+  const [studentIdError, setStudentIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const gradeOptions = Object.keys(gradeMap);
@@ -88,8 +88,12 @@ const SignUpForm = ({ onSubmit }) => {
     // 학번 (개별 처리)
     if (!studentId) {
       newErrors.studentId = "학번을 입력하세요.";
+      setStudentIdError(newErrors.studentId);
     } else if (!/^[0-9]{8}$/.test(studentId)) {
       newErrors.studentId = "학번은 8자리 숫자여야 합니다.";
+      setStudentIdError(newErrors.studentId);
+    } else {
+      setStudentIdError("");
     }
 
     if (!password) {
@@ -158,7 +162,7 @@ const SignUpForm = ({ onSubmit }) => {
           className={inputStyle}
         />
         <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
-          {formError.studentId}
+          {studentIdError}
         </span>
 
         <input
