@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 
 const Filter = ({ kind, setFilter }) => {
@@ -48,9 +47,6 @@ const Filter = ({ kind, setFilter }) => {
     }));
   };
 
-  useEffect(() => {
-    handleChange(code);
-  }, [code]);
   return (
     <div className="flex flex-col w-[225px]">
       <label>{filterName}</label>
@@ -67,10 +63,17 @@ const Filter = ({ kind, setFilter }) => {
         </select>
       ) : (
         <input
-          type="number"
           value={code}
-          onChange={(e) => setCode(e.target.value)}
-          className="p-2 rounded-lg border-2 border-gray-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          onChange={(e) => {
+            const value = e.target.value;
+            setCode(value);
+            setFilter((prev) => ({
+              ...prev,
+              [kind]: value,
+            }));
+          }}
+          className="p-2 rounded-lg border-2 border-gray-300"
+          placeholder="강의코드 입력"
         />
       )}
     </div>

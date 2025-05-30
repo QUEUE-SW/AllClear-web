@@ -9,14 +9,28 @@ const EnrollForm = () => {
     category: "",
     grade: "",
     department: "",
-    code: ""
+    code: "",
   });
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
 
   const getGeneralCourses = async () => {
     try {
-      const res = await getCourses(filters);
+      const formatFilters = {};
+      if(filters.category){
+        formatFilters.category = filters.category;
+      }
+      if(filters.grade){
+        formatFilters.grade = parseInt(filters.grade);
+      }
+      if(filters.department){
+        formatFilters.department = filters.department;
+      }
+      if(filters.code){
+        formatFilters.code = filters.code;
+      }
+      console.log(formatFilters);
+      const res = await getCourses(formatFilters);
       setGeneralCourses(res);
       console.log(res);
     } catch (error) {
@@ -34,9 +48,9 @@ const EnrollForm = () => {
   };
 
   // 필터를 변경할 때마다 강의목록 조희 api를 연동합니다.
-  useEffect(()=>{
+  useEffect(() => {
     getGeneralCourses();
-  },[filters]);
+  }, [filters]);
 
   useEffect(() => {
     getRegisterCourses();
@@ -46,10 +60,10 @@ const EnrollForm = () => {
     <div className="w-[1050px]">
       {/* filters */}
       <div className="flex gap-12 mb-5">
-        <Filter kind="category" setFilter={setFilters}/>
-        <Filter kind="grade" setFilter={setFilters}/>
-        <Filter kind="department" setFilter={setFilters}/>
-        <Filter kind="code" setFilter={setFilters}/>
+        <Filter kind="category" setFilter={setFilters} />
+        <Filter kind="grade" setFilter={setFilters} />
+        <Filter kind="department" setFilter={setFilters} />
+        <Filter kind="code" setFilter={setFilters} />
       </div>
       <div className="flex gap-6 min-w-0">
         {/* cources */}
