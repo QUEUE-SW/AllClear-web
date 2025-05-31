@@ -17,16 +17,16 @@ const EnrollForm = () => {
   const getGeneralCourses = async () => {
     try {
       const formatFilters = {};
-      if(filters.category){
+      if (filters.category) {
         formatFilters.category = filters.category;
       }
-      if(filters.grade){
+      if (filters.grade) {
         formatFilters.grade = parseInt(filters.grade);
       }
-      if(filters.department){
+      if (filters.department) {
         formatFilters.department = filters.department;
       }
-      if(filters.code){
+      if (filters.code) {
         formatFilters.code = filters.code;
       }
       console.log(formatFilters);

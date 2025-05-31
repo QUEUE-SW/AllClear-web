@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const Filter = ({ kind, setFilter }) => {
   const [code, setCode] = useState("");
+
   let filterName = "";
   let options = [];
   switch (kind) {
@@ -63,6 +64,7 @@ const Filter = ({ kind, setFilter }) => {
         </select>
       ) : (
         <input
+          type="number"
           value={code}
           onChange={(e) => {
             const value = e.target.value;
