@@ -6,6 +6,7 @@ const Filter = ({ kind, setFilter }) => {
 
   let filterName = "";
   let options = [];
+  // 필터 종류별로 label(사용자에게 보이는 이름)과 value(서버에 전달할 값) 설정
   switch (kind) {
     case "category":
       options = [
@@ -41,6 +42,8 @@ const Filter = ({ kind, setFilter }) => {
       break;
   }
 
+  // 선택한 필터에 맞게 서버에 전송할 filter 객체 설정
+  // 이미 선택한 필터가 초기화되지 않기 위해 prev 사용
   const handleChange = (option) => {
     setFilter((prev) => ({
       ...prev,
@@ -51,6 +54,7 @@ const Filter = ({ kind, setFilter }) => {
   return (
     <div className="flex flex-col w-[225px]">
       <label>{filterName}</label>
+      {/* 강의코드 필터인 경우엔 input 태그를 사용 */}
       {kind !== "code" ? (
         <select
           onChange={(e) => handleChange(e.target.value)}
@@ -65,6 +69,7 @@ const Filter = ({ kind, setFilter }) => {
       ) : (
         <input
           type="number"
+          // 사용자의 입력을 바로 인식하여 필터링 적용하기 위해 인라인으로 핸들러 작성
           value={code}
           onChange={(e) => {
             const value = e.target.value;

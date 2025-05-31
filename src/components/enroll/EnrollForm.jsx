@@ -16,6 +16,7 @@ const EnrollForm = () => {
 
   const getGeneralCourses = async () => {
     try {
+      // 선택한 필터만 요청하기 위해 filters를 포맷팅
       const formatFilters = {};
       if (filters.category) {
         formatFilters.category = filters.category;
@@ -29,10 +30,9 @@ const EnrollForm = () => {
       if (filters.code) {
         formatFilters.code = filters.code;
       }
-      console.log(formatFilters);
+      // 수강목록 조회 api 연동
       const res = await getCourses(formatFilters);
       setGeneralCourses(res);
-      console.log(res);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
