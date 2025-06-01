@@ -139,7 +139,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     const isValid = validateForm();
     if (!isValid) return;
 
-    onSubmit?.({
+    onSubmit({
       identifier: studentId,
       password,
       passwordConfirm,
