@@ -6,9 +6,7 @@ import { getCredits } from "@/services/student";
 import { getCapacities } from "@/services/courses";
 
 const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
-  // setCourseIdList는 수강신청 목록 조회 api 구현하면서 설정할 예정입니다.
-  const [coursesIdList, setCourseIdList] = useState([]);
-  const [currentCapa, setCurrentCapa] = useState([]);
+  const [capa, setCapa] = useState([]);
   const [credits, setCredits] = useState({
     totalCredit: null,
     maxCredit: null,
@@ -24,10 +22,12 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
     }
   };
 
-  const getCurrentCapa = async (ids) => {
+  const getCurrentCapa = async () => {
     try {
+      // courses에서 id만 뽑아와서 ids 데이터 만들기
+      const ids = courses.map((c) => c.courseId);
       const res = await getCapacities(ids);
-      setCurrentCapa(res);
+      setCapa(res);
     } catch (error) {
       console.error("수강신청 인원 조회 실패", error);
     }
@@ -40,16 +40,15 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
   // 서버 연결 후 주석 취소 처리할 예정. -> 주석 코드 적용할
   useEffect(() => {
     // setInterval로 2초마다 인원 조회 실행.
-    const idsQuery = coursesIdList.join(",");
     // const interval = setInterval(() => {
-    getCurrentCapa(idsQuery);
+    getCurrentCapa();
     // }, 2000);
 
     // setInterval함수는 초기화가 필요한 함수라서 초기화해줌.
     // return () => {
     //   clearInterval(interval);
     // };
-  }, [coursesIdList]);
+  }, [courses]);
 
   return (
     <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
@@ -69,17 +68,19 @@ const CourseCard = ({ title, courses, isRegister, onEnrollSuccess }) => {
       </div>
       <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
         <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
-          {courses?.map((course) => (
-            <CourseItem
-              key={course.courseId}
-              course={course}
-              capacity={currentCapa.find(
-                (capa) => capa.courseId === course.courseId
-              )}
-              isRegister={isRegister}
-              onEnrollSuccess={onEnrollSuccess}
-            />
-          ))}
+          {courses?.map((course) => {
+            const current = capa.find((c) => c.courseId === course.courseId);
+            console.log("current 값?", current);
+            return (
+              <CourseItem
+                key={course.courseId}
+                course={course}
+                currentCapa={current?.current}
+                isRegister={isRegister}
+                onEnrollSuccess={onEnrollSuccess}
+              />
+            );
+          })}
         </div>
         {isRegister && (
           <div className="flex border-t justify-between text-sm p-3">

@@ -3,7 +3,7 @@ import {
   collegeMap,
   departmentMap,
   majorMap,
-} from "@/constants/signupOptioins";
+} from "@/constants/signupOptions";
 import SignUpForm from "@/components/home/auth/SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "@/services/auth";

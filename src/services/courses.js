@@ -25,6 +25,7 @@ export const getEnrollStatus = async () => {
  */
 
 export const getCapacities = async (ids) => {
-  const res = await apiInterface("get", `/enrollments/capacities?ids=${ids}`);
+  const res = await apiInterface("post", "/enrollments/capacities", { ids });
+  console.log("인원 조회", res);
   return res.data;
 };
