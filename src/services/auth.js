@@ -13,7 +13,7 @@ export const login = async (identifier, password) => {
     {},
     false
   );
-  return response.data;
+  return response;
 };
 
 /**
@@ -28,5 +28,5 @@ export const signUp = async (payload) => {
     {},
     false
   );
-  return response.data;
+  return response;
 };
