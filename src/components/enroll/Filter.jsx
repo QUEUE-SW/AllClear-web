@@ -1,5 +1,10 @@
 import React from "react";
 import { useState } from "react";
+import {
+  categoryOptions,
+  gradeOptions,
+  departmentOptions,
+} from "@/constants/filterOptions";
 
 const Filter = ({ kind, setFilter }) => {
   const [code, setCode] = useState("");
@@ -9,30 +14,15 @@ const Filter = ({ kind, setFilter }) => {
   // 필터 종류별로 label(사용자에게 보이는 이름)과 value(서버에 전달할 값) 설정
   switch (kind) {
     case "category":
-      options = [
-        { label: "전체", value: "" },
-        { label: "교양", value: "GENERAL" },
-        { label: "전공", value: "MAJOR" },
-      ];
+      options = categoryOptions;
       filterName = "이수구분";
       break;
     case "grade":
-      options = [
-        { label: "전체", value: "" },
-        { label: "1학년", value: 1 },
-        { label: "2학년", value: 2 },
-        { label: "3학년", value: 3 },
-        { label: "4학년", value: 4 },
-      ];
+      options = gradeOptions;
       filterName = "학년";
       break;
     case "department":
-      options = [
-        { label: "전체", value: "" },
-        { label: "컴퓨터공학부", value: "COMPUTER_SCIENCE_AND_ENGINEERING" },
-        { label: "전자전기공학부", value: "ELECTRONIC_ENGINEERING" },
-        { label: "로봇공학과", value: "ROBOTICS_ENGINEERING" },
-      ];
+      options = departmentOptions;
       filterName = "학과";
       break;
     case "code":
@@ -69,6 +59,7 @@ const Filter = ({ kind, setFilter }) => {
       ) : (
         <input
           type="number"
+          min="0"
           // 사용자의 입력을 바로 인식하여 필터링 적용하기 위해 인라인으로 핸들러 작성
           value={code}
           onChange={(e) => {
@@ -79,7 +70,9 @@ const Filter = ({ kind, setFilter }) => {
               [kind]: value,
             }));
           }}
-          className="p-2 rounded-lg border-2 border-gray-300"
+          // 스핀 버튼 삭제
+          className="p-2 rounded-lg border-2 border-gray-300 [appearance:textfield]
+          [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           placeholder="강의코드 입력"
         />
       )}
