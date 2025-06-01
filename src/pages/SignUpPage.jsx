@@ -1,12 +1,7 @@
-import {
-  gradeMap,
-  collegeMap,
-  departmentMap,
-  majorMap,
-} from "@/constants/signupOptioins";
 import SignUpForm from "@/components/home/auth/SignUpForm";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "@/services/auth";
+import { useState } from "react";
 
 /**
  * SignUpPage.jsx
@@ -23,37 +18,44 @@ import { signUp } from "@/services/auth";
  */
 
 const SignUpPage = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
   const handleSignUpSubmit = async (formData) => {
     const payload = {
       identifier: formData.identifier,
       password: formData.password,
       name: formData.name,
-      grade: gradeMap[formData.grade] || 0,
-      college: collegeMap[formData.college] || "DIGITAL_CONVERGENCE",
-      department:
-        departmentMap[formData.department] ||
-        "COMPUTER_SCIENCE_AND_ENGINEERING",
-      major: majorMap[formData.major] || "CSE",
+      grade: formData.grade,
+      college: formData.college,
+      department: formData.department,
+      major: formData.major,
     };
 
     try {
-      const data = await signUp(payload);
+      const res = await signUp(payload);
 
-      if (data.code === "2000") {
+      if (res.code === "2000") {
         alert("회원가입 성공!");
         navigate("/login");
       } else {
-        alert("회원가입 실패: " + data.message);
+        alert("회원가입에 실패했습니다.");
       }
-    } catch (err) {
-      console.error(err);
-      alert("서버 오류가 발생했습니다.");
+    } catch (error) {
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+
+      if (status === 409 && code === "4091") {
+        // 해당 학번 이미 존재
+        setErrorMessage("해당 학번이 존재합니다. 다시 확인해주세요.");
+      } else {
+        alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
     }
   };
   return (
     <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
-      <SignUpForm onSubmit={handleSignUpSubmit} />
+      <SignUpForm onSubmit={handleSignUpSubmit} errorMessage={errorMessage} />
     </div>
   );
 };

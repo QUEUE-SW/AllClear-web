@@ -17,6 +17,7 @@ export const departmentMap = {
 };
 
 export const majorMap = {
+  통합: "ALL",
   컴퓨터공학과: "CSE",
   정보통신공학과: "ICE",
   소프트웨어융합전공: "SC",
