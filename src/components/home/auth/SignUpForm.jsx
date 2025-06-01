@@ -4,7 +4,7 @@ import {
   collegeMap,
   departmentMap,
   majorMap,
-} from "@/constants/signupOptioins";
+} from "@/constants/signupOptions";
 import { isValidKoreanName, isValidStudentId } from "@/utils/validation";
 
 const SignUpForm = ({ onSubmit, errorMessage }) => {
