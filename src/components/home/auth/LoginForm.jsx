@@ -27,7 +27,7 @@ function LoginForm({ onLoginSubmit, errorMessage }) {
 
   return (
     // 중앙정렬
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center">
       {/* 로그인 컨테이너 */}
       <div className="w-[446px] h-[470px] px-8 py-6 border rounded-[8px] shadow-gray-300 shadow-[0px_6px_8px_rgba(0,0,0,0.25)] ">
         <div className="mb-6 text-center">

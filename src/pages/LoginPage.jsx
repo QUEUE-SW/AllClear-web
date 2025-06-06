@@ -52,8 +52,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
-      <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
+    <div className="w-full h-screen px-4 ">
+      <div className="text-center py-14">
+        <div className="text-3xl font-extrabold">AllClear 수강신청 시스템</div>
+        <div className="text-gray-500">Course Registration System</div>
+      </div>
+      <div className=" flex justify-center items-center ">
+        <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
+        <div>dddd</div>
+      </div>
     </div>
   );
 };
