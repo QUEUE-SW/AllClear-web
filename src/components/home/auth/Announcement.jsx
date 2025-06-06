@@ -27,7 +27,7 @@ const Announcement = () => {
               18:00
             </div>
           </div>
-          <hr className="w-[622px] grow border-b border-gray-200" />
+          <hr className="w-[622px] grow border-t border-gray-200" />
           {/* 안내 */}
           <div className="pl-4 py-2 bg-sky-50 border-l-4 border-sky-400 space-y-1 text-xs">
             <div className="flex items-center space-x-2">
@@ -41,7 +41,7 @@ const Announcement = () => {
               매일 02:00 ~ 04:00 시스템 점검으로 인한 서비스 중단
             </div>
           </div>
-          <hr className="w-[622px] grow border-b border-gray-200" />
+          <hr className="w-[622px] grow border-t border-gray-200" />
           {/* 정보 */}
           <div className="pl-4 py-2 bg-emerald-50 border-l-4 border-emerald-400 space-y-1 text-xs">
             <div className="flex items-center space-x-2">
@@ -57,7 +57,7 @@ const Announcement = () => {
               <li>수강신청 변경기간: 2025년 3월 2일 ~ 3월 8일</li>
             </div>
           </div>
-          <hr className="w-[622px] grow border-b border-gray-200" />
+          <hr className="w-[622px] grow border-t border-gray-200" />
           {/* 문의 */}
           <div className="pl-4 py-2 bg-yellow-50 border-l-4 border-yellow-400 space-y-1 text-xs">
             <div className="flex items-center space-x-2">
@@ -75,7 +75,7 @@ const Announcement = () => {
               <li>방문상담: IT관 1층 114호 (평일 09:00~17:00)</li>
             </div>
           </div>
-          {/* <hr className="w-[622px] grow border-b border-gray-200" /> */}
+          {/* <hr className="w-[622px] grow border-t border-gray-200" /> */}
         </div>
       </div>
     </div>
