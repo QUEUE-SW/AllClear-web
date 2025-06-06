@@ -1,3 +1,4 @@
+import Header from "@/components/home/auth/Header";
 import LoginForm from "@/components/home/auth/LoginForm";
 import { login } from "@/services/auth";
 import { useAuthStore } from "@/stores/authStore";
@@ -53,6 +54,7 @@ const LoginPage = () => {
 
   return (
     <div className="w-full h-screen px-4 ">
+      <Header/>
       <div className="text-center py-14">
         <div className="text-3xl font-extrabold">AllClear 수강신청 시스템</div>
         <div className="text-gray-500">Course Registration System</div>
