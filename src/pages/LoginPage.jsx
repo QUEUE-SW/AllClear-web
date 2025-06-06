@@ -61,7 +61,7 @@ const LoginPage = () => {
         <div className="text-3xl font-extrabold">AllClear 수강신청 시스템</div>
         <div className="text-gray-500">Course Registration System</div>
       </div>
-      <div className="flex flex-1 flex-row justify-center items-start space-x-12">
+      <div className="flex flex-1 flex-row justify-center items-start space-x-12 min-h-[900px]">
         <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
         <Announcement />
       </div>
