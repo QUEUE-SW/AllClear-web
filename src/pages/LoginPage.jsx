@@ -1,3 +1,6 @@
+import Announcement from "@/components/home/auth/Announcement";
+import Footer from "@/components/home/auth/Footer";
+import Header from "@/components/home/auth/Header";
 import LoginForm from "@/components/home/auth/LoginForm";
 import { login } from "@/services/auth";
 import { useAuthStore } from "@/stores/authStore";
@@ -52,8 +55,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
-      <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
+    <div className="w-full h-screen flex flex-col">
+      <Header />
+      <div className="text-center py-14">
+        <h1 className="text-3xl font-extrabold">AllClear 수강신청 시스템</h1>
+        <span className="text-gray-500">Course Registration System</span>
+      </div>
+      <div className="flex flex-1 flex-row justify-center items-start space-x-12 min-h-[900px]">
+        <LoginForm onLoginSubmit={handleLogin} errorMessage={errorMessage} />
+        <Announcement />
+      </div>
+      <Footer />
     </div>
   );
 };
