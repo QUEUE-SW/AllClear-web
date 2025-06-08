@@ -22,7 +22,7 @@ const RegisteredCoursesList = ({ courses }) => {
 
   return (
     <div className="flex flex-col w-[394px] h-[692px] bg-white rounded-lg shadow-md overflow-hidden">
-      {/* 상단 헤더 */}
+      {/* 상단 제목 */}
       <div className="flex items-center gap-2 bg-green-50 px-4 py-3 text-green-800 font-bold text-lg">
         <BookOpen size={20} />
         수강 현황

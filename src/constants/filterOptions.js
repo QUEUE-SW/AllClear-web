@@ -18,3 +18,10 @@ export const departmentOptions = [
   { label: "전자전기공학부", value: "ELECTRONIC_ENGINEERING" },
   { label: "로봇공학과", value: "ROBOTICS_ENGINEERING" },
 ];
+
+export const majorOptions = [
+  { label: "전체", value: "" },
+  { label: "컴퓨터공학과", value: 1 },
+  { label: "정보통신공학과", value: 2 },
+  { label: "소프트웨어융합전공", value: 3 },
+];

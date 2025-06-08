@@ -4,6 +4,7 @@ import {
   categoryOptions,
   gradeOptions,
   departmentOptions,
+  majorOptions,
 } from "@/constants/filterOptions";
 import { Search } from "lucide-react";
 
@@ -19,7 +20,7 @@ const Filter = ({ kind, setFilter }) => {
       filterName = "학과";
       break;
     case "major":
-      options = gradeOptions;
+      options = majorOptions;
       filterName = "전공";
       break;
     case "category":
@@ -61,7 +62,7 @@ const Filter = ({ kind, setFilter }) => {
           ))}
         </select>
       ) : (
-        <div className="flex flex-1 items-center gap-2 px-4 py-2 bg-white">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white">
           <Search size={16} className="text-gray-500" />
           <input
             type="number"
