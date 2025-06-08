@@ -27,11 +27,16 @@ const EnrollPage = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-gray-50">
+    <div className="w-full h-screen flex flex-col">
+      {/* 고정 헤더 */}
       <Header myBasic={myBasic} />
-      <div className="w-full h-[calc(100vh-60px)] flex justify-center items-center">
-        <EnrollForm />
-      </div>
+
+      {/* 본문 영역 */}
+      <main className="flex-1 flex justify-center items-center px-6 py-10">
+        <div className="w-full max-w-4xl">
+          <EnrollForm />
+        </div>
+      </main>
     </div>
   );
 };
