@@ -32,10 +32,8 @@ const EnrollPage = () => {
       <Header myBasic={myBasic} />
 
       {/* 본문 영역 */}
-      <main className="flex-1 flex justify-center items-center px-6 py-10">
-        <div className="w-full max-w-4xl">
-          <EnrollForm />
-        </div>
+      <main className="flex justify-center items-center mt-[12px]">
+        <EnrollForm />
       </main>
     </div>
   );

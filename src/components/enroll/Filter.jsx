@@ -5,6 +5,7 @@ import {
   gradeOptions,
   departmentOptions,
 } from "@/constants/filterOptions";
+import { Search } from "lucide-react";
 
 const Filter = ({ kind, setFilter }) => {
   const [code, setCode] = useState("");
@@ -13,6 +14,14 @@ const Filter = ({ kind, setFilter }) => {
   let options = [];
   // 필터 종류별로 label(사용자에게 보이는 이름)과 value(서버에 전달할 값) 설정
   switch (kind) {
+    case "department":
+      options = departmentOptions;
+      filterName = "학과";
+      break;
+    case "major":
+      options = gradeOptions;
+      filterName = "전공";
+      break;
     case "category":
       options = categoryOptions;
       filterName = "이수구분";
@@ -20,10 +29,6 @@ const Filter = ({ kind, setFilter }) => {
     case "grade":
       options = gradeOptions;
       filterName = "학년";
-      break;
-    case "department":
-      options = departmentOptions;
-      filterName = "학과";
       break;
     case "code":
       filterName = "강의코드";
@@ -42,14 +47,13 @@ const Filter = ({ kind, setFilter }) => {
   };
 
   return (
-    <div className="flex flex-col w-[225px]">
-      <label>{filterName}</label>
+    <div className="flex flex-col flex-1">
       {/* 강의코드 필터인 경우엔 input 태그를 사용 */}
       {kind !== "code" ? (
-        <select
-          onChange={(e) => handleChange(e.target.value)}
-          className="p-2 rounded-lg border-2 border-gray-300"
-        >
+        <select onChange={(e) => handleChange(e.target.value)} className="p-2">
+          <option value="" disabled selected hidden>
+            {filterName}
+          </option>
           {options.map((item, idx) => (
             <option key={idx} value={item.value}>
               {item.label}
@@ -57,24 +61,25 @@ const Filter = ({ kind, setFilter }) => {
           ))}
         </select>
       ) : (
-        <input
-          type="number"
-          min="0"
-          // 사용자의 입력을 바로 인식하여 필터링 적용하기 위해 인라인으로 핸들러 작성
-          value={code}
-          onChange={(e) => {
-            const value = e.target.value;
-            setCode(value);
-            setFilter((prev) => ({
-              ...prev,
-              [kind]: value,
-            }));
-          }}
-          // 스핀 버튼 삭제
-          className="p-2 rounded-lg border-2 border-gray-300 [appearance:textfield]
-          [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-          placeholder="강의코드 입력"
-        />
+        <div className="flex flex-1 items-center gap-2 px-4 py-2 bg-white">
+          <Search size={16} className="text-gray-500" />
+          <input
+            type="number"
+            min="0"
+            value={code}
+            onChange={(e) => {
+              const value = e.target.value;
+              setCode(value);
+              setFilter((prev) => ({
+                ...prev,
+                [kind]: value,
+              }));
+            }}
+            className="w-full bg-transparent outline-none text-sm 
+      [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            placeholder="강의코드 검색"
+          />
+        </div>
       )}
     </div>
   );

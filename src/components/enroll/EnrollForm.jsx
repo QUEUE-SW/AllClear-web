@@ -1,9 +1,9 @@
 import React from "react";
 import CourseCard from "./CourseCard";
-import Filter from "./Filter";
 import { getCourses, getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
+import FilterBar from "@/components/enroll/FilterBar";
 const EnrollForm = () => {
   const [filters, setFilters] = useState({
     category: "",
@@ -57,30 +57,27 @@ const EnrollForm = () => {
   }, []);
 
   return (
-    <div className="w-[1050px]">
+    <div className="w-[1230px] flex gap-[22px]">
       {/* filters */}
-      <div className="flex gap-12 mb-5">
-        <Filter kind="category" setFilter={setFilters} />
-        <Filter kind="grade" setFilter={setFilters} />
-        <Filter kind="department" setFilter={setFilters} />
-        <Filter kind="code" setFilter={setFilters} />
+      <div className="flex flex-col">
+        <FilterBar setFilter={setFilters} />
+        <div className="flex gap-6 min-w-0">
+          {/* cources */}
+          <CourseCard
+            title="강의 목록"
+            courses={generalCourses}
+            isRegister={false}
+            onEnrollSuccess={getRegisterCourses}
+          />
+        </div>
       </div>
-      <div className="flex gap-6 min-w-0">
-        {/* cources */}
-        <CourseCard
-          title="강의 목록"
-          courses={generalCourses}
-          isRegister={false}
-          onEnrollSuccess={getRegisterCourses}
-        />
-        {/* register */}
-        <CourseCard
-          title="수강 현황"
-          courses={registerCourses}
-          isRegister={true}
-          onEnrollSuccess={getRegisterCourses}
-        />
-      </div>
+      {/* register */}
+      <CourseCard
+        title="수강 현황"
+        courses={registerCourses}
+        isRegister={true}
+        onEnrollSuccess={getRegisterCourses}
+      />
     </div>
   );
 };
