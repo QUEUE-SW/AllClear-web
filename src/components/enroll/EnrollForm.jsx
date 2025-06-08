@@ -1,9 +1,10 @@
 import React from "react";
-import CourseCard from "./CourseCard";
 import { getCourses, getEnrollStatus } from "@/services/courses";
 import { useEffect } from "react";
 import { useState } from "react";
 import FilterBar from "@/components/enroll/FilterBar";
+import CoursesList from "./CoursesList";
+import RegisteredCoursesList from "./RegisteredCoursesList";
 const EnrollForm = () => {
   const [filters, setFilters] = useState({
     category: "",
@@ -59,23 +60,16 @@ const EnrollForm = () => {
   return (
     <div className="w-[1230px] flex gap-[22px]">
       {/* filters */}
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-[15px]">
         <FilterBar setFilter={setFilters} />
-        <div className="flex gap-6 min-w-0">
-          {/* cources */}
-          <CourseCard
-            title="강의 목록"
-            courses={generalCourses}
-            isRegister={false}
-            onEnrollSuccess={getRegisterCourses}
-          />
-        </div>
+        <CoursesList
+          courses={generalCourses}
+          onEnrollSuccess={getRegisterCourses}
+        />
       </div>
       {/* register */}
-      <CourseCard
-        title="수강 현황"
+      <RegisteredCoursesList
         courses={registerCourses}
-        isRegister={true}
         onEnrollSuccess={getRegisterCourses}
       />
     </div>
