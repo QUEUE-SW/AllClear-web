@@ -27,7 +27,10 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between bg-white rounded-lg shadow-md px-4 py-4 w-[260px] h-[226px]">
+    <div
+      className="flex flex-col justify-between bg-white rounded-lg shadow-md px-4 py-4 w-[260px] h-[226px] 
+    hover:-translate-y-1 transition-transform duration-200 ease-in-out hover:shadow-lg"
+    >
       {/* 상단 뱃지 영역 */}
       <div className="flex justify-between items-center mb-2">
         <div className="flex justify-center items-center w-[93px] h-[28px] bg-blue-100 text-blue-600 text-sm font-bold rounded-full">
@@ -79,15 +82,16 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
           onClick={() =>
             currentStatus === "gray" ? null : handleEnroll(course.courseId)
           }
-          className={`w-[100px] h-[40px] text-white text-sm font-semibold rounded-full shadow ${
-            currentStatus === "gray"
-              ? "bg-gray-300 cursor-not-allowed"
-              : currentStatus === "red"
-              ? "bg-gradient-to-b from-red-400 to-red-500 hover:from-red-500 hover:to-red-600"
-              : currentStatus === "orange"
-              ? "bg-gradient-to-b from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600"
-              : "bg-gradient-to-b from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
-          }`}
+          className={`w-[100px] h-[40px] text-white text-sm font-semibold rounded-full shadow 
+    hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150 ${
+      currentStatus === "gray"
+        ? "bg-gray-300 cursor-not-allowed"
+        : currentStatus === "red"
+        ? "bg-gradient-to-b from-red-400 to-red-500 hover:from-red-500 hover:to-red-600"
+        : currentStatus === "orange"
+        ? "bg-gradient-to-b from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600"
+        : "bg-gradient-to-b from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
+    }`}
         >
           {currentStatus === "gray" ? "마감" : "신청하기"}
         </button>

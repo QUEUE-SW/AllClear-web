@@ -3,7 +3,7 @@ import { MapPin } from "lucide-react";
 
 const RegisteredCourseItem = ({ course, onCancel }) => {
   return (
-    <div className="w-[352px] h-[136px] flex justify-between px-3 py-3 bg-gray-50 rounded-lg border border-gray-200">
+    <div className="w-[352px] h-[136px] flex justify-between px-3 py-3 bg-gray-50 rounded-lg border border-gray-200 hover:-translate-y-1 transition-transform duration-200 ease-in-out hover:shadow-lg">
       {/* 좌측 정보 */}
       <div className="flex flex-col">
         <div className="flex gap-2">
@@ -30,7 +30,7 @@ const RegisteredCourseItem = ({ course, onCancel }) => {
       <div className="flex flex-col justify-end">
         <button
           onClick={() => onCancel(course.enrollmentId)}
-          className="w-[52px] h-[28px] text-sm text-white bg-black border rounded-full"
+          className="w-[52px] h-[28px] text-sm text-white bg-black border rounded-full hover:bg-gray-800 hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150"
         >
           취소
         </button>
