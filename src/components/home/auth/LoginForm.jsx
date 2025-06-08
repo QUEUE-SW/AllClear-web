@@ -59,15 +59,23 @@ function LoginForm({ onLoginSubmit, errorMessage }) {
             />
           </div>
 
-          {(
-            <div className="w-full text-center text-sm text-red-500 mt-2 min-h-[20px]" disabled={errorMessage}>
+          {
+            <div
+              className="w-full text-center text-sm text-red-500 mt-2 min-h-[20px]"
+              disabled={errorMessage}
+            >
               {errorMessage}
             </div>
-          )}
+          }
 
           <button
             type="submit"
-            className="cursor-pointer w-full h-[44px] mt-3 mb-2 bg-indigo-700 text-white text-center rounded-[8px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+            className="cursor-pointer w-full h-[44px] mt-3 mb-2 
+             bg-indigo-700 text-white text-center rounded-[8px] 
+             shadow-[0px_4px_4px_rgba(0,0,0,0.25)] 
+             hover:bg-indigo-800 active:bg-indigo-900 
+             transition duration-200 ease-in-out 
+             hover:scale-[1.02] active:scale-[0.98]"
             onClick={handleSubmit}
           >
             로그인
@@ -77,9 +85,9 @@ function LoginForm({ onLoginSubmit, errorMessage }) {
           <div className="cursor-pointer text-indigo-700" onClick={toSignup}>
             회원가입
           </div>
-          <div className="m-1 text-xs text-gray-400">
+          <span className="m-1 text-xs text-gray-400">
             문의: 한이음 드림업 팀 큐 02-1234-5678
-          </div>
+          </span>
         </div>
       </div>
     </div>

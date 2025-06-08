@@ -51,11 +51,11 @@ const Announcement = () => {
               <div className="text-gray-500">2025.02.02</div>
             </div>
             <div className="text-lg font-bold">수강신청 시 유의사항</div>
-            <div className="text-gray-500 space-y-1">
+            <ul className="list-disc list-inside text-gray-500 space-y-1">
               <li>졸업요건을 확인한 후 수강신청 하시기 바랍니다</li>
               <li>시간표 중복 및 선수과목 이수 여부를 확인하세요</li>
               <li>수강신청 변경기간: 2025년 3월 2일 ~ 3월 8일</li>
-            </div>
+            </ul>
           </div>
           <hr className="w-[622px] grow border-t border-gray-200" />
           {/* 문의 */}
@@ -69,13 +69,12 @@ const Announcement = () => {
             <div className="text-lg font-bold">
               2025학년도 1학기 수강신청 일정 안내
             </div>
-            <div className="text-gray-500 space-y-1">
+            <ul className="list-disc list-inside text-gray-500 space-y-1">
               <li>한이음 드림업 팀 큐: 02-6344-8423 (평일 09:00~18:00)</li>
               <li>이메일: queue123@han.ac.kr</li>
               <li>방문상담: IT관 1층 114호 (평일 09:00~17:00)</li>
-            </div>
+            </ul>
           </div>
-          {/* <hr className="w-[622px] grow border-t border-gray-200" /> */}
         </div>
       </div>
     </div>

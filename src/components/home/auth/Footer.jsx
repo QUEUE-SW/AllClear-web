@@ -4,7 +4,7 @@ const Footer = () => {
   const titleStyle = "font-extrabold pb-2 text-base";
   const contentStyle = "text-slate-500";
   return (
-    <div className="w-full bg-gray-100 border border-gray-200 grid place-items-center text-sm">
+    <footer className="w-full bg-gray-100 border border-gray-200 grid place-items-center text-sm">
       <div className="w-[1242px]">
         {/* main helper */}
         <div className="flex pt-6 pb-4">
@@ -43,7 +43,7 @@ const Footer = () => {
           ⓒ 2025 Team Queue. All rights reserved. | 개인정보처리방침 | 이용약관
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
