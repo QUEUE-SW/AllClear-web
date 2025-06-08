@@ -27,7 +27,7 @@ const EnrollPage = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gradient-to-b from-blue-50 to-blue-200">
+    <div className="w-full min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-blue-200">
       {/* 고정 헤더 */}
       <Header myBasic={myBasic} />
 
