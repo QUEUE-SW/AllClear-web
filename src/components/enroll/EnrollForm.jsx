@@ -5,6 +5,7 @@ import { useState } from "react";
 import FilterBar from "@/components/enroll/FilterBar";
 import CoursesList from "./CoursesList";
 import RegisteredCoursesList from "./RegisteredCoursesList";
+import CreditsStatus from "./CreditsStatus";
 const EnrollForm = () => {
   const [filters, setFilters] = useState({
     category: "",
@@ -58,20 +59,24 @@ const EnrollForm = () => {
   }, []);
 
   return (
-    <div className="w-[1230px] flex gap-[22px]">
-      {/* filters */}
-      <div className="flex flex-col gap-[15px]">
-        <FilterBar setFilter={setFilters} />
-        <CoursesList
-          courses={generalCourses}
+    <div className="flex flex-col justify-center items-center gap-6">
+      <div className="w-[1230px] flex gap-[22px]">
+        {/* filters */}
+        <div className="flex flex-col gap-[15px]">
+          <FilterBar setFilter={setFilters} />
+          <CoursesList
+            courses={generalCourses}
+            onEnrollSuccess={getRegisterCourses}
+          />
+        </div>
+        {/* register */}
+        <RegisteredCoursesList
+          courses={registerCourses}
           onEnrollSuccess={getRegisterCourses}
         />
       </div>
-      {/* register */}
-      <RegisteredCoursesList
-        courses={registerCourses}
-        onEnrollSuccess={getRegisterCourses}
-      />
+
+      <CreditsStatus />
     </div>
   );
 };

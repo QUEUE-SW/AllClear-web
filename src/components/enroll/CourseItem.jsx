@@ -70,7 +70,7 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
 
       {/* 아래: 학점 + 버튼 */}
       <div className="flex justify-between items-center mt-auto">
-        <div className="w-[51px] h-[24px] flex justify-center items-center bg-gray-100 text-sm rounded">
+        <div className="w-[51px] h-[24px] flex justify-center items-center bg-gray-100 text-sm">
           {course.credit}학점
         </div>
 

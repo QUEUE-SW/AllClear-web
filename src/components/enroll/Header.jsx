@@ -11,7 +11,7 @@ const Header = ({ myBasic }) => {
     navigate("/login");
   };
   return (
-    <header className="flex border-b-2 justify-center gap-[504px] p-2">
+    <header className="flex border-b-2 justify-center gap-[504px] p-2 bg-white">
       <div className="flex space-x-3">
         <div className="w-12 h-12 rounded-xl font-extrabold text-xl bg-blue-800 text-white grid place-items-center">
           한이

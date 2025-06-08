@@ -20,7 +20,12 @@ const CoursesList = ({ courses, onEnrollSuccess }) => {
   }, [courses]);
 
   return (
-    <div className="w-[814px] h-[607px] grid grid-cols-3 gap-2 overflow-y-auto">
+    <div
+      className="w-[814px] h-[607px] grid grid-cols-3 gap-2 overflow-y-auto     [&::-webkit-scrollbar]:w-1
+    [&::-webkit-scrollbar-track]:bg-transparent
+    [&::-webkit-scrollbar-thumb]:bg-gray-400
+    [&::-webkit-scrollbar-thumb]:rounded-full"
+    >
       {courses?.map((course) => {
         const current = capa.find((c) => c.courseId === course.courseId);
         return (

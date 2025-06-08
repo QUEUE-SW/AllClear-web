@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CourseItem from "./CourseItem";
-import { getCredits } from "@/services/student";
 import { getCapacities } from "@/services/courses";
+import { BookOpen } from "lucide-react"; // 상단 아이콘 예시
+import RegisteredCourseItem from "./RegisteredCourseItem";
 
-const RegisteredCoursesList = ({ courses, onEnrollSuccess }) => {
+const RegisteredCoursesList = ({ courses }) => {
   const [capa, setCapa] = useState([]);
-  const [credits, setCredits] = useState({
-    totalCredit: null,
-    maxCredit: null,
-    remainingCredit: null,
-  });
-
-  const getCreditData = async () => {
-    try {
-      const res = await getCredits();
-      setCredits(res);
-    } catch (error) {
-      console.error("학점 조회 실패", error);
-    }
-  };
 
   const getCurrentCapa = async () => {
     try {
@@ -31,50 +17,39 @@ const RegisteredCoursesList = ({ courses, onEnrollSuccess }) => {
   };
 
   useEffect(() => {
-    getCreditData();
-  }, []);
-
-  useEffect(() => {
     getCurrentCapa();
   }, [courses]);
 
   return (
-    <div className="border w-[515px] bg-gray-100 rounded-xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-      <div className="flex justify-between border-b-2 border-gray-200 px-4 py-2">
-        <div className="text-xl">수강 현황</div>
-        <div>{courses?.length}개 강의</div>
+    <div className="flex flex-col w-[394px] h-[692px] bg-white rounded-lg shadow-md overflow-hidden">
+      {/* 상단 헤더 */}
+      <div className="flex items-center gap-2 bg-green-50 px-4 py-3 text-green-800 font-bold text-lg">
+        <BookOpen size={20} />
+        수강 현황
       </div>
-      <div className="flex border-slate-400 text-sm p-2 text-center text-gray-400">
-        <div className="w-[55px]">강의 번호</div>
-        <div className="w-[60px]">강의명</div>
-        <div className="w-[70px]">교수명</div>
-        <div className="w-[85px]">시간</div>
-        <div className="w-[70px]">여석현황</div>
-        <div className="w-[65px]">강의실</div>
-        <div className="w-[40px]">학점</div>
-      </div>
-      <div className="flex flex-col w-full xl:h-[300px] 2xl:h-[550px] justify-between">
-        <div className="overflow-scroll rounded-b-xl [&::-webkit-scrollbar]:hidden">
-          {courses?.map((course) => {
-            const current = capa.find((c) => c.courseId === course.courseId);
-            return (
-              <CourseItem
-                key={course.courseId}
-                course={course}
-                currentCapa={current?.current}
-                isRegister={true}
-                onEnrollSuccess={onEnrollSuccess}
-              />
-            );
-          })}
-        </div>
-        <div className="flex border-t justify-between text-sm p-3">
-          <div>총 학점: {credits.totalCredit}</div>
-          <div className="flex gap-4">
-            <div>최대 신청 가능 학점: {credits.maxCredit}</div>
-            <div>남은 신청 가능 학점: {credits.remainingCredit}</div>
-          </div>
-        </div>
+
+      {/* 내용 영역 - 스크롤 */}
+      <div
+        className="flex flex-col gap-4 px-4 py-3 overflow-y-auto
+          [&::-webkit-scrollbar]:w-1
+          [&::-webkit-scrollbar-thumb]:bg-gray-400
+          [&::-webkit-scrollbar-track]:bg-transparent"
+      >
+        {/* TODO: CourseItem 영역 */}
+        {courses?.map((course) => {
+          const current = capa.find((c) => c.courseId === course.courseId);
+          return (
+            <RegisteredCourseItem
+              key={course.courseId}
+              course={course}
+              currentCapa={current?.current}
+              onCancel={(id) => {
+                console.log("취소 클릭:", id);
+                // TODO: 취소 API 연결
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );
