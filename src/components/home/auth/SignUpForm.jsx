@@ -6,8 +6,10 @@ import {
   majorMap,
 } from "@/constants/signupOptions";
 import { isValidKoreanName, isValidStudentId } from "@/utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = ({ onSubmit, errorMessage }) => {
+  const navigate = useNavigate();
   const [studentId, setStudentId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -151,15 +153,21 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
     });
   };
 
+  const toLogin = () => navigate("/login");
+
   // 공통 인풋 스타일. 추후 파일 분리 예정
   const inputStyle =
-    "w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-xl text-gray-600 placeholder-gray-400 text-sm";
+    "w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-[8px] text-gray-500 text-sm";
+  const itemTitleStyle = "mb-3";
 
   return (
-    <div className="w-[450px] min-w-[400px] h-[590px] bg-white rounded-3xl shadow-gray-300 shadow-[10px_10px_10px_rgba(0,0,0,0.25),inset_1px_1px_10px_rgba(0,0,0,5)] p-4">
-      <h1 className="text-lg font-semibold mb-4">수강신청 회원가입</h1>
+    <div className="w-[446px] h-[752px] px-8 py-6 border rounded-[8px] shadow-gray-300 shadow-[0px_6px_8px_rgba(0,0,0,0.25)] ">
+      <div className="mb-3 text-center">
+        <h1 className="text-xl font-bold">회원가입</h1>
+      </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit} className="text-sm">
+        <div className={itemTitleStyle}>학번 (Student ID)</div>
         <input
           type="text"
           value={studentId}
@@ -171,109 +179,130 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
           {studentIdError || errorMessage}
         </span>
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => handlePWChange(e.target.value)}
-          placeholder="비밀번호"
-          className={inputStyle}
-        />
+        <div className={itemTitleStyle}>비밀번호 (Password)</div>
+        <div className="space-y-1">
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => handlePWChange(e.target.value)}
+            placeholder="비밀번호"
+            className={inputStyle}
+          />
 
-        <input
-          type="password"
-          value={passwordConfirm}
-          onChange={(e) => handlePWConfirmChange(e.target.value)}
-          placeholder="비밀번호 확인"
-          className={inputStyle}
-        />
+          <input
+            type="password"
+            value={passwordConfirm}
+            onChange={(e) => handlePWConfirmChange(e.target.value)}
+            placeholder="비밀번호 확인"
+            className={inputStyle}
+          />
+        </div>
 
         <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
           {passwordError}
         </span>
 
-        <div className="grid grid-cols-2 gap-2">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="이름"
-            className={inputStyle}
-          />
+        <div className={itemTitleStyle}>
+          학사정보 (Student Academic Information)
+        </div>
+        <div className="space-y-1">
+          <div className="grid grid-cols-2 gap-2">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름"
+              className={inputStyle}
+            />
+
+            <select
+              value={grade}
+              onChange={(e) => {
+                setGrade(e.target.value);
+                setMajor("");
+              }}
+              className={inputStyle}
+            >
+              <option value="">학년</option>
+              {gradeOptions.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <select
-            value={grade}
+            value={college}
             onChange={(e) => {
-              setGrade(e.target.value);
+              setCollege(e.target.value);
+              setDepartment("");
               setMajor("");
             }}
             className={inputStyle}
           >
-            <option value="">학년</option>
-            {gradeOptions.map((g) => (
-              <option key={g} value={g}>
-                {g}
+            <option value="">대학</option>
+            {collegeOptions.map((c) => (
+              <option key={c} value={c}>
+                {c}
               </option>
             ))}
           </select>
+
+          <select
+            value={department}
+            onChange={(e) => {
+              setDepartment(e.target.value);
+              setMajor("");
+            }}
+            className={inputStyle}
+            disabled={!departmentOptionsByCollege[college]?.length}
+          >
+            <option value="">학부/학과</option>
+            {departmentOptionsByCollege[college]?.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+            className={inputStyle}
+            disabled={getFilteredMajors().length === 0}
+          >
+            <option value="">전공</option>
+            {getFilteredMajors().map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+          <span className="min-h-[18px] -mt-3 ml-2 text-xs text-red-500">
+            {formError.common}
+          </span>
         </div>
-
-        <select
-          value={college}
-          onChange={(e) => {
-            setCollege(e.target.value);
-            setDepartment("");
-            setMajor("");
-          }}
-          className={inputStyle}
-        >
-          <option value="">대학</option>
-          {collegeOptions.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={department}
-          onChange={(e) => {
-            setDepartment(e.target.value);
-            setMajor("");
-          }}
-          className={inputStyle}
-          disabled={!departmentOptionsByCollege[college]?.length}
-        >
-          <option value="">학부/학과</option>
-          {departmentOptionsByCollege[college]?.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
-          className={inputStyle}
-          disabled={getFilteredMajors().length === 0}
-        >
-          <option value="">전공</option>
-          {getFilteredMajors().map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-        <span className="min-h-[18px] -mt-3 ml-2 text-xs text-red-500">
-          {formError.common}
-        </span>
         <button
           type="submit"
-          className="w-full py-2.5 bg-indigo-500 text-white rounded-xl shadow-gray-300/50 hover:shadow-indigo-300/50 shadow-[inset_3px_3px_3px_rgba(0,0,0,5)] hover:shadow-[10px_10px_10px,inset_1px_1px_5px]"
+          className="cursor-pointer w-full h-[44px] mt-16 mb-2 
+             bg-indigo-700 text-white text-center rounded-[8px] 
+             shadow-[0px_4px_4px_rgba(0,0,0,0.25)] 
+             hover:bg-indigo-800 active:bg-indigo-900 
+             transition duration-200 ease-in-out 
+             hover:scale-[1.02] active:scale-[0.98]"
         >
           회원가입
         </button>
       </form>
+      <div className="mt-8 text-center">
+        <div className="cursor-pointer text-indigo-700" onClick={toLogin}>
+          로그인
+        </div>
+        <span className="m-1 text-xs text-gray-400">
+          문의: 한이음 드림업 팀 큐 02-1234-5678
+        </span>
+      </div>
     </div>
   );
 };
