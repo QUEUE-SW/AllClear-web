@@ -175,7 +175,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
           placeholder="학번"
           className={inputStyle}
         />
-        <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
+        <span className="block min-h-[18px] mt-1 ml-2 text-xs text-red-500">
           {studentIdError || errorMessage}
         </span>
 
@@ -198,7 +198,7 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
           />
         </div>
 
-        <span className="min-h-[18px] -mt-3 -mb-2 ml-2 text-xs text-red-500">
+        <span className="block min-h-[18px] mt-1 ml-2 text-xs text-red-500">
           {passwordError}
         </span>
 
@@ -279,13 +279,13 @@ const SignUpForm = ({ onSubmit, errorMessage }) => {
               </option>
             ))}
           </select>
-          <span className="min-h-[18px] -mt-3 ml-2 text-xs text-red-500">
+          <span className="block min-h-[18px] mt-1 ml-2 text-xs text-red-500">
             {formError.common}
           </span>
         </div>
         <button
           type="submit"
-          className="cursor-pointer w-full h-[44px] mt-16 mb-2 
+          className="cursor-pointer w-full h-[44px] mt-8 mb-2
              bg-indigo-700 text-white text-center rounded-[8px] 
              shadow-[0px_4px_4px_rgba(0,0,0,0.25)] 
              hover:bg-indigo-800 active:bg-indigo-900 
