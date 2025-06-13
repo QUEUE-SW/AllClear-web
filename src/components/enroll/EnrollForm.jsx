@@ -35,11 +35,11 @@ const EnrollForm = () => {
       };
 
       const courseRes = await getCourses(filters);
-      setGeneralCourses(courseRes);
+      setGeneralCourses(courseRes.data);
 
-      const ids = courseRes.map((c) => c.courseId);
+      const ids = courseRes.data.map((c) => c.courseId);
       const capaRes = await getCapacities(ids);
-      setCapacities(capaRes);
+      setCapacities(capaRes.data);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
@@ -49,7 +49,7 @@ const EnrollForm = () => {
   const getRegisterCourses = async () => {
     try {
       const res = await getEnrollStatus();
-      setRegisterCourses(res);
+      setRegisterCourses(res.data);
     } catch (error) {
       console.error("수강신청 현황 조회 실패", error);
     }
@@ -58,7 +58,7 @@ const EnrollForm = () => {
   const getCreditData = async () => {
     try {
       const res = await getCredits();
-      setCredits(res);
+      setCredits(res.data);
     } catch (error) {
       console.error("학점 조회 실패", error);
     }

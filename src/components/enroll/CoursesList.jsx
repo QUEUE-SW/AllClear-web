@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import CourseItem from "./CourseItem";
 import { enrollCourse } from "@/services/enrollments";
 
@@ -5,10 +6,28 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
   const handleEnroll = async (courseId) => {
     try {
       const res = await enrollCourse(courseId);
+      const courseName = res.data.courseName;
+
+      toast.success(`✅ ‘${courseName}’가 \n 성공적으로 신청되었습니다!`, {
+        icon: false,
+      });
+
       onEnrollSuccess?.();
     } catch (error) {
-      const msg = error?.response?.data?.message || "신청 실패 또는 서버 오류";
-      alert(msg);
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+
+      let message = "❌ 신청 실패 또는 서버 오류";
+      // todo: 달라진 에러코드에 맞게 수정
+      if (status === 404 && code === "4040") {
+        message = "❌ 해당 강의 정보를 찾을 수 없습니다.";
+      } else if (status === 409 && code === "4090") {
+        message = "❌ 최대 신청 학점을 초과했습니다.";
+      } else if (status === 409 && code === "4091") {
+        message = "❌ 이미 신청한 강의입니다.";
+      }
+
+      toast.error(message, { icon: false });
     }
   };
 

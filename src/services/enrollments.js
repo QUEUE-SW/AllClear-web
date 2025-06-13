@@ -10,5 +10,5 @@ export const enrollCourse = async (courseId) => {
   });
   console.log(response)
 
-  return response.data;
+  return response;
 }
