@@ -15,7 +15,7 @@ const EnrollPage = () => {
   const getMyBasic = async () => {
     try {
       const res = await myBasicData();
-      console.log(res);
+      // console.log(res);
       setMyBasic(res);
     } catch (error) {
       console.log("내 기본 정보 조회 실패", error);
@@ -27,11 +27,14 @@ const EnrollPage = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-gray-50">
+    <div className="w-full min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-blue-200">
+      {/* 고정 헤더 */}
       <Header myBasic={myBasic} />
-      <div className="w-full h-[calc(100vh-60px)] flex justify-center items-center">
+
+      {/* 본문 영역 */}
+      <main className="flex justify-center items-center mt-[12px]">
         <EnrollForm />
-      </div>
+      </main>
     </div>
   );
 };
