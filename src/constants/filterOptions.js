@@ -21,7 +21,8 @@ export const departmentOptions = [
 
 export const majorOptions = [
   { label: "전체", value: "" },
-  { label: "컴퓨터공학과", value: 1 },
-  { label: "정보통신공학과", value: 2 },
-  { label: "소프트웨어융합전공", value: 3 },
+  { label: "통합", value: "ALL" },
+  { label: "컴퓨터공학과", value: "CSE" },
+  { label: "정보통신공학과", value: "ICE" },
+  { label: "소프트웨어융합전공", value: "SC" },
 ];
