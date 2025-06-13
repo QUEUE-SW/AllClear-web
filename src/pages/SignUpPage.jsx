@@ -54,7 +54,7 @@ const SignUpPage = () => {
     }
   };
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-gray-50 px-4">
+    <div>
       <SignUpForm onSubmit={handleSignUpSubmit} errorMessage={errorMessage} />
     </div>
   );
