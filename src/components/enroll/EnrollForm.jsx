@@ -73,11 +73,14 @@ const EnrollForm = () => {
   // 필터 변경될 때마다 호출 (최초 포함)
   useEffect(() => {
     getGeneralCourses();
-    getCreditData();
   }, [category, grade, department, major]);
 
   useEffect(() => {
     getRegisterCourses();
+  }, []);
+
+  useEffect(() => {
+    getCreditData(); // ✅ 최초 1회만 실행
   }, []);
 
   return (
