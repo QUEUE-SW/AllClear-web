@@ -9,7 +9,7 @@ const RegisteredCourseItem = ({ course, onCancelSuccess }) => {
       const res = await cancelEnrollment(course.enrollmentId);
       const courseName = course.name;
 
-      toast.success(`${courseName} 수강 취소 완료`);
+      toast.success(`${courseName} 성공적으로 취소되었습니다!`);
 
       onCancelSuccess?.(); // 상위 콜백 호출
     } catch (error) {

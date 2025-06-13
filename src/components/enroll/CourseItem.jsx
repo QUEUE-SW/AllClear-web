@@ -1,7 +1,38 @@
+import { enrollCourse } from "@/services/enrollments";
 import { MapPin } from "lucide-react";
 import React from "react";
+import { toast } from "react-toastify";
 
-const CourseItem = ({ course, currentCapa, onEnroll }) => {
+const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
+  const handleEnroll = async () => {
+    try {
+      const res = await enrollCourse(course.courseId);
+      const courseName = course.name;
+
+      toast.success(`‘${courseName}’가 성공적으로 신청되었습니다!`);
+
+      onEnrollSuccess?.();
+    } catch (error) {
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+      const message = error?.response?.data?.message;
+
+      if (status === 404 && code === "4040") {
+        toast.error(message);
+      } else if (status === 409 && code === "4090") {
+        toast.error(message);
+      } else if (status === 409 && code === "4091") {
+        toast.error(message);
+      } else {
+        toast.error("수강 취소 실패: 서버 오류");
+      }
+    }
+  };
+
+  const onEnroll = () => {
+    handleEnroll();
+  };
+
   const capaRate = (currentCapa || 0) / course.capacity;
 
   const getStatusClass = () => {
@@ -65,9 +96,7 @@ const CourseItem = ({ course, currentCapa, onEnroll }) => {
         </div>
 
         <button
-          onClick={() =>
-            currentStatus === "gray" ? null : onEnroll(course.courseId)
-          }
+          onClick={() => (currentStatus === "gray" ? null : onEnroll())}
           className={`w-[100px] h-[40px] text-white text-sm font-semibold rounded-full shadow 
             hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150 ${
               currentStatus === "gray"
