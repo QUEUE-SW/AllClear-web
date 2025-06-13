@@ -106,6 +106,7 @@ const EnrollForm = () => {
         <RegisteredCoursesList
           courses={registerCourses}
           onEnrollSuccess={getRegisterCourses}
+          onCancelSuccess={handleAfterEnroll}
         />
       </div>
       <CreditsStatus credits={credits} />

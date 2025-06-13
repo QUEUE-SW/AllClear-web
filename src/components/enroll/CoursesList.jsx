@@ -8,9 +8,7 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
       const res = await enrollCourse(courseId);
       const courseName = res.data.courseName;
 
-      toast.success(`✅ ‘${courseName}’가 \n 성공적으로 신청되었습니다!`, {
-        icon: false,
-      });
+      toast.success(`✅ ‘${courseName}’가 \n 성공적으로 신청되었습니다!`);
 
       onEnrollSuccess?.();
     } catch (error) {
@@ -24,6 +22,8 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
         toast.error(message, { icon: false });
       } else if (status === 409 && code === "4091") {
         toast.error(message, { icon: false });
+      } else {
+        toast.error("수강 취소 실패: 서버 오류");
       }
     }
   };
