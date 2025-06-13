@@ -15,7 +15,7 @@ const EnrollPage = () => {
   const getMyBasic = async () => {
     try {
       const res = await myBasicData();
-      console.log(res);
+      // console.log(res);
       setMyBasic(res);
     } catch (error) {
       console.log("내 기본 정보 조회 실패", error);

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   categoryOptions,
   gradeOptions,
@@ -10,10 +9,10 @@ import { Search } from "lucide-react";
 
 const Filter = ({ kind, setFilter }) => {
   const [code, setCode] = useState("");
+  const [selected, setSelected] = useState(""); // select 전용 상태 추가
 
   let filterName = "";
   let options = [];
-  // 필터 종류별로 label(사용자에게 보이는 이름)과 value(서버에 전달할 값) 설정
   switch (kind) {
     case "department":
       options = departmentOptions;
@@ -38,9 +37,8 @@ const Filter = ({ kind, setFilter }) => {
       break;
   }
 
-  // 선택한 필터에 맞게 서버에 전송할 filter 객체 설정
-  // 이미 선택한 필터가 초기화되지 않기 위해 prev 사용
   const handleChange = (option) => {
+    setSelected(option);
     setFilter((prev) => ({
       ...prev,
       [kind]: option,
@@ -49,10 +47,13 @@ const Filter = ({ kind, setFilter }) => {
 
   return (
     <div className="flex flex-col flex-1">
-      {/* 강의코드 필터인 경우엔 input 태그를 사용 */}
       {kind !== "code" ? (
-        <select onChange={(e) => handleChange(e.target.value)} className="p-2">
-          <option value="" disabled selected hidden>
+        <select
+          value={selected}
+          onChange={(e) => handleChange(e.target.value)}
+          className="p-2"
+        >
+          <option value="" disabled hidden>
             {filterName}
           </option>
           {options.map((item, idx) => (

@@ -8,7 +8,7 @@ const FilterBar = ({ setFilter }) => {
       <Filter kind="major" setFilter={setFilter} />
       <Filter kind="category" setFilter={setFilter} />
       <Filter kind="grade" setFilter={setFilter} />
-      <Filter kind="code" setFilter={setFilter} />
+      {/* <Filter kind="code" setFilter={setFilter} /> */}
     </div>
   );
 };

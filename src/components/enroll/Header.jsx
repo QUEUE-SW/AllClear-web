@@ -25,16 +25,26 @@ const Header = ({ myBasic }) => {
 
       <div className="flex justify-center items-center gap-4">
         {/* 학기 */}
-        <div className="flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 text-sm font-medium rounded-full">
+        <div className="flex items-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 text-sm font-medium rounded-full min-w-[180px]">
           <Calendar size={18} />
-          <span>2025학년도 {myBasic.semester}</span>
+          <span>
+            {myBasic.semester ? (
+              `2025학년도 ${myBasic.semester}`
+            ) : (
+              <span className="text-gray-300">학기 정보 로딩 중</span>
+            )}
+          </span>
         </div>
 
         {/* 학번 + 이름 */}
-        <div className="flex items-center space-x-2 px-4 py-2 bg-gray-50 text-black text-sm font-medium rounded-full">
+        <div className="flex items-center space-x-2 px-4 py-2 bg-gray-50 text-black text-sm font-medium rounded-full min-w-[200px]">
           <User size={18} />
           <span>
-            {myBasic.identifier} {myBasic.name}
+            {myBasic.identifier && myBasic.name ? (
+              `${myBasic.identifier} ${myBasic.name}`
+            ) : (
+              <span className="text-gray-300">사용자 정보 로딩 중</span>
+            )}
           </span>
         </div>
 
