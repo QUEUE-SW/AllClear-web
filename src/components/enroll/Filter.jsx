@@ -1,10 +1,11 @@
-const Filter = ({ kind, value, setValue, options = [] }) => {
+const Filter = ({ kind, value, setValue, options = [], disabled = false }) => {
   return (
     <div className="flex flex-col flex-1">
       <select
         value={value}
         onChange={(e) => setValue(e.target.value)}
         className="p-2"
+        disabled={disabled} // 💡 비활성화 처리
       >
         <option value="" disabled hidden>
           {(() => {

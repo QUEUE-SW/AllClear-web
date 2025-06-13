@@ -14,6 +14,8 @@ const FilterBar = ({
   setGrade,
   setDepartment,
   setMajor,
+  getFilteredMajorOptions,
+  isMajorDisabled,
 }) => {
   return (
     <div className="flex w-[814px] h-[70px] items-center justify-center px-4 gap-2 bg-white rounded-lg shadow-md">
@@ -27,7 +29,8 @@ const FilterBar = ({
         kind="major"
         value={major}
         setValue={setMajor}
-        options={majorOptions}
+        options={getFilteredMajorOptions()}
+        disabled={isMajorDisabled}
       />
       <Filter
         kind="category"

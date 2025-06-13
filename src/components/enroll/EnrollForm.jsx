@@ -5,13 +5,23 @@ import CoursesList from "@/components/enroll/CoursesList";
 import RegisteredCoursesList from "@/components/enroll/RegisteredCoursesList";
 import CreditsStatus from "@/components/enroll/CreditsStatus";
 import { getCredits } from "@/services/student";
+import { useFilter } from "@/hooks/useFilter";
 
 const EnrollForm = () => {
-  // 각각의 필터 상태 분리
-  const [category, setCategory] = useState("");
-  const [grade, setGrade] = useState("");
-  const [department, setDepartment] = useState("");
-  const [major, setMajor] = useState("");
+  const {
+    category,
+    grade,
+    department,
+    major,
+    setCategory,
+    setGrade,
+    setDepartment,
+    setMajor,
+    getFilteredMajorOptions,
+    isMajorDisabled,
+    filters,
+    resetFilters,
+  } = useFilter();
 
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
@@ -26,14 +36,6 @@ const EnrollForm = () => {
   // 강의 목록 조회
   const getGeneralCourses = async () => {
     try {
-      const filters = {
-        category,
-        grade,
-        department,
-        major,
-        code: "",
-      };
-
       const courseRes = await getCourses(filters);
       setGeneralCourses(courseRes.data);
 
@@ -73,7 +75,7 @@ const EnrollForm = () => {
   // 필터 변경될 때마다 호출 (최초 포함)
   useEffect(() => {
     getGeneralCourses();
-  }, [category, grade, department, major]);
+  }, [filters]);
 
   useEffect(() => {
     getRegisterCourses();
@@ -101,6 +103,8 @@ const EnrollForm = () => {
             setGrade={setGrade}
             setDepartment={setDepartment}
             setMajor={setMajor}
+            getFilteredMajorOptions={getFilteredMajorOptions}
+            isMajorDisabled={isMajorDisabled}
           />
           <CoursesList
             courses={filteredCourses}
