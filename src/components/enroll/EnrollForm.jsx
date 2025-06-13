@@ -37,11 +37,9 @@ const EnrollForm = () => {
       const courseRes = await getCourses(filters);
       setGeneralCourses(courseRes);
 
-      const ids = courseRes.map((c) => c.courseId); // ✅ 여기서 courseRes 사용
+      const ids = courseRes.map((c) => c.courseId);
       const capaRes = await getCapacities(ids);
       setCapacities(capaRes);
-
-      // console.log("[강의목록 조회]", filters);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
@@ -61,7 +59,6 @@ const EnrollForm = () => {
     try {
       const res = await getCredits();
       setCredits(res);
-      console.log(res);
     } catch (error) {
       console.error("학점 조회 실패", error);
     }
@@ -70,7 +67,7 @@ const EnrollForm = () => {
   const handleAfterEnroll = () => {
     getGeneralCourses();
     getRegisterCourses();
-    getCreditData(); // ✅ 학점 정보도 갱신
+    getCreditData();
   };
 
   // 필터 변경될 때마다 호출 (최초 포함)

@@ -26,7 +26,7 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
           <CourseItem
             key={course.courseId}
             course={course}
-            currentCapa={current?.current}
+            currentCapa={current?.participant}
             onEnroll={handleEnroll}
           />
         );
