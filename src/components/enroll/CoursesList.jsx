@@ -16,18 +16,15 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
     } catch (error) {
       const status = error?.response?.status;
       const code = error?.response?.data?.code;
+      const message = error?.response?.data?.message;
 
-      let message = "❌ 신청 실패 또는 서버 오류";
-      // todo: 달라진 에러코드에 맞게 수정
       if (status === 404 && code === "4040") {
-        message = "❌ 해당 강의 정보를 찾을 수 없습니다.";
+        toast.error(message, { icon: false });
       } else if (status === 409 && code === "4090") {
-        message = "❌ 최대 신청 학점을 초과했습니다.";
+        toast.error(message, { icon: false });
       } else if (status === 409 && code === "4091") {
-        message = "❌ 이미 신청한 강의입니다.";
+        toast.error(message, { icon: false });
       }
-
-      toast.error(message, { icon: false });
     }
   };
 
