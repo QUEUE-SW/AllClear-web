@@ -18,18 +18,6 @@ const FilterBar = ({
   return (
     <div className="flex w-[814px] h-[70px] items-center justify-center px-4 gap-2 bg-white rounded-lg shadow-md">
       <Filter
-        kind="category"
-        value={category}
-        setValue={setCategory}
-        options={categoryOptions}
-      />
-      <Filter
-        kind="grade"
-        value={grade}
-        setValue={setGrade}
-        options={gradeOptions}
-      />
-      <Filter
         kind="department"
         value={department}
         setValue={setDepartment}
@@ -40,6 +28,18 @@ const FilterBar = ({
         value={major}
         setValue={setMajor}
         options={majorOptions}
+      />
+      <Filter
+        kind="category"
+        value={category}
+        setValue={setCategory}
+        options={categoryOptions}
+      />
+      <Filter
+        kind="grade"
+        value={grade}
+        setValue={setGrade}
+        options={gradeOptions}
       />
     </div>
   );

@@ -9,14 +9,14 @@ const Filter = ({ kind, value, setValue, options = [] }) => {
         <option value="" disabled hidden>
           {(() => {
             switch (kind) {
+              case "department":
+                return "학부│학과";
+              case "major":
+                return "전공";
               case "category":
                 return "이수구분";
               case "grade":
                 return "학년";
-              case "department":
-                return "학과";
-              case "major":
-                return "전공";
               default:
                 return "선택";
             }
