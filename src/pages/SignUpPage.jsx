@@ -54,7 +54,7 @@ const SignUpPage = () => {
     }
   };
   return (
-    <div className="">
+    <div>
       <SignUpForm onSubmit={handleSignUpSubmit} errorMessage={errorMessage} />
     </div>
   );

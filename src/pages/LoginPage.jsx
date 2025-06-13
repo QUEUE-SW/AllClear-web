@@ -1,6 +1,3 @@
-import Announcement from "@/components/home/auth/Announcement";
-import Footer from "@/components/home/auth/Footer";
-import Header from "@/components/home/auth/Header";
 import LoginForm from "@/components/home/auth/LoginForm";
 import { login } from "@/services/auth";
 import { useAuthStore } from "@/stores/authStore";
