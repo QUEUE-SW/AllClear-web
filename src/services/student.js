@@ -6,6 +6,7 @@ import { apiInterface } from "@/utils/apiInterface";
  */
 export const myBasicData = async () => {
   const res = await apiInterface("get", "/students/me");
+  // console.log(res)
   return res.data;
 };
 
@@ -15,5 +16,6 @@ export const myBasicData = async () => {
  */
 export const getCredits = async () => {
   const res = await apiInterface("get", "/student_polices/credits");
+  // console.log(res)
   return res.data;
 };

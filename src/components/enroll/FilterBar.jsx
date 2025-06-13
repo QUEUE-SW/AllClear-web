@@ -6,36 +6,40 @@ import {
   departmentOptions,
   majorOptions,
 } from "@/constants/filterOptions";
-
-const FilterBar = ({ filters, onChange }) => {
-  const updateFilter = (key, value) => {
-    onChange(key, value);
-  };
-
+const FilterBar = ({
+  category,
+  grade,
+  department,
+  major,
+  setCategory,
+  setGrade,
+  setDepartment,
+  setMajor,
+}) => {
   return (
     <div className="flex w-[814px] h-[70px] items-center justify-center px-4 gap-2 bg-white rounded-lg shadow-md">
       <Filter
         kind="category"
-        value={filters.category}
-        setValue={(v) => updateFilter("category", v)}
+        value={category}
+        setValue={setCategory}
         options={categoryOptions}
       />
       <Filter
         kind="grade"
-        value={filters.grade}
-        setValue={(v) => updateFilter("grade", v)}
+        value={grade}
+        setValue={setGrade}
         options={gradeOptions}
       />
       <Filter
         kind="department"
-        value={filters.department}
-        setValue={(v) => updateFilter("department", v)}
+        value={department}
+        setValue={setDepartment}
         options={departmentOptions}
       />
       <Filter
         kind="major"
-        value={filters.major}
-        setValue={(v) => updateFilter("major", v)}
+        value={major}
+        setValue={setMajor}
         options={majorOptions}
       />
     </div>

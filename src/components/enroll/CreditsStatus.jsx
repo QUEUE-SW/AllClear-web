@@ -1,27 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getCredits } from "@/services/student";
 import { GraduationCap, CheckCircle, PlusCircle } from "lucide-react";
 
-const CreditsStatus = () => {
-  const [credits, setCredits] = useState({
-    totalCredit: null,
-    maxCredit: null,
-    remainingCredit: null,
-  });
-
-  const getCreditData = async () => {
-    try {
-      const res = await getCredits();
-      setCredits(res);
-    } catch (error) {
-      console.error("학점 조회 실패", error);
-    }
-  };
-
-  useEffect(() => {
-    getCreditData();
-  }, []);
-
+const CreditsStatus = ({ credits }) => {
   return (
     <div className="flex justify-between items-center w-[896px] h-[100px] px-6 bg-white rounded-xl shadow-md">
       {/* 좌측: 타이틀 */}
