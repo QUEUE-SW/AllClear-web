@@ -1,5 +1,3 @@
-import React from "react";
-
 const Filter = ({ kind, value, setValue, options = [] }) => {
   return (
     <div className="flex flex-col flex-1">

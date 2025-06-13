@@ -1,6 +1,5 @@
 import { enrollCourse } from "@/services/enrollments";
 import { MapPin } from "lucide-react";
-import React from "react";
 import { toast } from "react-toastify";
 
 const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {

@@ -1,4 +1,3 @@
-import React from "react";
 import { MapPin } from "lucide-react";
 import { cancelEnrollment } from "@/services/enrollments";
 import { toast } from "react-toastify";

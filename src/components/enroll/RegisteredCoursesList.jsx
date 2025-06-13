@@ -1,7 +1,5 @@
 import { BookOpen } from "lucide-react"; // 상단 아이콘 예시
-import RegisteredCourseItem from "./RegisteredCourseItem";
-import { toast } from "react-toastify";
-import { cancelEnrollment } from "@/services/enrollments";
+import RegisteredCourseItem from "@/components/enroll/RegisteredCourseItem";
 
 const RegisteredCoursesList = ({ courses, onCancelSuccess }) => {
   return (
@@ -19,7 +17,6 @@ const RegisteredCoursesList = ({ courses, onCancelSuccess }) => {
           [&::-webkit-scrollbar-thumb]:bg-gray-400
           [&::-webkit-scrollbar-track]:bg-transparent"
       >
-        {/* TODO: CourseItem 영역 */}
         {courses?.map((course) => {
           return (
             <RegisteredCourseItem

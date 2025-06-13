@@ -1,6 +1,4 @@
-import { toast } from "react-toastify";
-import CourseItem from "./CourseItem";
-import { enrollCourse } from "@/services/enrollments";
+import CourseItem from "@/components/enroll/CourseItem";
 
 const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
   return (
