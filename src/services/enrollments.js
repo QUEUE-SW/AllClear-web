@@ -8,6 +8,7 @@ export const enrollCourse = async (courseId) => {
   const response = await apiInterface("post", "/enrollments", {
     courseId,
   });
+  console.log(response)
 
-  return response.data;
+  return response;
 }

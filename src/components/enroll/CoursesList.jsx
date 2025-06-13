@@ -1,39 +1,49 @@
-import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import CourseItem from "./CourseItem";
-import { getCapacities } from "@/services/courses";
+import { enrollCourse } from "@/services/enrollments";
 
-const CoursesList = ({ courses, onEnrollSuccess }) => {
-  const [capa, setCapa] = useState([]);
-
-  const getCurrentCapa = async () => {
+const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
+  const handleEnroll = async (courseId) => {
     try {
-      const ids = courses.map((c) => c.courseId);
-      const res = await getCapacities(ids);
-      setCapa(res);
+      const res = await enrollCourse(courseId);
+      const courseName = res.data.courseName;
+
+      toast.success(`✅ ‘${courseName}’가 \n 성공적으로 신청되었습니다!`, {
+        icon: false,
+      });
+
+      onEnrollSuccess?.();
     } catch (error) {
-      console.error("수강신청 인원 조회 실패", error);
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+      const message = error?.response?.data?.message;
+
+      if (status === 404 && code === "4040") {
+        toast.error(message, { icon: false });
+      } else if (status === 409 && code === "4090") {
+        toast.error(message, { icon: false });
+      } else if (status === 409 && code === "4091") {
+        toast.error(message, { icon: false });
+      }
     }
   };
 
-  useEffect(() => {
-    getCurrentCapa();
-  }, [courses]);
-
   return (
     <div
-      className="w-[814px] h-[607px] grid grid-cols-3 gap-2 overflow-y-auto     [&::-webkit-scrollbar]:w-1
-    [&::-webkit-scrollbar-track]:bg-transparent
-    [&::-webkit-scrollbar-thumb]:bg-gray-400
-    [&::-webkit-scrollbar-thumb]:rounded-full"
+      className="w-[814px] h-[607px] grid grid-cols-3 gap-2 overflow-y-auto
+      [&::-webkit-scrollbar]:w-1
+      [&::-webkit-scrollbar-track]:bg-transparent
+      [&::-webkit-scrollbar-thumb]:bg-gray-400
+      [&::-webkit-scrollbar-thumb]:rounded-full"
     >
       {courses?.map((course) => {
-        const current = capa.find((c) => c.courseId === course.courseId);
+        const current = capacities.find((c) => c.courseId === course.courseId);
         return (
           <CourseItem
             key={course.courseId}
             course={course}
-            currentCapa={current?.current}
-            onEnrollSuccess={onEnrollSuccess}
+            currentCapa={current?.participant}
+            onEnroll={handleEnroll}
           />
         );
       })}

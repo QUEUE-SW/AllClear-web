@@ -1,9 +1,7 @@
-import { enrollCourse } from "@/services/enrollments";
+import { MapPin } from "lucide-react";
 import React from "react";
-import { MapPin } from "lucide-react"; // 위치 아이콘
 
-const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
-  // 상태 비율 계산
+const CourseItem = ({ course, currentCapa, onEnroll }) => {
   const capaRate = (currentCapa || 0) / course.capacity;
 
   const getStatusClass = () => {
@@ -14,17 +12,6 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
   };
 
   const currentStatus = getStatusClass();
-
-  // 신청하기 핸들러
-  const handleEnroll = async (id) => {
-    try {
-      const res = await enrollCourse(id);
-      alert(`${res.data.courseName} 신청 성공`);
-      onEnrollSuccess();
-    } catch (error) {
-      alert("신청 실패 또는 서버 오류");
-    }
-  };
 
   return (
     <div
@@ -71,27 +58,26 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
         </div>
       </div>
 
-      {/* 아래: 학점 + 버튼 */}
+      {/* 학점 + 버튼 */}
       <div className="flex justify-between items-center mt-auto">
         <div className="w-[51px] h-[24px] flex justify-center items-center bg-gray-100 text-sm">
           {course.credit}학점
         </div>
 
-        {/* 버튼 */}
         <button
           onClick={() =>
-            currentStatus === "gray" ? null : handleEnroll(course.courseId)
+            currentStatus === "gray" ? null : onEnroll(course.courseId)
           }
           className={`w-[100px] h-[40px] text-white text-sm font-semibold rounded-full shadow 
-    hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150 ${
-      currentStatus === "gray"
-        ? "bg-gray-300 cursor-not-allowed"
-        : currentStatus === "red"
-        ? "bg-gradient-to-b from-red-400 to-red-500 hover:from-red-500 hover:to-red-600"
-        : currentStatus === "orange"
-        ? "bg-gradient-to-b from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600"
-        : "bg-gradient-to-b from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
-    }`}
+            hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150 ${
+              currentStatus === "gray"
+                ? "bg-gray-300 cursor-not-allowed"
+                : currentStatus === "red"
+                ? "bg-gradient-to-b from-red-400 to-red-500 hover:from-red-500 hover:to-red-600"
+                : currentStatus === "orange"
+                ? "bg-gradient-to-b from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600"
+                : "bg-gradient-to-b from-green-400 to-green-500 hover:from-green-500 hover:to-green-600"
+            }`}
         >
           {currentStatus === "gray" ? "마감" : "신청하기"}
         </button>

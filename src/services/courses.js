@@ -6,7 +6,8 @@ import { apiInterface } from "@/utils/apiInterface";
  */
 export const getCourses = async (filters) => {
   const res = await apiInterface("get", "/courses/filters", {}, filters);
-  return res.data;
+  // console.log("인원 조회", res);
+  return res;
 };
 
 /**
@@ -16,7 +17,8 @@ export const getCourses = async (filters) => {
 
 export const getEnrollStatus = async () => {
   const res = await apiInterface("get", "/courses/me");
-  return res.data;
+  // console.log("인원 조회", res);
+  return res;
 };
 
 /**
@@ -26,6 +28,6 @@ export const getEnrollStatus = async () => {
 
 export const getCapacities = async (ids) => {
   const res = await apiInterface("post", "/enrollments/capacities", { ids });
-  console.log("인원 조회", res);
-  return res.data;
+  // console.log("인원 조회", res);
+  return res;
 };

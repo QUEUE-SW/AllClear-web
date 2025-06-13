@@ -1,70 +1,106 @@
 import React, { useEffect, useState } from "react";
-import { getCourses, getEnrollStatus } from "@/services/courses";
+import { getCapacities, getCourses, getEnrollStatus } from "@/services/courses";
 import FilterBar from "@/components/enroll/FilterBar";
 import CoursesList from "./CoursesList";
 import RegisteredCoursesList from "./RegisteredCoursesList";
 import CreditsStatus from "./CreditsStatus";
+import { getCredits } from "@/services/student";
 
 const EnrollForm = () => {
-  const [filters, setFilters] = useState({
-    category: "",
-    grade: "",
-    department: "",
-    major: "",
-    code: "",
-  });
+  // 각각의 필터 상태 분리
+  const [category, setCategory] = useState("");
+  const [grade, setGrade] = useState("");
+  const [department, setDepartment] = useState("");
+  const [major, setMajor] = useState("");
 
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
+  const [capacities, setCapacities] = useState([]);
 
+  const [credits, setCredits] = useState({
+    totalCredit: null,
+    maxCredit: null,
+    remainingCredit: null,
+  });
+
+  // 강의 목록 조회
   const getGeneralCourses = async () => {
     try {
-      const formatFilters = {};
-      if (filters.category) formatFilters.category = filters.category;
-      if (filters.grade) formatFilters.grade = parseInt(filters.grade);
-      if (filters.department) formatFilters.department = filters.department;
-      if (filters.major) formatFilters.major = filters.major;
-      if (filters.code) formatFilters.code = filters.code;
+      const filters = {
+        category,
+        grade,
+        department,
+        major,
+        code: "",
+      };
 
-      const res = await getCourses(formatFilters);
-      setGeneralCourses(res);
+      const courseRes = await getCourses(filters);
+      setGeneralCourses(courseRes.data);
+
+      const ids = courseRes.data.map((c) => c.courseId);
+      const capaRes = await getCapacities(ids);
+      setCapacities(capaRes.data);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
   };
 
+  // 수강 신청 현황 조회
   const getRegisterCourses = async () => {
     try {
       const res = await getEnrollStatus();
-      setRegisterCourses(res);
+      setRegisterCourses(res.data);
     } catch (error) {
       console.error("수강신청 현황 조회 실패", error);
     }
   };
 
+  const getCreditData = async () => {
+    try {
+      const res = await getCredits();
+      setCredits(res.data);
+    } catch (error) {
+      console.error("학점 조회 실패", error);
+    }
+  };
+
+  const handleAfterEnroll = () => {
+    getGeneralCourses();
+    getRegisterCourses();
+    getCreditData();
+  };
+
+  // 필터 변경될 때마다 호출 (최초 포함)
   useEffect(() => {
     getGeneralCourses();
-  }, [filters]);
+  }, [category, grade, department, major]);
 
   useEffect(() => {
     getRegisterCourses();
   }, []);
 
-  const handleFilterChange = (key, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  useEffect(() => {
+    getCreditData(); // ✅ 최초 1회만 실행
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center gap-6">
       <div className="w-[1230px] flex gap-[22px]">
         <div className="flex flex-col gap-[15px]">
-          <FilterBar filters={filters} onChange={handleFilterChange} />
+          <FilterBar
+            category={category}
+            grade={grade}
+            department={department}
+            major={major}
+            setCategory={setCategory}
+            setGrade={setGrade}
+            setDepartment={setDepartment}
+            setMajor={setMajor}
+          />
           <CoursesList
             courses={generalCourses}
-            onEnrollSuccess={getRegisterCourses}
+            capacities={capacities}
+            onEnrollSuccess={handleAfterEnroll}
           />
         </div>
         <RegisteredCoursesList
@@ -72,7 +108,7 @@ const EnrollForm = () => {
           onEnrollSuccess={getRegisterCourses}
         />
       </div>
-      <CreditsStatus />
+      <CreditsStatus credits={credits} />
     </div>
   );
 };
