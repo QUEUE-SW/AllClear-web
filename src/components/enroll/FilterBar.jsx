@@ -1,4 +1,3 @@
-import React from "react";
 import Filter from "@/components/enroll/Filter";
 import {
   categoryOptions,
@@ -15,9 +14,24 @@ const FilterBar = ({
   setGrade,
   setDepartment,
   setMajor,
+  getFilteredMajorOptions,
+  isMajorDisabled,
 }) => {
   return (
     <div className="flex w-[814px] h-[70px] items-center justify-center px-4 gap-2 bg-white rounded-lg shadow-md">
+      <Filter
+        kind="department"
+        value={department}
+        setValue={setDepartment}
+        options={departmentOptions}
+      />
+      <Filter
+        kind="major"
+        value={major}
+        setValue={setMajor}
+        options={getFilteredMajorOptions()}
+        disabled={isMajorDisabled}
+      />
       <Filter
         kind="category"
         value={category}
@@ -29,18 +43,6 @@ const FilterBar = ({
         value={grade}
         setValue={setGrade}
         options={gradeOptions}
-      />
-      <Filter
-        kind="department"
-        value={department}
-        setValue={setDepartment}
-        options={departmentOptions}
-      />
-      <Filter
-        kind="major"
-        value={major}
-        setValue={setMajor}
-        options={majorOptions}
       />
     </div>
   );

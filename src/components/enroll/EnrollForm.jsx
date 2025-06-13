@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getCapacities, getCourses, getEnrollStatus } from "@/services/courses";
 import FilterBar from "@/components/enroll/FilterBar";
-import CoursesList from "./CoursesList";
-import RegisteredCoursesList from "./RegisteredCoursesList";
-import CreditsStatus from "./CreditsStatus";
+import CoursesList from "@/components/enroll/CoursesList";
+import RegisteredCoursesList from "@/components/enroll/RegisteredCoursesList";
+import CreditsStatus from "@/components/enroll/CreditsStatus";
 import { getCredits } from "@/services/student";
+import { useFilter } from "@/hooks/useFilter";
 
 const EnrollForm = () => {
-  // 각각의 필터 상태 분리
-  const [category, setCategory] = useState("");
-  const [grade, setGrade] = useState("");
-  const [department, setDepartment] = useState("");
-  const [major, setMajor] = useState("");
+  const {
+    category,
+    grade,
+    department,
+    major,
+    setCategory,
+    setGrade,
+    setDepartment,
+    setMajor,
+    getFilteredMajorOptions,
+    isMajorDisabled,
+    filters,
+    resetFilters,
+  } = useFilter();
 
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
@@ -26,14 +36,6 @@ const EnrollForm = () => {
   // 강의 목록 조회
   const getGeneralCourses = async () => {
     try {
-      const filters = {
-        category,
-        grade,
-        department,
-        major,
-        code: "",
-      };
-
       const courseRes = await getCourses(filters);
       setGeneralCourses(courseRes.data);
 
@@ -64,7 +66,7 @@ const EnrollForm = () => {
     }
   };
 
-  const handleAfterEnroll = () => {
+  const handleAfterAction = () => {
     getGeneralCourses();
     getRegisterCourses();
     getCreditData();
@@ -73,7 +75,7 @@ const EnrollForm = () => {
   // 필터 변경될 때마다 호출 (최초 포함)
   useEffect(() => {
     getGeneralCourses();
-  }, [category, grade, department, major]);
+  }, [filters]);
 
   useEffect(() => {
     getRegisterCourses();
@@ -82,6 +84,11 @@ const EnrollForm = () => {
   useEffect(() => {
     getCreditData(); // ✅ 최초 1회만 실행
   }, []);
+
+  const filteredCourses = generalCourses.filter(
+    (course) =>
+      !registerCourses.some((enrolled) => enrolled.courseId === course.courseId)
+  );
 
   return (
     <div className="flex flex-col justify-center items-center gap-6">
@@ -96,16 +103,19 @@ const EnrollForm = () => {
             setGrade={setGrade}
             setDepartment={setDepartment}
             setMajor={setMajor}
+            getFilteredMajorOptions={getFilteredMajorOptions}
+            isMajorDisabled={isMajorDisabled}
           />
           <CoursesList
-            courses={generalCourses}
+            courses={filteredCourses}
             capacities={capacities}
-            onEnrollSuccess={handleAfterEnroll}
+            onEnrollSuccess={handleAfterAction}
           />
         </div>
         <RegisteredCoursesList
           courses={registerCourses}
           onEnrollSuccess={getRegisterCourses}
+          onCancelSuccess={handleAfterAction}
         />
       </div>
       <CreditsStatus credits={credits} />

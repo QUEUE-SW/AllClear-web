@@ -1,7 +1,33 @@
-import React from "react";
 import { MapPin } from "lucide-react";
+import { cancelEnrollment } from "@/services/enrollments";
+import { toast } from "react-toastify";
 
-const RegisteredCourseItem = ({ course, onCancel }) => {
+const RegisteredCourseItem = ({ course, onCancelSuccess }) => {
+  const handleCancel = async () => {
+    try {
+      const res = await cancelEnrollment(course.enrollmentId);
+      const courseName = course.name;
+
+      toast.success(`${courseName} 성공적으로 취소되었습니다!`);
+
+      onCancelSuccess?.(); // 상위 콜백 호출
+    } catch (error) {
+      const code = error?.response?.data?.code;
+      const status = error?.response?.status;
+
+      if (status === 401 && code === "4012") {
+        toast.error("다른 학생의 수강정보는 취소할 수 없습니다.");
+      } else if (status === 404 && code === "4040") {
+        toast.error("수강 정보를 찾을 수 없습니다.");
+      } else {
+        toast.error("수강 취소 실패: 서버 오류");
+      }
+    }
+  };
+
+  const onCancel = async () => {
+    handleCancel();
+  };
   return (
     <div className="w-[352px] h-[136px] flex justify-between px-3 py-3 bg-gray-50 rounded-lg border border-gray-200 hover:-translate-y-1 transition-transform duration-200 ease-in-out hover:shadow-lg">
       {/* 좌측 정보 */}
@@ -29,7 +55,7 @@ const RegisteredCourseItem = ({ course, onCancel }) => {
       {/* 우측 정보 */}
       <div className="flex flex-col justify-end">
         <button
-          onClick={() => onCancel(course.enrollmentId)}
+          onClick={onCancel}
           className="w-[52px] h-[28px] text-sm text-white bg-black border rounded-full hover:bg-gray-800 hover:scale-[1.1] active:scale-[0.9] transition-transform duration-150"
         >
           취소

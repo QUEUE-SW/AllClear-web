@@ -1,7 +1,7 @@
 import { BookOpen } from "lucide-react"; // 상단 아이콘 예시
-import RegisteredCourseItem from "./RegisteredCourseItem";
+import RegisteredCourseItem from "@/components/enroll/RegisteredCourseItem";
 
-const RegisteredCoursesList = ({ courses }) => {
+const RegisteredCoursesList = ({ courses, onCancelSuccess }) => {
   return (
     <div className="flex flex-col w-[394px] h-[692px] bg-white rounded-lg shadow-md overflow-hidden">
       {/* 상단 제목 */}
@@ -17,16 +17,12 @@ const RegisteredCoursesList = ({ courses }) => {
           [&::-webkit-scrollbar-thumb]:bg-gray-400
           [&::-webkit-scrollbar-track]:bg-transparent"
       >
-        {/* TODO: CourseItem 영역 */}
         {courses?.map((course) => {
           return (
             <RegisteredCourseItem
               key={course.courseId}
               course={course}
-              onCancel={(id) => {
-                console.log("취소 클릭:", id);
-                // TODO: 취소 API 연결
-              }}
+              onCancelSuccess={onCancelSuccess}
             />
           );
         })}
