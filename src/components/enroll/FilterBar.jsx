@@ -15,6 +15,7 @@ const FilterBar = ({
   setDepartment,
   setMajor,
   getFilteredMajorOptions,
+  getFilteredGradeOptions,
   isMajorDisabled,
 }) => {
   return (
@@ -30,7 +31,7 @@ const FilterBar = ({
         value={major}
         setValue={setMajor}
         options={getFilteredMajorOptions()}
-        disabled={isMajorDisabled}
+        // disabled={isMajorDisabled}
       />
       <Filter
         kind="category"
@@ -42,7 +43,7 @@ const FilterBar = ({
         kind="grade"
         value={grade}
         setValue={setGrade}
-        options={gradeOptions}
+        options={getFilteredGradeOptions()}
       />
     </div>
   );
