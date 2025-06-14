@@ -1,7 +1,7 @@
 export const categoryOptions = [
   { label: "전체", value: "" },
-  { label: "교양과목", value: "GENERAL" },
-  { label: "전공과목", value: "MAJOR" },
+  { label: "교양", value: "GENERAL" },
+  { label: "전공", value: "MAJOR" },
 ];
 
 export const gradeOptions = [

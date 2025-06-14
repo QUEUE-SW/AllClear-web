@@ -18,7 +18,7 @@ const EnrollForm = () => {
     setDepartment,
     setMajor,
     getFilteredMajorOptions,
-    getFilteredGradeOptions,
+    isMajorDisabled,
     filters,
     resetFilters,
   } = useFilter();
@@ -104,8 +104,7 @@ const EnrollForm = () => {
             setDepartment={setDepartment}
             setMajor={setMajor}
             getFilteredMajorOptions={getFilteredMajorOptions}
-            getFilteredGradeOptions={getFilteredGradeOptions}
-            // isMajorDisabled={isMajorDisabled}
+            isMajorDisabled={isMajorDisabled}
           />
           <CoursesList
             courses={filteredCourses}
