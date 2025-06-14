@@ -6,7 +6,7 @@ import { apiInterface } from "@/utils/apiInterface";
  */
 export const getCourses = async (filters) => {
   const res = await apiInterface("get", "/courses/filters", {}, filters);
-  console.log("강의목록 필터링", filters);
+  // console.log("강의목록 필터링", filters);
   return res;
 };
 
