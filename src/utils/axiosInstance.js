@@ -13,7 +13,7 @@ import { getAccessToken } from "./auth";
 
 const baseConfig = {
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
-  timeout: 3000,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
