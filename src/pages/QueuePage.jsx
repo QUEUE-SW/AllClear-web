@@ -1,11 +1,41 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const QueuePage = () => {
+  const [filledCount, setFilledCount] = useState(0);
+  const queueBars = [];
+  for (let i = 1; i <= 10; i++) {
+    filledCount >= i
+      ? queueBars.push(
+          <span key={i} className="w-[20px] h-[54px] bg-blue-500 rounded" />
+        )
+      : queueBars.push(
+          <span key={i} className="w-[20px] h-[54px] bg-gray-200 rounded" />
+        );
+  }
+
+  useEffect(() => {
+    const queueInterval = setInterval(() => {
+      setFilledCount((prev) => {
+        if (prev >= 10) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 500);
+
+    return () => clearInterval(queueInterval);
+  }, []);
   return (
     <div className="bg-indigo-50 min-h-screen grid place-items-center">
       <div className="bg-white w-[600px] h-[465px] py-8 grid place-items-center border rounded-[8px] shadow-gray-300 shadow-[0px_6px_8px_rgba(0,0,0,0.25)] ">
-        <div className="text-3xl font-bold tracking-widest">수강신청 대기 중입니다.</div>
-        <div className="w-[255px] h-[55px] bg-blue-500 my-1">대기열 로딩 바</div>
+        <div className="text-3xl font-bold tracking-widest">
+          수강신청 대기 중입니다.
+        </div>
+        <div className="w-[255px] h-[55px] my-1 flex items-center justify-between">
+          {queueBars}
+        </div>
         <div className="w-[350px] h-[140px] p-3 border-2 border-gray-200 rounded-[8px] bg-gray-100 grid place-items-center">
           <div className="text-xl">
             대기순서:
