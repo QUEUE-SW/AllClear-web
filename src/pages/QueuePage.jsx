@@ -2,8 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
+/**
+ * QueuePage.jsx
+ *
+ * 대기열 페이지입니다.
+ *
+ * - 사용자는 서비스를 들어오게 되면 바로 대기열 진입.
+ * - 대기열 페이지에서 대기열 애니메이션을 통해 대기 중임을 확인.
+ * - 대기열 진입 시 `/queue` 페이지로 이동 => ❎ 대기열 진입 api 연결
+ * - 대기열 상태조회를 통해 대기순서 확인 => ❎ 구현해야함
+ * - 자신의 순서가 되면 '/login' 페이지로 이동 => ❎ 구현해야함
+ * - 대기 취소 버튼 동작 => ❎ 구현해야함
+ */
+
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
+  
+  // filledCount 수만큼 queueBars의 Bar 색 입히기
   const queueBars = [];
   for (let i = 1; i <= 10; i++) {
     filledCount >= i
@@ -17,7 +32,9 @@ const QueuePage = () => {
 
   useEffect(() => {
     const queueInterval = setInterval(() => {
+      // setInterval을 통해 0.5초마다 filledCount 수 1씩 증가
       setFilledCount((prev) => {
+        // queueBars가 모두 채워진 경우 filledCount를 0으로 초기화
         if (prev >= 10) {
           return 0;
         }
@@ -25,8 +42,10 @@ const QueuePage = () => {
       });
     }, 500);
 
+    // useEffect가 언마운트될때(로그인 페이지 진입 직전) setInterval 함수 종료
     return () => clearInterval(queueInterval);
   }, []);
+
   return (
     <div className="bg-indigo-50 min-h-screen grid place-items-center">
       <div className="bg-white w-[600px] h-[465px] py-8 grid place-items-center border rounded-[8px] shadow-gray-300 shadow-[0px_6px_8px_rgba(0,0,0,0.25)] ">
@@ -39,6 +58,7 @@ const QueuePage = () => {
         <div className="w-[350px] h-[140px] p-3 border-2 border-gray-200 rounded-[8px] bg-gray-100 grid place-items-center">
           <div className="text-xl">
             대기순서:
+            {/* 대기 순서는 '대기열 상태조회 api' 연결해야합니다. */}
             <span className="text-red-600 font-bold px-2">1234</span>
           </div>
           <div className="text-gray-500 text-xs/6 w-[250px] text-center">
