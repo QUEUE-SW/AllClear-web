@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 /**
  * QueuePage.jsx
@@ -17,7 +18,10 @@ import { useEffect } from "react";
 
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
-  
+
+  const navigate = useNavigate();
+  const toLogin = () => navigate("/login");
+
   // filledCount 수만큼 queueBars의 Bar 색 입히기
   const queueBars = [];
   for (let i = 1; i <= 10; i++) {
@@ -59,15 +63,16 @@ const QueuePage = () => {
           <div className="text-xl">
             대기순서:
             {/* 대기 순서는 '대기열 상태조회 api' 연결해야합니다. */}
-            <span className="text-red-600 font-bold px-2">1234</span>
+            <span className="text-red-600 text-2xl font-bold px-2">1234</span>
           </div>
-          <div className="text-gray-500 text-xs/6 w-[250px] text-center">
+          <div className="text-gray-500 text-xs/6 text-center">
             현재 접속 사용자가 많아 대기중이며,
             <br />
             잠시만 기다리시면 수강신청 서비스로 접속됩니다.
           </div>
         </div>
         <div
+          onClick={toLogin}
           className="cursor-pointer w-[380px] h-[44px]
              bg-indigo-700 text-white
              rounded-[8px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] 
