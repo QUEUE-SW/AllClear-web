@@ -1,4 +1,9 @@
-import { publicInstance, tokenInstance } from "@/utils/axiosInstance"
+import {
+  tokenInstanceDev,
+  publicInstanceDev,
+  tokenInstanceProd,
+  publicInstanceProd,
+} from "@/utils/axiosInstance";
 
 /**
  * 이 함수는 공통적으로 API 요청을 처리하는 래퍼 함수입니다.
@@ -21,6 +26,7 @@ import { publicInstance, tokenInstance } from "@/utils/axiosInstance"
  * @param {object} data
  * @param {object} params
  * @param {boolean} useToken
+ * @param {'dev' | 'prod'} env
  * @returns {Promise<any>}
  */
 export const apiInterface = async (
@@ -28,9 +34,17 @@ export const apiInterface = async (
   url,
   data = {},
   params = {},
-  useToken = true
+  useToken = true,
+  env = "dev" // 기본값 dev
 ) => {
-  const client = useToken ? tokenInstance : publicInstance;
+  let client;
+
+  if (env === "prod") {
+    client = useToken ? tokenInstanceProd : publicInstanceProd;
+  } else {
+    client = useToken ? tokenInstanceDev : publicInstanceDev;
+  }
+
   try {
     const response = await client({ method, url, data, params });
     return response.data;
@@ -38,4 +52,4 @@ export const apiInterface = async (
     console.error(error);
     throw error;
   }
-}
+};
