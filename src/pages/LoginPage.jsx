@@ -1,7 +1,9 @@
 import LoginForm from "@/components/home/auth/LoginForm";
 import { login } from "@/services/auth";
 import { useAuthStore } from "@/stores/authStore";
-import { useState } from "react";
+import { useQueueStore } from "@/stores/queueStore";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -19,35 +21,63 @@ import { useNavigate } from "react-router-dom";
  */
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setUUID, setCredentials } = useQueueStore();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const [errorMessage, setErrorMessage] = useState("");
+  const { clearCredentials } = useQueueStore.getState();
+
+  // 뒤로가기로 접근했을 때를 대비하여 캐싱 정보 제거
+  useEffect(() => {
+    clearCredentials();
+  }, []);
 
   const handleLogin = async ({ identifier, password }) => {
+    // 로컬 폼 검증 우선
+    if (!identifier || !password) {
+      setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+
     try {
-      const res = await login(identifier, password);
+      const uuid = uuidv4();
 
-      if (res.code === "2000") {
-        setAccessToken(res.data.accessToken);
-        navigate("/enroll");
-      } else {
-        setErrorMessage(res.message || "로그인에 실패했습니다.");
-      }
+      // 1. 상태에 로그인 정보 저장
+      // setUUID(uuid);
+      setCredentials(identifier, password);
+
+      // 2. 대기열 진입 요청
+      // await joinQueue({ token: uuid });
+
+      // 3. 대기열 페이지로 이동
+      navigate(`/queue/${uuid}`);
+
+      // 이전 로직
+      // const res = await login(identifier, password);
+
+      // if (res.code === "2000") {
+      //   setAccessToken(res.data.accessToken);
+      //   navigate("/enroll");
+      // } else {
+      //   setErrorMessage(res.message || "로그인에 실패했습니다.");
+      // }
     } catch (error) {
-      const status = error?.response?.status;
-      const code = error?.response?.data?.code;
+      // console.error(error);
+      setErrorMessage("대기열 진입 중 문제가 발생했습니다. 다시 시도해주세요.");
 
-      if (status === 400 && code === "4000") {
-        // 학번, 비밀번호 형식 오류
-        setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
-      } else if (status === 401 && code === "4010") {
-        // 비밀번호 미일치
-        setErrorMessage("비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
-      } else if (status === 404 && code === "4040") {
-        // 해당 학번 미존재
-        setErrorMessage("입력하신 학번으로 가입된 계정을 찾을 수 없습니다.");
-      } else {
-        setErrorMessage("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-      }
+      // const status = error?.response?.status;
+      // const code = error?.response?.data?.code;
+      // if (status === 400 && code === "4000") {
+      //   // 학번, 비밀번호 형식 오류
+      //   setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
+      // } else if (status === 401 && code === "4010") {
+      //   // 비밀번호 미일치
+      //   setErrorMessage("비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
+      // } else if (status === 404 && code === "4040") {
+      //   // 해당 학번 미존재
+      //   setErrorMessage("입력하신 학번으로 가입된 계정을 찾을 수 없습니다.");
+      // } else {
+      //   setErrorMessage("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      // }
     }
   };
 

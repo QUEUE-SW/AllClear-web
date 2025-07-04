@@ -1,7 +1,8 @@
+import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 /**
  * QueuePage.jsx
@@ -18,9 +19,49 @@ import { useNavigate } from "react-router-dom";
 
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
+  const { clearCredentials } = useQueueStore.getState();
 
   const navigate = useNavigate();
-  const toLogin = () => navigate("/login");
+  const queueCancel = () => {
+    // Todo 취소 api 요청
+    clearCredentials();
+    navigate("/login");
+  };
+
+  const { uuid } = useParams();
+  const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
+
+  // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
+  useEffect(() => {
+    if (!credentials.identifier || !credentials.password) {
+      // Todo 취소 api 요청
+      clearCredentials();
+      navigate("/login");
+    }
+  }, []);
+
+  // 새로고침이나 탭 닫기 시 강제 대기열 취소
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      // Todo 취소 api 요청
+      clearCredentials();
+      e.preventDefault();
+      e.returnValue = ""; // 크롬에서 필수
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  // 디버깅용 코드
+  useEffect(() => {
+    console.log("uuid:", uuid);
+    console.log("identifier:", credentials.identifier);
+    console.log("password:", credentials.password);
+  }, [uuid, credentials]);
 
   // filledCount 수만큼 queueBars의 Bar 색 입히기
   const queueBars = [];
@@ -72,7 +113,7 @@ const QueuePage = () => {
           </div>
         </div>
         <div
-          onClick={toLogin}
+          onClick={queueCancel}
           className="cursor-pointer w-[380px] h-[44px]
              bg-indigo-700 text-white
              rounded-[8px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] 
