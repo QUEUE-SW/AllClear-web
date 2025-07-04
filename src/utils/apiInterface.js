@@ -39,7 +39,7 @@ export const apiInterface = async (
 ) => {
   let client;
 
-  if (env === "prod") {
+  if (env === "queue") {
     client = useToken ? tokenInstanceProd : publicInstanceProd;
   } else {
     client = useToken ? tokenInstanceDev : publicInstanceDev;

@@ -12,7 +12,7 @@ export const login = async (identifier, password) => {
     { identifier, password },
     {},
     false,
-    "prod"
+    "queue"
   );
   return response;
 };
