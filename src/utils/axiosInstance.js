@@ -20,7 +20,6 @@ const createConfig = (baseURL) => ({
 
 const createInstance = (baseURL, useToken = true) => {
   const instance = axios.create(createConfig(baseURL));
-  console.log(baseURL)
 
   if (useToken) {
     instance.interceptors.request.use((config) => {
@@ -50,6 +49,9 @@ const publicInstanceDev = createInstance(import.meta.env.VITE_API_BASE_URL, fals
 
 const tokenInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, true);
 const publicInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, false);
+
+console.log("✅ DEV URL:", import.meta.env.VITE_API_BASE_URL);
+console.log("✅ QUEUE URL:", import.meta.env.VITE_API_BASE_QUEUE_URL);
 
 export {
   tokenInstanceDev,
