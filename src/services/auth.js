@@ -5,11 +5,11 @@ import { apiInterface } from "@/utils/apiInterface";
  * @param {string} stdId 학번
  * @param {string} password 비밀번호
  */
-export const login = async (identifier, password) => {
+export const login = async (identifier, password, uuid) => {
   const response = await apiInterface(
     "post",
     "/auth/sign-in",
-    { identifier, password },
+    { identifier, password, uuid },
     {},
     false,
     "queue"
