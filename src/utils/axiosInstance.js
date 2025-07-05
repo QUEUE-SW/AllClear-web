@@ -20,7 +20,7 @@ const createConfig = (baseURL) => ({
 
 const createInstance = (baseURL, useToken = true) => {
   const instance = axios.create(createConfig(baseURL));
-  console.log(baseURL)
+  console.log(baseURL);
 
   if (useToken) {
     instance.interceptors.request.use((config) => {
