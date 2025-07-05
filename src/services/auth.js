@@ -31,3 +31,17 @@ export const signUp = async (payload) => {
   );
   return response;
 };
+
+/**
+ * 로그아웃
+ */
+export const logout = async () => {
+  const response = await apiInterface(
+    "post",
+    "/auth/sign-out",
+    {},
+    {},
+    true,
+  );
+  return response;
+};
