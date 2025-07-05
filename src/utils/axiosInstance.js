@@ -10,35 +10,49 @@ import { getAccessToken } from "./auth";
  * 
  * 요청 시 accessToken이 있으면 자동으로 Authorization 헤더에 추가됨
 */
-
-const baseConfig = {
-  baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
+const createConfig = (baseURL) => ({
+  baseURL: `${baseURL}/api/v1`,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
-  // withCredentials: true, 쿠키 미사용으로 인한 삭제
-};
-
-const tokenInstance = axios.create(baseConfig);
-const publicInstance = axios.create(baseConfig);
-
-tokenInstance.interceptors.request.use((config) => {
-  const token = getAccessToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
 });
 
-tokenInstance.interceptors.response.use(
-  (res) => res,
-  (error) => {
-    if (error.response?.status === 401) {
-      window.location.href = "/login";
-    }
-    return Promise.reject(error);
-  }
-)
+const createInstance = (baseURL, useToken = true) => {
+  const instance = axios.create(createConfig(baseURL));
 
-export { tokenInstance, publicInstance };
+  if (useToken) {
+    instance.interceptors.request.use((config) => {
+      const token = getAccessToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+
+    instance.interceptors.response.use(
+      (res) => res,
+      (error) => {
+        if (error.response?.status === 401) {
+          window.location.href = "/login";
+        }
+        return Promise.reject(error);
+      }
+    );
+  }
+
+  return instance;
+};
+
+const tokenInstanceDev = createInstance(import.meta.env.VITE_API_BASE_URL, true);
+const publicInstanceDev = createInstance(import.meta.env.VITE_API_BASE_URL, false);
+
+const tokenInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, true);
+const publicInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, false);
+
+export {
+  tokenInstanceDev,
+  publicInstanceDev,
+  tokenInstanceProd,
+  publicInstanceProd,
+};

@@ -11,7 +11,8 @@ export const login = async (identifier, password) => {
     "/auth/sign-in",
     { identifier, password },
     {},
-    false
+    false,
+    "queue"
   );
   return response;
 };
