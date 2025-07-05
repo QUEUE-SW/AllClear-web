@@ -1,4 +1,6 @@
+import { login } from "@/services/auth";
 import { queueStatus } from "@/services/queue";
+import { useAuthStore } from "@/stores/authStore";
 import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
@@ -29,11 +31,25 @@ const QueuePage = () => {
   const { uuid } = useParams();
   const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
   const navigate = useNavigate();
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
   const queueCancel = () => {
     // Todo 취소 api 요청
     clearCredentials();
     navigate("/login");
+  };
+
+  const handleLogin = async (id, pw, uuid) => {
+    try {
+      const res = await login(id, pw, uuid);
+      // 로그인 성공 시 토큰 저장 후 enroll 페이지로 이동
+      if (res.code === "2000") {
+        setAccessToken(res.data.accessToken);
+        navigate("/enroll");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 5초 간격으로 대기 순서 서버에게 받아오기
@@ -48,10 +64,10 @@ const QueuePage = () => {
         setQueueNumber(res.queueNumber);
         console.log(res.queueStatus); // 디버깅용
 
-        // 상태가 ALLOWED라면 polling 정지 후 수강신청 페이지로 이동
+        // 상태가 ALLOWED라면 polling 정지 후 로그인 시도
         if (res.queueStatus === "ALLOWED") {
           clearInterval(polling);
-          // navigate("/enroll");
+          handleLogin(credentials.identifier, credentials.password, uuid);
         }
       } catch (error) {
         console.error(error);
@@ -117,7 +133,7 @@ const QueuePage = () => {
       });
     }, 500);
 
-    // useEffect가 언마운트될때(수강신청 페이지 진입 직전) setInterval 함수 종료
+    // useEffect가 언마운트될때(페이지에서 벗어날 때) setInterval 함수 종료
     return () => clearInterval(queueInterval);
   }, []);
 
