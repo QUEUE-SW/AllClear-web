@@ -43,14 +43,22 @@ const LoginPage = () => {
       const uuid = uuidv4();
 
       // 1. 상태에 로그인 정보 저장
-      // setUUID(uuid);
       setCredentials(identifier, password);
 
       // 2. 대기열 진입 요청
-      await joinQueue({ token: uuid });
+      const res = await joinQueue({ token: uuid });
+      const queueNumber = res.data?.queueNumber;
+
+      if (queueNumber === undefined) {
+        throw new Error("queueNumber가 응답에 없습니다.");
+      }
 
       // 3. 대기열 페이지로 이동
-      navigate(`/queue/${uuid}`);
+      navigate(`/queue/${uuid}`, {
+        state: {
+          queueNumber,
+        },
+      });
 
       // 이전 로직
       // const res = await login(identifier, password);

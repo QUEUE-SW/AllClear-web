@@ -2,7 +2,7 @@ import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 /**
  * QueuePage.jsx
@@ -18,18 +18,22 @@ import { useNavigate, useParams } from "react-router-dom";
  */
 
 const QueuePage = () => {
+  const location = useLocation();
   const [filledCount, setFilledCount] = useState(0);
-  const { clearCredentials } = useQueueStore.getState();
+  const [queueNumber, setQueueNumber] = useState(() => {
+    return location.state?.queueNumber ?? null;
+  });
 
+  const { clearCredentials } = useQueueStore.getState();
+  const { uuid } = useParams();
+  const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
   const navigate = useNavigate();
+
   const queueCancel = () => {
     // Todo 취소 api 요청
     clearCredentials();
     navigate("/login");
   };
-
-  const { uuid } = useParams();
-  const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
 
   // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
   useEffect(() => {
@@ -104,7 +108,9 @@ const QueuePage = () => {
           <div className="text-xl">
             대기순서:
             {/* 대기 순서는 '대기열 상태조회 api' 연결해야합니다. */}
-            <span className="text-red-600 text-2xl font-bold px-2">1234</span>
+            <span className="text-red-600 text-2xl font-bold px-2">
+              {queueNumber}
+            </span>
           </div>
           <div className="text-gray-500 text-xs/6 text-center">
             현재 접속 사용자가 많아 대기중이며,
