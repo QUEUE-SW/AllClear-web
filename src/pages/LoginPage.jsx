@@ -5,6 +5,7 @@ import { useQueueStore } from "@/stores/queueStore";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { joinQueue } from "@/services/queue";
 
 /**
  * LoginPage.jsx
@@ -46,7 +47,7 @@ const LoginPage = () => {
       setCredentials(identifier, password);
 
       // 2. 대기열 진입 요청
-      // await joinQueue({ token: uuid });
+      await joinQueue({ token: uuid });
 
       // 3. 대기열 페이지로 이동
       navigate(`/queue/${uuid}`);

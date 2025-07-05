@@ -7,7 +7,7 @@ import { apiInterface } from "@/utils/apiInterface";
 export const joinQueue = async ({ token }) => {
   const response = await apiInterface("post", "/queue/join", {
     token,
-  });
+  }, {}, false, "queue");
   console.log(response);
 
   return response;
