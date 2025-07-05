@@ -44,11 +44,11 @@ const createInstance = (baseURL, useToken = true) => {
   return instance;
 };
 
-const tokenInstanceDev = createInstance("https://www.queue.it.kr/dev", true);
-const publicInstanceDev = createInstance("https://www.queue.it.kr/dev", false);
+const tokenInstanceDev = createInstance(import.meta.env.VITE_API_BASE_URL, true);
+const publicInstanceDev = createInstance(import.meta.env.VITE_API_BASE_URL, false);
 
-const tokenInstanceProd = createInstance("https://www.queue.it.kr/queue", true);
-const publicInstanceProd = createInstance("https://www.queue.it.kr/queue", false);
+const tokenInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, true);
+const publicInstanceProd = createInstance(import.meta.env.VITE_API_BASE_QUEUE_URL, false);
 
 console.log("✅ DEV URL:", import.meta.env.VITE_API_BASE_URL);
 console.log("✅ QUEUE URL:", import.meta.env.VITE_API_BASE_QUEUE_URL);
