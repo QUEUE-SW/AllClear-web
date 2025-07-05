@@ -16,8 +16,8 @@ export const joinQueue = async ({ token }) => {
 /**
  * 대기열 상태 조회
  */
-export const queueStatus = async ({uuid}) => {
-  const response = await apiInterface("get", `/queue/${uuid}`, {}, {}, true, "queue");
+export const queueStatus = async ({ uuid }) => {
+  const response = await apiInterface("get", `/queue/${uuid}`, {}, {}, false, "queue");
 
   return response.data;
 }
