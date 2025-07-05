@@ -6,6 +6,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 /**
  * QueuePage.jsx
@@ -49,6 +50,24 @@ const QueuePage = () => {
       }
     } catch (error) {
       console.error(error);
+      // LoginPage의 기존 에러처리 -> toast로 변경
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+      const message = error?.response?.data?.message;
+
+      if (status === 400 && code === "4000") {
+        // 학번, 비밀번호 형식 오류
+        toast.error(message);
+      } else if (status === 401 && code === "4010") {
+        // 비밀번호 미일치
+        toast.error(message);
+      } else if (status === 404 && code === "4040") {
+        // 해당 학번 미존재
+        toast.error(message);
+      } else {
+        toast.error("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+      navigate("/login");
     }
   };
 
