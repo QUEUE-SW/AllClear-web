@@ -1,14 +1,46 @@
 import { useAuthStore } from "@/stores/authStore";
 import { useNavigate } from "react-router-dom";
 import { Calendar, User, LogOut } from "lucide-react";
+import { logout } from "@/services/auth";
+import { useEffect, useState } from "react";
 
 const Header = ({ myBasic }) => {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const [timeLeft, setTimeLeft] = useState(600);
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+      console.log(res);
+      useAuthStore.getState().logout();
+      navigate("/login"); // 로그인 페이지로 이동
+    } catch (error) {
+      console.error("서버 로그아웃 실패:", error);
+    }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          handleLogout(); // 자동 로그아웃
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 정리
+  }, []);
+
+  // 시간 형식 변환 (MM:SS)
+  const formatTime = (seconds) => {
+    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const sec = String(seconds % 60).padStart(2, "0");
+    return `${min}:${sec}`;
+  };
+
   return (
     <header className="flex border-b-2 justify-center gap-[504px] p-2 bg-white">
       <div className="flex space-x-3">
@@ -45,6 +77,10 @@ const Header = ({ myBasic }) => {
               <span className="text-gray-300">사용자 정보 로딩 중</span>
             )}
           </span>
+        </div>
+
+        <div className="text-sm text-red-500 font-semibold min-w-[80px] text-center">
+          {formatTime(timeLeft)}
         </div>
 
         {/* 로그아웃 */}
