@@ -71,30 +71,60 @@ const QueuePage = () => {
     }
   };
 
-  // 5초 간격으로 대기 순서 서버에게 받아오기
+
+  //SSE 연결
   useEffect(() => {
     if (!uuid) return;
+    const eventSource = new EventSource(`${import.meta.env.VITE_API_BASE_QUEUE_URL}/api/v1/queue/sse/${uuid}`);
 
-    let polling = setInterval(async () => {
-      try {
-        const res = await queueStatus({ uuid });
-        console.log("queueStatus: ", res);
+    if (!eventSource) return;
 
-        setQueueNumber(res.queueNumber);
-        console.log(res.queueStatus); // 디버깅용
+    // 입장 이벤트리스너
+    eventSource.addEventListener("enterance", (event)=>{
+      console.log("SSE 데이터: ", event.data);
 
-        // 상태가 ALLOWED라면 polling 정지 후 로그인 시도
-        if (res.queueStatus === "ALLOWED") {
-          clearInterval(polling);
-          handleLogin(credentials.identifier, credentials.password, uuid);
-        }
-      } catch (error) {
-        console.error(error);
+      if(event.data === "입장 가능합니다."){
+        eventSource.close();
+        handleLogin(credentials.identifier, credentials.password, uuid);
       }
-    }, 5000);
 
-    return () => clearInterval(polling);
-  }, []);
+    // 오류 처리
+    eventSource.onerror = (err) => {
+      console.error("EventSource 에러: ", err);
+      // 오류 발생 시 종료
+      eventSource.close();
+    }
+
+    // 언마운트 시 SSE 종료
+    return () => eventSource.close();
+    },[])
+
+  })
+
+  // // 5초 간격으로 대기 순서 서버에게 받아오기
+  // useEffect(() => {
+  //   if (!uuid) return;
+
+  //   let polling = setInterval(async () => {
+  //     try {
+  //       const res = await queueStatus({ uuid });
+  //       console.log("queueStatus: ", res);
+
+  //       setQueueNumber(res.queueNumber);
+  //       console.log(res.queueStatus); // 디버깅용
+
+  //       // 상태가 ALLOWED라면 polling 정지 후 로그인 시도
+  //       if (res.queueStatus === "ALLOWED") {
+  //         clearInterval(polling);
+  //         handleLogin(credentials.identifier, credentials.password, uuid);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }, 5000);
+
+  //   return () => clearInterval(polling);
+  // }, []);
 
   // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
   useEffect(() => {
