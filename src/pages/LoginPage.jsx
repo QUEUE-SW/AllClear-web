@@ -38,56 +38,48 @@ const LoginPage = () => {
       setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
       return;
     }
+    const uuid = uuidv4();
 
-    try {
-      const uuid = uuidv4();
+    // 1. 상태에 로그인 정보 저장
+    setCredentials(identifier, password);
 
-      // 1. 상태에 로그인 정보 저장
-      setCredentials(identifier, password);
+    // 3. 대기열 페이지로 이동
+    navigate(`/queue/${uuid}`, {
+      state: {
+        queueNumber: -1,
+      },
+    });
+    
+    // try {
 
-      // 2. 대기열 진입 요청
-      const res = await joinQueue({ token: uuid });
-      const queueNumber = res.data?.queueNumber;
+    //   // 이전 로직
+    //   // const res = await login(identifier, password);
 
-      if (queueNumber === undefined) {
-        throw new Error("queueNumber가 응답에 없습니다.");
-      }
+    //   // if (res.code === "2000") {
+    //   //   setAccessToken(res.data.accessToken);
+    //   //   navigate("/enroll");
+    //   // } else {
+    //   //   setErrorMessage(res.message || "로그인에 실패했습니다.");
+    //   // }
+    // } catch (error) {
+    //   // console.error(error);
+    //   setErrorMessage("대기열 진입 중 문제가 발생했습니다. 다시 시도해주세요.");
 
-      // 3. 대기열 페이지로 이동
-      navigate(`/queue/${uuid}`, {
-        state: {
-          queueNumber,
-        },
-      });
-
-      // 이전 로직
-      // const res = await login(identifier, password);
-
-      // if (res.code === "2000") {
-      //   setAccessToken(res.data.accessToken);
-      //   navigate("/enroll");
-      // } else {
-      //   setErrorMessage(res.message || "로그인에 실패했습니다.");
-      // }
-    } catch (error) {
-      // console.error(error);
-      setErrorMessage("대기열 진입 중 문제가 발생했습니다. 다시 시도해주세요.");
-
-      // const status = error?.response?.status;
-      // const code = error?.response?.data?.code;
-      // if (status === 400 && code === "4000") {
-      //   // 학번, 비밀번호 형식 오류
-      //   setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
-      // } else if (status === 401 && code === "4010") {
-      //   // 비밀번호 미일치
-      //   setErrorMessage("비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
-      // } else if (status === 404 && code === "4040") {
-      //   // 해당 학번 미존재
-      //   setErrorMessage("입력하신 학번으로 가입된 계정을 찾을 수 없습니다.");
-      // } else {
-      //   setErrorMessage("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-      // }
-    }
+    //   // const status = error?.response?.status;
+    //   // const code = error?.response?.data?.code;
+    //   // if (status === 400 && code === "4000") {
+    //   //   // 학번, 비밀번호 형식 오류
+    //   //   setErrorMessage("학번과 비밀번호를 모두 입력해주세요.");
+    //   // } else if (status === 401 && code === "4010") {
+    //   //   // 비밀번호 미일치
+    //   //   setErrorMessage("비밀번호가 올바르지 않습니다. 다시 입력해주세요.");
+    //   // } else if (status === 404 && code === "4040") {
+    //   //   // 해당 학번 미존재
+    //   //   setErrorMessage("입력하신 학번으로 가입된 계정을 찾을 수 없습니다.");
+    //   // } else {
+    //   //   setErrorMessage("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+    //   // }
+    // }
   };
 
   return (
