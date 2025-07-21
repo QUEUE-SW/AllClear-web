@@ -74,13 +74,13 @@ const QueuePage = () => {
   // SSE 연결
   useEffect(() => {
     if (!uuid) return;
-    
-    if(queueNumber < 0 ){
+
+    if (queueNumber < 0) {
       toast.error("대기순서를 불러오는 중입니다. 잠시만 기다려 주세요.");
     }
-    
+
     const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_BASE_SSE_URL}/api/v1/queue/sse/${uuid}`
+      `${import.meta.env.VITE_API_BASE_QUEUE_URL}/api/v1/queue/sse/${uuid}`
     );
 
     if (!eventSource) return;
@@ -96,7 +96,7 @@ const QueuePage = () => {
       console.log("waiting SSE 데이터: ", data);
       setQueueNumber(data.number);
     });
-    
+
     // 허용 이벤트리스너
     eventSource.addEventListener("allowed", (event) => {
       const data = JSON.parse(event.data);
