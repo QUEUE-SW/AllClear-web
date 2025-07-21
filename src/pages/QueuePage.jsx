@@ -71,24 +71,32 @@ const QueuePage = () => {
     }
   };
 
-
   // SSE 연결
   useEffect(() => {
     if (!uuid) return;
-    const eventSource = new EventSource(`${import.meta.env.VITE_API_BASE_QUEUE_URL}/api/v1/queue/sse/${uuid}`);
+    const eventSource = new EventSource(
+      `${import.meta.env.VITE_API_BASE_QUEUE_URL}/api/v1/queue/sse/${uuid}`
+    );
 
     if (!eventSource) return;
 
     eventSource.onopen = () => {
       console.log("SSE 연결 성공!");
-    }
+    };
+    // console.log("withCredentials: ", eventSource.withCredentials);
 
-    // 입장 이벤트리스너
-    eventSource.addEventListener("entrance", (event)=>{
-      console.log("SSE 데이터: ", event.data);
+    // 대기 순번 이벤트리스너
+    eventSource.addEventListener("waiting", (event) => {
+      console.log("waiting SSE 데이터: ", event.data);
+      setQueueNumber(event.data.number);
+    });
+
+    // 허용 이벤트리스너
+    eventSource.addEventListener("allowed", (event) => {
+      console.log("allowed SSE 데이터: ", event.data);
 
       // 입장 가능하다면 SSE 닫은 후 로그인 시도
-      if(event.data === "입장 가능합니다."){
+      if (event.data.status === "ALLOWED") {
         eventSource.close();
         handleLogin(credentials.identifier, credentials.password, uuid);
       }
@@ -99,7 +107,7 @@ const QueuePage = () => {
       console.error("EventSource 에러: ", err);
       toast.error("연결에 문제가 발생했습니다. 다시 시도해주세요.");
       eventSource.close();
-    }
+    };
 
     // 언마운트 시 SSE 종료
     return () => eventSource.close();
