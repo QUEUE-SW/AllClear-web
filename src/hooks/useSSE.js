@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export const useSSE = ({ uuid, onAllowed }) => {
   const [queueNumber, setQueueNumber] = useState(-1);
+
   // SSE 연결
   useEffect(() => {
     if (!uuid) return;
@@ -34,7 +35,7 @@ export const useSSE = ({ uuid, onAllowed }) => {
       const data = JSON.parse(event.data);
       console.log("allowed SSE 데이터: ", data);
 
-      // 입장 가능하다면 SSE 닫은 후 로그인 시도
+      // Allowed 상태가 되면 SSE 닫은 후 onAllowed 콜백함수 실행
       if (data.status === "ALLOWED") {
         eventSource.close();
         onAllowed?.(); // QueuePage에서 handleLogin 실행됨.

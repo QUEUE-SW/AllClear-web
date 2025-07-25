@@ -5,7 +5,7 @@ import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 /**
@@ -23,52 +23,55 @@ import { toast } from "react-toastify";
 
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
-    
-    const { clearCredentials } = useQueueStore.getState();
-    const { uuid } = useParams();
-    const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
-    const navigate = useNavigate();
-    const setAccessToken = useAuthStore((state) => state.setAccessToken);
-    
-    const queueCancel = () => {
-      // Todo 취소 api 요청
-      clearCredentials();
-      navigate("/login");
-    };
-    
-    const handleLogin = async () => {
-      try {
-        const res = await login(credentials.identifier, credentials.password, uuid);
-        // 로그인 성공 시 토큰 저장 후 enroll 페이지로 이동
-        if (res.code === "2000") {
-          setAccessToken(res.data.accessToken);
-          navigate("/enroll");
-        }
-      } catch (error) {
-        console.error(error);
-        // LoginPage의 기존 에러처리 -> toast로 변경
-        const status = error?.response?.status;
-        const code = error?.response?.data?.code;
-        const message = error?.response?.data?.message;
-        
-        if (status === 400 && code === "4000") {
-          // 학번, 비밀번호 형식 오류
-          toast.error(message);
-        } else if (status === 401 && code === "4010") {
-          // 비밀번호 미일치
-          toast.error(message);
-        } else if (status === 404 && code === "4040") {
-          // 해당 학번 미존재
-          toast.error(message);
-        } else {
-          toast.error("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
-        navigate("/login");
-      }
-    };
-    
 
-    const { queueNumber } = useSSE({uuid, onAllowed: handleLogin});
+  const { clearCredentials } = useQueueStore.getState();
+  const { uuid } = useParams();
+  const { credentials } = useQueueStore(); // zustand에서 학번, 비번 불러오기
+  const navigate = useNavigate();
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
+
+  const queueCancel = () => {
+    // Todo 취소 api 요청
+    clearCredentials();
+    navigate("/login");
+  };
+
+  const handleLogin = async () => {
+    try {
+      const res = await login(
+        credentials.identifier,
+        credentials.password,
+        uuid
+      );
+      // 로그인 성공 시 토큰 저장 후 enroll 페이지로 이동
+      if (res.code === "2000") {
+        setAccessToken(res.data.accessToken);
+        navigate("/enroll");
+      }
+    } catch (error) {
+      console.error(error);
+      // LoginPage의 기존 에러처리 -> toast로 변경
+      const status = error?.response?.status;
+      const code = error?.response?.data?.code;
+      const message = error?.response?.data?.message;
+
+      if (status === 400 && code === "4000") {
+        // 학번, 비밀번호 형식 오류
+        toast.error(message);
+      } else if (status === 401 && code === "4010") {
+        // 비밀번호 미일치
+        toast.error(message);
+      } else if (status === 404 && code === "4040") {
+        // 해당 학번 미존재
+        toast.error(message);
+      } else {
+        toast.error("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+      navigate("/login");
+    }
+  };
+
+  const { queueNumber } = useSSE({ uuid, onAllowed: handleLogin });
 
   // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
   useEffect(() => {
