@@ -1,11 +1,11 @@
+import { useSSE } from "@/hooks/useSSE";
 import { login } from "@/services/auth";
-import { queueStatus } from "@/services/queue";
 import { useAuthStore } from "@/stores/authStore";
 import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 /**
@@ -22,11 +22,7 @@ import { toast } from "react-toastify";
  */
 
 const QueuePage = () => {
-  const location = useLocation();
   const [filledCount, setFilledCount] = useState(0);
-  const [queueNumber, setQueueNumber] = useState(() => {
-    return location.state?.queueNumber ?? null;
-  });
 
   const { clearCredentials } = useQueueStore.getState();
   const { uuid } = useParams();
@@ -40,9 +36,13 @@ const QueuePage = () => {
     navigate("/login");
   };
 
-  const handleLogin = async (id, pw, uuid) => {
+  const handleLogin = async () => {
     try {
-      const res = await login(id, pw, uuid);
+      const res = await login(
+        credentials.identifier,
+        credentials.password,
+        uuid
+      );
       // 로그인 성공 시 토큰 저장 후 enroll 페이지로 이동
       if (res.code === "2000") {
         setAccessToken(res.data.accessToken);
@@ -71,54 +71,7 @@ const QueuePage = () => {
     }
   };
 
-  // SSE 연결
-  useEffect(() => {
-    if (!uuid) return;
-
-    if (queueNumber < 0) {
-      toast.error("대기순서를 불러오는 중입니다. 잠시만 기다려 주세요.");
-    }
-
-    const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_BASE_QUEUE_URL}/api/v1/queue/sse/${uuid}`
-    );
-
-    if (!eventSource) return;
-
-    eventSource.onopen = () => {
-      console.log("SSE 연결 성공!");
-    };
-    // console.log("withCredentials: ", eventSource.withCredentials);
-
-    // 대기 순번 이벤트리스너
-    eventSource.addEventListener("waiting", (event) => {
-      const data = JSON.parse(event.data);
-      console.log("waiting SSE 데이터: ", data);
-      setQueueNumber(data.number);
-    });
-
-    // 허용 이벤트리스너
-    eventSource.addEventListener("allowed", (event) => {
-      const data = JSON.parse(event.data);
-      console.log("allowed SSE 데이터: ", data);
-
-      // 입장 가능하다면 SSE 닫은 후 로그인 시도
-      if (data.status === "ALLOWED") {
-        eventSource.close();
-        handleLogin(credentials.identifier, credentials.password, uuid);
-      }
-    });
-
-    // 오류 발생 시 SSE 종료
-    eventSource.onerror = (err) => {
-      console.error("EventSource 에러: ", err);
-      toast.error("연결에 문제가 발생했습니다. 다시 시도해주세요.");
-      eventSource.close();
-    };
-
-    // 언마운트 시 SSE 종료
-    return () => eventSource.close();
-  }, []);
+  const { queueNumber } = useSSE({ uuid, onAllowed: handleLogin });
 
   // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
   useEffect(() => {
@@ -192,7 +145,6 @@ const QueuePage = () => {
         <div className="w-[350px] h-[140px] p-3 border-2 border-gray-200 rounded-[8px] bg-gray-100 grid place-items-center">
           <div className="text-xl">
             대기순서:
-            {/* 대기 순서는 '대기열 상태조회 api' 연결해야합니다. */}
             <span className="text-red-600 text-2xl font-bold px-2">
               {queueNumber}
             </span>
