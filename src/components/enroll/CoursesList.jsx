@@ -11,7 +11,7 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
     const courseIds = courses.map((c) => `courseIds=${c.courseId}`).join("&");
 
     const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_BASE_SSE_URL}/api/v1/seats?${courseIds}`
+      `${import.meta.env.VITE_API_BASE_SECURE_SSE_URL}/api/v1/seats/subscribe?${courseIds}`
     );
 
     if (!eventSource) return;
