@@ -2,23 +2,32 @@ import CourseItem from "@/components/enroll/CourseItem";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
-  const [capa, setCapa] = useState(capacities || []);
+const CoursesList = ({ courses, onEnrollSuccess }) => {
+  const [capa, setCapa] = useState([]);
 
   useEffect(() => {
-    if (!courses) return;
+    if (!courses || courses.length === 0) return;
 
     const courseIds = courses.map((c) => `courseIds=${c.courseId}`).join("&");
+    const token = localStorage.getItem("accessToken");
+    console.log(token);
+    if (!token) {
+      console.error("Access token is missing!");
+    }
 
-    const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_BASE_SECURE_SSE_URL}/api/v1/seats/subscribe?${courseIds}`
-    );
-
+    const sseUrl = `${import.meta.env.VITE_API_BASE_SECURE_SSE_URL}/api/v1/seats/subscribe?${courseIds}&token=${token}`;
+    // console.log("SSE URL:", sseUrl);
+    const eventSource = new EventSource(sseUrl);
     if (!eventSource) return;
 
     eventSource.onopen = () => {
       console.log("SSE 연결");
     };
+
+    // eventSource.onerror = (e) => {
+    //   console.error("SSE Error:", e);
+    //   eventSource.close();
+    // };
 
     eventSource.addEventListener("seat", (event) => {
       const data = JSON.parse(event.data);
