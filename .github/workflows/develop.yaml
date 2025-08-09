@@ -24,6 +24,7 @@ jobs:
           echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL_DEV }}" > .env
           echo "VITE_API_BASE_QUEUE_URL=${{ secrets.VITE_API_BASE_URL_QUEUE }}" >> .env
           echo "VITE_API_BASE_SSE_URL=${{ secrets.VITE_API_BASE_URL_SSE }}" >> .env
+          echo "VITE_API_BASE_SECURE_SSE_URL=${{ secrets.VITE_API_BASE_SECURE_SSE_URL }}" >> .env
 
       - name: Check .env
         run: cat .env
