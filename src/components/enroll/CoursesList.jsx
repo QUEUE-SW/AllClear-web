@@ -29,6 +29,13 @@ const CoursesList = ({ courses, onEnrollSuccess }) => {
     //   eventSource.close();
     // };
 
+    // 오류 발생 시 SSE 종료
+    eventSource.onerror = (err) => {
+      console.error("EventSource 에러: ", err);
+      toast.error("연결에 문제가 발생했습니다. 다시 시도해주세요.");
+      eventSource.close();
+    };
+
     eventSource.addEventListener("seat", (event) => {
       const data = JSON.parse(event.data);
       console.log("seat 데이터: ", data);
