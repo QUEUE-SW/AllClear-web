@@ -62,7 +62,7 @@ export const useCapaSSE = ({ courses }) => {
       eventSource.close();
     };
     return () => eventSource.close();
-  }, []);
+  }, [courses]);
 
   return { capa };
 };
