@@ -32,13 +32,13 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
     handleEnroll();
   };
 
-  const capaRate = (currentCapa || 0) / course.capacity;
+  const filledRate = (course.capacity - (currentCapa || 0)) / course.capacity;
 
   const getStatusClass = () => {
-    if (currentCapa >= course.capacity) return "gray";
-    if (capaRate >= 0.9) return "red";
-    if (capaRate >= 0.7) return "orange";
-    return "green";
+    if (currentCapa === 0) return "gray"; // 남은 좌석 없음 → 만석
+    if (filledRate >= 0.9) return "red"; // 90% 이상 찼음
+    if (filledRate >= 0.7) return "orange"; // 70% 이상 찼음
+    return "green"; // 여유 있음
   };
 
   const currentStatus = getStatusClass();
@@ -64,7 +64,7 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
               : "bg-green-100 text-green-600 border-green-400"
           }`}
         >
-          {currentCapa || 0}/{course.capacity}
+          {currentCapa || 40}/{course.capacity}
         </div>
       </div>
 
