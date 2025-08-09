@@ -40,8 +40,8 @@ const EnrollForm = () => {
       setGeneralCourses(courseRes.data);
 
       const ids = courseRes.data.map((c) => c.courseId);
-      const capaRes = await getCapacities(ids);
-      setCapacities(capaRes.data);
+      //const capaRes = await getCapacities(ids);
+      //setCapacities(capaRes.data);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
@@ -109,7 +109,7 @@ const EnrollForm = () => {
           />
           <CoursesList
             courses={filteredCourses}
-            capacities={capacities}
+            //capacities={capacities}
             onEnrollSuccess={handleAfterAction}
           />
         </div>
