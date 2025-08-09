@@ -29,9 +29,8 @@ export const useCapaSSE = ({ courses }) => {
       console.error("Access token is missing!");
       return;
     }
-    const sseUrl = `${
-      import.meta.env.VITE_API_BASE_SECURE_SSE_URL
-    }/api/v1/seats/subscribe?${courseIds}`;
+    const sseUrl = `${import.meta.env.VITE_API_BASE_SECURE_SSE_URL
+      }/api/v1/seats/subscribe?${courseIds}`;
 
     eventSource = new EventSourcePolyfill(sseUrl, {
       headers: {
@@ -63,7 +62,7 @@ export const useCapaSSE = ({ courses }) => {
       eventSource.close();
     };
     return () => eventSource.close();
-  }, [courses]);
+  }, []);
 
   return { capa };
 };
