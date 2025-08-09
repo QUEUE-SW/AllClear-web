@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
-  console.log("capacities 출력: ", capacities);
+  console.log("[CoursesList] capacities 출력: ", capacities);
   return (
     <div
       className="w-[814px] h-[607px] overflow-y-auto
@@ -16,7 +16,7 @@ const CoursesList = ({ courses, capacities, onEnrollSuccess }) => {
     >
       <div className="grid grid-cols-3 gap-x-2 gap-y-3">
         {courses?.map((course) => {
-          const current = capacities.find(
+          const current = capacities?.find(
             (c) => c.courseId === course.courseId
           );
           return (

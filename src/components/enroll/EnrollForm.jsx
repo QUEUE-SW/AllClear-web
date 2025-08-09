@@ -33,8 +33,6 @@ const EnrollForm = () => {
     remainingCredit: null,
   });
 
-  const { capa } = useCapaSSE({ generalCourses });
-
   // 강의 목록 조회
   const getGeneralCourses = async () => {
     try {
@@ -48,6 +46,8 @@ const EnrollForm = () => {
       console.error("수강 목록 조회 실패", error);
     }
   };
+
+  const { capa } = useCapaSSE({ courses: generalCourses });
 
   // 수강 신청 현황 조회
   const getRegisterCourses = async () => {

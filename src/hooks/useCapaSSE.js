@@ -6,6 +6,8 @@ import { EventSourcePolyfill } from "event-source-polyfill";
 export const useCapaSSE = ({ courses }) => {
   const [capa, setCapa] = useState(courses);
 
+  //console.log("[useCapaSSE] courses: ", courses);
+
   useEffect(() => {
     let eventSource;
     // 기존 연결 닫기
