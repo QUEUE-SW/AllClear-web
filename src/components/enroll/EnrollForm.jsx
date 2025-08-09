@@ -6,6 +6,7 @@ import RegisteredCoursesList from "@/components/enroll/RegisteredCoursesList";
 import CreditsStatus from "@/components/enroll/CreditsStatus";
 import { getCredits } from "@/services/student";
 import { useFilter } from "@/hooks/useFilter";
+import { useCapaSSE } from "@/hooks/useCapaSSE";
 
 const EnrollForm = () => {
   const {
@@ -25,7 +26,6 @@ const EnrollForm = () => {
 
   const [generalCourses, setGeneralCourses] = useState([]);
   const [registerCourses, setRegisterCourses] = useState([]);
-  const [capacities, setCapacities] = useState([]);
 
   const [credits, setCredits] = useState({
     totalCredit: null,
@@ -33,15 +33,17 @@ const EnrollForm = () => {
     remainingCredit: null,
   });
 
+  const { capa } = useCapaSSE({ generalCourses });
+
   // 강의 목록 조회
   const getGeneralCourses = async () => {
     try {
       const courseRes = await getCourses(filters);
       setGeneralCourses(courseRes.data);
 
-      const ids = courseRes.data.map((c) => c.courseId);
-      //const capaRes = await getCapacities(ids);
-      //setCapacities(capaRes.data);
+      // const ids = courseRes.data.map((c) => c.courseId);
+      // const capaRes = await getCapacities(ids);
+      // setCapacities(capaRes.data);
     } catch (error) {
       console.error("수강 목록 조회 실패", error);
     }
@@ -109,7 +111,7 @@ const EnrollForm = () => {
           />
           <CoursesList
             courses={filteredCourses}
-            //capacities={capacities}
+            capacities={capa}
             onEnrollSuccess={handleAfterAction}
           />
         </div>
