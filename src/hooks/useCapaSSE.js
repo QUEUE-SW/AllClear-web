@@ -53,7 +53,7 @@ export const useCapaSSE = ({ courses }) => {
 
     const es = new EventSourcePolyfill(sseUrl, {
       headers: { Authorization: `Bearer ${token}` },
-      heartbeatTimeout: 60_000, // 클라이언트 무활동 감지 여유 (서버 하트비트는 10~15초 권장)
+      heartbeatTimeout: 300000,
       withCredentials: false,
     });
     esRef.current = es;
