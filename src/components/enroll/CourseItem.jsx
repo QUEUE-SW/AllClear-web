@@ -64,7 +64,7 @@ const CourseItem = ({ course, currentCapa, onEnrollSuccess }) => {
               : "bg-green-100 text-green-600 border-green-400"
           }`}
         >
-          {currentCapa || 40}/{course.capacity}
+          {currentCapa || 0}/{course.capacity}
         </div>
       </div>
 

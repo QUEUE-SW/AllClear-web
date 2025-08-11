@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EventSourcePolyfill } from "event-source-polyfill";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 export const useCapaSSE = ({ courses }) => {
   const [capa, setCapa] = useState([]);
@@ -82,10 +82,10 @@ export const useCapaSSE = ({ courses }) => {
     es.onerror = (err) => {
       // 자동 재연결에 맡기고 close() 하지 않음
       console.warn("SSE error (auto-reconnect):", err);
-      if (!toastOnceRef.current) {
-        toast.error("좌석 정보 연결이 불안정합니다. 자동으로 다시 연결합니다.");
-        toastOnceRef.current = true;
-      }
+      // if (!toastOnceRef.current) {
+      //   toast.error("좌석 정보 연결이 불안정합니다. 자동으로 다시 연결합니다.");
+      //   toastOnceRef.current = true;
+      // }
     };
 
     return () => {
