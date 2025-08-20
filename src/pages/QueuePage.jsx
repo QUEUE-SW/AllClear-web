@@ -1,5 +1,6 @@
 import { useSSE } from "@/hooks/useSSE";
 import { login } from "@/services/auth";
+import { queueStatus } from "@/services/queue";
 import { useAuthStore } from "@/stores/authStore";
 import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
@@ -23,6 +24,7 @@ import { toast } from "react-toastify";
 
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
+  coust[(queueNumber, setQueueNumber)] = useState(0);
 
   const { clearCredentials } = useQueueStore.getState();
   const { uuid } = useParams();
@@ -71,7 +73,30 @@ const QueuePage = () => {
     }
   };
 
-  const { queueNumber } = useSSE({ uuid, onAllowed: handleLogin });
+  // 5초 간격으로 대기 순서 서버에게 받아오기
+  useEffect(() => {
+    if (!uuid) return;
+
+    let polling = setInterval(async () => {
+      try {
+        const res = await queueStatus({ uuid });
+        console.log("queueStatus: ", res);
+
+        setQueueNumber(res.queueNumber);
+        console.log(res.queueStatus); // 디버깅용
+
+        // 상태가 ALLOWED라면 polling 정지 후 로그인 시도
+        if (res.queueStatus === "ALLOWED") {
+          clearInterval(polling);
+          handleLogin();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }, 5000);
+
+    return () => clearInterval(polling);
+  }, []);
 
   // 첫 페이지 진입 시 캐싱된 정보가 없다면(url 조작으로 접속 시) 강제 리다이렉트
   useEffect(() => {
