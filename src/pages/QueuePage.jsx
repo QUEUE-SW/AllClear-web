@@ -6,7 +6,7 @@ import { useQueueStore } from "@/stores/queueStore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 /**
@@ -23,8 +23,11 @@ import { toast } from "react-toastify";
  */
 
 const QueuePage = () => {
+  const location = useLocation();
   const [filledCount, setFilledCount] = useState(0);
-  coust[queueNumber, setQueueNumber] = useState(0);
+  const [queueNumber, setQueueNumber] = useState(() => {
+    return location.state?.queueNumber ?? -1;
+  });
 
   const { clearCredentials } = useQueueStore.getState();
   const { uuid } = useParams();
@@ -76,6 +79,10 @@ const QueuePage = () => {
   // 5초 간격으로 대기 순서 서버에게 받아오기
   useEffect(() => {
     if (!uuid) return;
+
+    if (queueNumber < 0) {
+      toast.warn("대기순서를 불러오는 중입니다. 잠시만 기다려 주세요.");
+    }
 
     let polling = setInterval(async () => {
       try {
