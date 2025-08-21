@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 
 const QueuePage = () => {
   const [filledCount, setFilledCount] = useState(0);
-  coust[(queueNumber, setQueueNumber)] = useState(0);
+  coust[queueNumber, setQueueNumber] = useState(0);
 
   const { clearCredentials } = useQueueStore.getState();
   const { uuid } = useParams();
