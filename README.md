@@ -41,3 +41,77 @@ React + Vite 기반으로 개발되었으며, 실시간 대기열 상태를 표�
 ---
 
 ## 📁 폴더 구조
+```
+📦AllClear-web
+ ┣ 📂.git
+ ┣ 📂.github
+ ┣ 📂src
+ ┃ ┣ 📂components
+ ┃ ┃ ┣ 📂enroll
+ ┃ ┃ ┃ ┣ 📜CourseItem.jsx
+ ┃ ┃ ┃ ┣ 📜CoursesList.jsx
+ ┃ ┃ ┃ ┣ 📜CreditsStatus.jsx
+ ┃ ┃ ┃ ┣ 📜EnrollForm.jsx
+ ┃ ┃ ┃ ┣ 📜Filter.jsx
+ ┃ ┃ ┃ ┣ 📜FilterBar.jsx
+ ┃ ┃ ┃ ┣ 📜Header.jsx
+ ┃ ┃ ┃ ┣ 📜RegisteredCourseItem.jsx
+ ┃ ┃ ┃ ┗ 📜RegisteredCoursesList.jsx
+ ┃ ┃ ┗ 📂home
+ ┃ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┃ ┣ 📜Announcement.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜Footer.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜Header.jsx
+ ┃ ┃ ┃ ┃ ┣ 📜LoginForm.jsx
+ ┃ ┃ ┃ ┃ ┗ 📜SignUpForm.jsx
+ ┃ ┃ ┃ ┗ 📜Home.jsx
+ ┃ ┣ 📂constants
+ ┃ ┃ ┣ 📜filterOptions.js
+ ┃ ┃ ┗ 📜signupOptions.js
+ ┃ ┣ 📂data
+ ┃ ┃ ┗ 📜userOptions.js
+ ┃ ┣ 📂hooks
+ ┃ ┃ ┣ 📜useCapaSSE.js
+ ┃ ┃ ┣ 📜useFilter.js
+ ┃ ┃ ┗ 📜useSSE.js
+ ┃ ┣ 📂pages
+ ┃ ┃ ┣ 📜AuthPage.jsx
+ ┃ ┃ ┣ 📜EnrollPage.jsx
+ ┃ ┃ ┣ 📜HomePage.jsx
+ ┃ ┃ ┣ 📜LoginPage.jsx
+ ┃ ┃ ┣ 📜QueuePage.jsx
+ ┃ ┃ ┗ 📜SignUpPage.jsx
+ ┃ ┣ 📂router
+ ┃ ┃ ┣ 📜auth.jsx
+ ┃ ┃ ┣ 📜enroll.jsx
+ ┃ ┃ ┣ 📜home.jsx
+ ┃ ┃ ┣ 📜queue.jsx
+ ┃ ┃ ┗ 📜root.jsx
+ ┃ ┣ 📂services
+ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┣ 📜courses.js
+ ┃ ┃ ┣ 📜enrollments.js
+ ┃ ┃ ┣ 📜queue.js
+ ┃ ┃ ┗ 📜student.js
+ ┃ ┣ 📂stores
+ ┃ ┃ ┣ 📜authStore.js
+ ┃ ┃ ┗ 📜queueStore.js
+ ┃ ┣ 📂utils
+ ┃ ┃ ┣ 📜apiInterface.js
+ ┃ ┃ ┣ 📜auth.js
+ ┃ ┃ ┣ 📜axiosInstance.js
+ ┃ ┃ ┗ 📜validation.js
+ ┃ ┣ 📜App.jsx
+ ┃ ┣ 📜index.css
+ ┃ ┗ 📜main.jsx
+ ┣ 📜.gitignore
+ ┣ 📜eslint.config.js
+ ┣ 📜index.html
+ ┣ 📜jsconfig.json
+ ┣ 📜package-lock.json
+ ┣ 📜package.json
+ ┣ 📜postcss.config.js
+ ┣ 📜README.md
+ ┣ 📜tailwind.config.js
+ ┗ 📜vite.config.js
+```
