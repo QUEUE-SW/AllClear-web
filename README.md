@@ -24,14 +24,17 @@ React + Vite 기반으로 개발되었으며, 실시간 대기열 상태를 표�
 | **배포 도구**    | AWS S3, CloudFront                 |
 | **협업 도구**    | Figma, Github, Confluence, Slack   |
 
+---
+
 ## 💡 주요 기능
 - **대기열 화면** : 로그인 후 유저 순번 확인
 <img width="466" height="500" alt="e1cfa9c7-f7ec-4d5f-8d56-7e13c6d63fe1" src="https://github.com/user-attachments/assets/b80127d7-ae06-4f69-8d9e-e20f78e398bc" />
 
-- **수강신청** : 대기열 통과한 유저는 강좌를 선택 및 신청 가능
-<img width="1271" height="500" alt="d775dda5-c777-45c6-8e9d-be5b8772133b" src="https://github.com/user-attachments/assets/6e32165f-4fa2-4180-a3da-0fd485fe1f6f" />
+<br/><br/>
 
-- **잔여석 확인 등 실시간 피드백** : Polling 기반 강의 여석 및 신청 결과 즉시 확인 가능
+- **수강신청** : 대기열 통과한 유저는 강좌를 선택 및 신청 가능
+- **잔여석 확인 등 실시간 피드백** : SSE 기반 강의 여석 및 신청 결과 즉시 확인 가능
+<img width="720" height="349" alt="1 ______________720" src="https://github.com/user-attachments/assets/b14b94fe-fda5-4b65-8ad2-8139d1d47d03" />
 
 ---
 
